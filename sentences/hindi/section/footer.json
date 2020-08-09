@@ -1,0 +1,11 @@
+{
+    "cookie": {
+        "description": "We use cookies to ensure that we give you the best experience on our website. By using website you agree to our cookie policy. Please read our <a href='/cookies/terms?ref=footerNote'>cookie policy</a>. If you do not agree or want to change how we use cookie, you can change it in <a href='/cookies/setting?ref=noteFooter'>settings</a>."
+    },
+    "menu": {
+        "aboutUs": "About us",
+        "contribute": "Contribute",
+        "cookies": "Cookies",
+        "terms": "Termms & Conditions"
+    }
+}

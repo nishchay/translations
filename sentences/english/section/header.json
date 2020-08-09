@@ -1,0 +1,39 @@
+{
+    "defaultTitle": "Open structure PHP framework",
+    "menu": {
+        "search": "Search",
+        "learningCenter": "Learning Center",
+        "contribute": "Contribute",
+        "login": "Login",
+        "profile": "Profile",
+        "random": "Random"
+    },
+    "search": {
+        "placeholder": "Search anything or Press down arrow to view search hint",
+        "hint": {
+            "title": "Search Hint",
+            "list": {
+                "feature": {
+                    "bold": "What is",
+                    "light": "feature name"
+                },
+                "learn": {
+                    "bold": "Learn",
+                    "light": "feature name"
+                },
+                "work": {
+                    "bold": "How to",
+                    "light": "work name"
+                },
+                "error": {
+                    "bold": "Error message",
+                    "light": "Copy error message and paste in search box to look for solution"
+                }
+            }
+        },
+        "notFound": {
+            "title":"Nothing found",
+            "message": "Clear search box and you will see search hint"
+        }
+    }
+}

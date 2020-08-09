@@ -1,0 +1,16 @@
+{
+    "learningCenter": "Learning Center",
+    "random": "Random",
+    "contribute": "Contribute",
+    "login": "Login",
+    "help": "Help",
+    "needOnlyNishchay": "We only need one decision(Nishchay).",
+    "error": "Something went wrong",
+    "needVerification": "You need to verify your email to access this feature.",
+    "actions": {
+        "edit": "Edit",
+        "remove": "Remove",
+        "cancel": "Cancel",
+        "update": "Update"
+    }
+}

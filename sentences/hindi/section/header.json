@@ -1,0 +1,39 @@
+{
+    "defaultTitle": " ओपन स्ट्रक्चर PHP फ्रेमवर्क",
+    "menu": {
+        "search": "खोजे",
+        "learningCenter": "सीखो",
+        "contribute": "सहयोग",
+        "login": "लॉगिन",
+        "profile": "प्रोफाइल",
+        "random": "रैंडम"
+    },
+    "search": {
+        "placeholder": "कुछ भी खोजे और संकेत पाने के लिए डाउन अर्रोर दबाइये",
+        "hint": {
+            "title": "खोज संकेत (फ़िलहाल निश्चय पे खोज सिर्फ अंग्रेजी में ही कर सकते है)",
+            "list": {
+                "feature": {
+                    "bold": "What is",
+                    "light": "feature name"
+                },
+                "learn": {
+                    "bold": "Learn",
+                    "light": "feature name"
+                },
+                "work": {
+                    "bold": "How to",
+                    "light": "work name"
+                },
+                "error": {
+                    "bold": "Error message",
+                    "light": "Copy error message and paste in search box to look for solution"
+                }
+            }
+        },
+        "notFound": {
+            "title":"Nothing found",
+            "message": "Clear search box and you will see search hint"
+        }
+    }
+}

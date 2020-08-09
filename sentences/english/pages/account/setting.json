@@ -1,0 +1,43 @@
+{
+    "title": "Nishchay - Profile Setting : ",
+    "menu": {
+        "detail": {
+            "title": "Your detail",
+            "description": "Update your profile information like name or email address."
+        },
+        "security": {
+            "title": "Security",
+            "description": "Update your password. You last change your password {time}.",
+            "no-password": "You don't have password set for your account."
+        },
+        "progress": {
+            "title": "Learning Progress",
+            "description": "Check you learning progress and reading timeline"
+        },
+        "membership": {
+            "title": "Membership",
+            "description": "View and manage your membership detail and manage your developer if you are an organization."
+        }
+    },
+    "detail": {
+        "title": "Your profile information"
+    },
+    "button": {
+        "update": "Update"
+    },
+    "account-type": {
+        "title": "Account Type",
+        "developer": {
+            "title": "Developer",
+            "description": "You are individual and\/or belongs to any organization."
+        },
+        "organization": {
+            "title": "Organization",
+            "description": "You are an organization and there are some developers belongs to your organization."
+        },
+        "contributor": {
+            "title": "Contributor",
+            "description": "You are the one who helping Developer community by providing your best effort."
+        }
+    }
+}

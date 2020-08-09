@@ -1,0 +1,71 @@
+{
+    "onlyNeed": {
+        "light": "We only need",
+        "bold": "One Nishchay"
+    },
+    "tagLine": "Nishchay is <span>Open structure php framework</span> which helps you achieve your aim of building something awesome.",
+    "feature": {
+        "title": "Features at glance",
+        "list": {
+            "openStructure": {
+                "title": "Open Structure",
+                "description": "Open structure allows us to create type of application structure we want.<br\/>Everything including controller, model, event, views, template etc. follows structure we define.<br\/>This way our application supports only things which are defined in structure definition."
+            },
+            "database": {
+                "title": "Database",
+                "description": "Database features like Query builder, Entity classes along with events and various kind of relation between entities.<br\/>Nishchay also provides entity query builder to build query based on entity.<br\/>It also supports inbuilt caching for query builder which turned on or off and caching key can be created using query statement itself or provided key."
+            },
+            "session": {
+                "title": "Session",
+                "description": "Nishchay session management is powerful and easy to use.<br\/>It can be used multiple ways, as an example scope session which are available to processing route's scope only and it also has number of type of save handler like file, DB and Cache."
+            },
+            "maintenanceModes": {
+                "title": "Maintenance modes",
+                "description": "Put application into maintenance mode by various ways.<br\/>Such maintenance modes are like browser level, timed based or based on callback method. Nishchay also allows to add exception for list of routes, route belongs to scope or context."
+            },
+            "webService": {
+                "title": "Web service",
+                "description": "Nishchay provides web service features apart form RESTful route.<br\/>Route allow us to create SEO friendly URL which can also used to create RESTful API.<br\/>Using allowed method type we can also create GET, POST, PUT or other service to provide various operation on same route.<br\/>Using response type we can create JSON\/XML response."
+            },
+            "consoleCommand": {
+                "title": "Console command",
+                "description": "Console command allow us to create route, controller, entity.<br/>It can also be use for creating empty, CRUD or we can create it from template.<br/> It can also be used to find routes, controller, events and handler info of an application. Use console command to run route which is useful for CRON jobs."
+            }
+        }
+    },
+    "learnMore": "Learn more",
+    "join": {
+        "title": "Join community",
+        "tagLine": "Take up Nishchay & bring your ideas to reality.",
+        "buttonText": "Sign up"
+    },
+    "accountType": {
+        "contributor": {
+            "title": "Contributor",
+            "tagLine": "Contribute to any of the following to promote account to contributor.",
+            "list": {
+                "line-1": "Contribute to framework",
+                "line-2": "Help us translating to multiple language or improve existing content",
+                "line-3": "Donate an amount"
+            }
+        },
+        "developer": {
+            "title": "Developer",
+            "tagLine": "You can create normal account which is called developer account by default.",
+            "list": {
+                "line-1": "Add note to any topic in learning center",
+                "line-2": "Your reading progress will be saved and can be seen in your profile",
+                "line-3": "Get suggestions in profile"
+            }
+        },
+        "organization": {
+            "title": "Organization",
+            "tagLine": "In short time you will be able join as an organization.",
+            "list": {
+                "line-1": "Submit project to get listed in website",
+                "line-2": "Track reading progress of your developer",
+                "line-3": "Code review by experts"
+            }
+        }
+    }
+}

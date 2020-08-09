@@ -1,0 +1,32 @@
+{
+    "title": "Contribute",
+    "subTitle": "Many ways to help world",
+    "newFeature": {
+        "title": "New feature",
+        "description": "If you have an idea for new feature or want to update/upgrade existing feature then visit our portal to submit your requirement."
+    },
+    "reportBug": {
+        "title": "Report bug",
+        "description": "Did you found something not working or something not working as expected? Let us know about issue you are facing."
+    },
+    "fixBug": {
+        "title": "Fix bug",
+        "description": "You can directly clone our github repo and start working on it. Once you fix work, push changes and create pull request."
+    },
+    "codeReview": {
+        "title": "Correct us/Code review",
+        "description": "Everybody makes mistake but who finds mistake. On our github repo you can always comment and code review submitted code."
+    },
+    "contribution": {
+        "title": "Code contribution",
+        "description": "Learn if you are first timer or unaware of our coding guidelines and process of implementation."
+    },
+    "updateContent": {
+        "title": "Update content",
+        "description": "You can edit each word, line and paragraph of this website including learning center documentation."
+    },
+    "donate": {
+        "title": "Donate",
+        "description": "Send us amount so that we can spend it on our website for maintenance, seminar & marketing work."
+    }
+}

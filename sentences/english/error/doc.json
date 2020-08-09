@@ -1,0 +1,15 @@
+{
+    "doc": {
+        "not-found": "Doc not found."
+    },
+    "note": {
+        "required": "Please enter note",
+        "minLength": "Note should be at least {0} character long",
+        "limit": "You can add max 10 notes to this doc",
+        "noteId": "Invalid noteId",
+        "userIdMismatch": "Note does not belongs to you"
+    },
+    "noteToAdd": {
+        "required": "Note to add is missing."
+    }
+}

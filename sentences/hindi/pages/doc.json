@@ -1,0 +1,22 @@
+{
+    "introduction": "परिचय",
+    "getStarted": "शुरू करें",
+    "openStructure": "ओपन स्ट्रक्चर",
+    "requestResponse": "रिक्वेस्ट / रिस्पांस",
+    "settings": "सेटिंग्स",
+    "annotations": "अननोटाशंस",
+    "database": "डेटाबेस",
+    "maintenanceModes": "मेंटेनेंस मोड्स",
+    "session": "सेशन",
+    "webService": "वेब सर्विस",
+    "security": "सिक्योरिटी",
+    "mail": "मेल",
+    "dependencyInjection": "डिपेंडेंसी  इंजेक्शन",
+    "exceptionHandling": "एक्सेप्शन हैंडलिंग",
+    "utilityClasses": "यूटिलिटी क्लासेज",
+    "events": "इवेंट्स",
+    "applicationLogging": "एप्लीकेशन लॉगिंग",
+    "localization": "भाषा",
+    "consoleCommand": "कंसोल कमांड",
+    "titleLearnPrefix": "संकल्प - सीखें "
+}

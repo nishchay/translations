@@ -1,0 +1,71 @@
+{
+    "onlyNeed": {
+        "light": "हमें चाहिए सिर्फ",
+        "bold": "एक निश्चय"
+    },
+    "tagLine": "निश्चय एक <span>ओपन स्ट्रक्चर PHP फ्रेमवर्क</span> जो अप्पको अपना लक्ष्य को पूरा करने में मदद कर सकता है.",
+    "feature": {
+        "title": "नज़र में सुविधाएँ",
+        "list": {
+            "openStructure": {
+                "title": "ओपन स्ट्रक्चर",
+                "description": "ओपन स्ट्रक्चर से आप अपने पसंदी एप्लीकेशन स्ट्रक्चर बना सकते हे. <br\/>इसमें कंट्रोलर, मॉडल, व्यू, इवेंट्स और सब कुछ बनाये गए स्ट्रक्चर का पालन करता है.<br\/> निश्चय स्ट्रक्चर प्रोसेसर सिर्फ उसी को अनुमति करता है जो बनाये गए स्ट्रक्चर में हो"
+            },
+            "database": {
+                "title": "डेटाबेस",
+                "description": "Nishchay has database features like Query builder, Entity classes along with events and various kind of relation between entities.<br\/>Nishchay also provides entity query builder to query entity.<br\/>It also inbuilt caching for query builder which turned on or off and caching key can created using query statment itself or provided key."
+            },
+            "session": {
+                "title": "सेशन",
+                "description": "Nishchay session management is powerful and easy to use.<br\/>It can be used multiple ways, as an example scope session which are available to processing route's scope only and it also has number of type of save handler like file, DB and Cache."
+            },
+            "maintenanceModes": {
+                "title": "मैटिंनेंस मोड",
+                "description": "Nishchay provides various ways to put application into maintenance.<br\/>Such maintenance modes are like browser level, timed based or based on callback method. Nishchay also allows to add exception for routes, scope or context."
+            },
+            "webService": {
+                "title": "वेब सर्विसिस",
+                "description": "Nishchay provides web service features apart form RESTful route.<br\/>Route allow us to create SEO friendly URL which can also used to create RESTful API.<br\/>Using allowed method type we can also create GET, POST, PUT or other service to provide various operation on same route.<br\/>Using response type we can create JSON\/XML response."
+            },
+            "consoleCommand": {
+                "title": "कंसोल कमांड",
+                "description": "Console command allow us to create route, controller, entity.<br/>It can be created empty, with CRUD functionality or we can create it from template.<br/> It can also be used to find routes, controller, events and handler info of an application."
+            }
+        }
+    },
+    "learnMore": "आगे पढ़े",
+    "join": {
+        "title": "समुदाय में शामिल हों",
+        "tagLine": "Take up Nishchay & bring your ideas to reality.",
+        "buttonText": "साइन अप करें"
+    },
+    "accountType": {
+        "contributor": {
+            "title": "योगदान देने वाला",
+            "tagLine": "Contribute to any of the following to promote account to contributor.",
+            "list": {
+                "line-1": "Contribute to framework",
+                "line-2": "Help us translating to multiple language or improve existing content",
+                "line-3": "Donate an amount"
+            }
+        },
+        "developer": {
+            "title": "डेवलपर",
+            "tagLine": "You can create normal account which is called developer account by default.",
+            "list": {
+                "line-1": "Add note to any topic in learning center",
+                "line-2": "Your reading progress will be saved and can be seen in your profile",
+                "line-3": "Get suggestins in profile"
+            }
+        },
+        "organization": {
+            "title": "आर्गेनाइजेशन",
+            "tagLine": "In short time you will be able join as organization.",
+            "list": {
+                "line-1": "Submit project to get listed in website",
+                "line-2": "Track reading progress of your developer",
+                "line-3": "Code review by experts"
+            }
+        }
+    }
+}

@@ -1,0 +1,15 @@
+{
+    "subTitle": "Login into website",
+    "button": {
+        "login": "Login",
+        "loginWithGithub": "Login with Github",
+        "createAccount": "Create an account"
+    },
+    "link": {
+        "resetPassword": "Reset your password"
+    },
+    "placeholder": {
+        "email": "Email",
+        "password": "Password"
+    }
+}

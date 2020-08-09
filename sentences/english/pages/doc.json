@@ -1,0 +1,65 @@
+{
+    "title": "Learning center",
+    "titleLearnPrefix": "Nishchay - Learn ",
+    "introduction": "Introduction",
+    "getStarted": "Get Started",
+    "openStructure": "Open Structure",
+    "requestResponse": {
+        "title": "Request / Response",
+        "request": "Request",
+        "requestParameter": "Request Paramter",
+        "requestStore": "Request Store",
+        "response": "Response",
+        "viewTemplate": "View template"
+    },
+    "settings": {
+        "title": "Settings",
+        "application": "Application",
+        "cache": "Cache",
+        "database": "Database",
+        "encryption": "Encryption",
+        "language": "Language",
+        "logger": "Logger",
+        "mail": "Mail",
+        "maintenance": "Maintenance",
+        "response": "Response",
+        "service": "Service",
+        "yourOwnSetting": "Your Own Setting",
+        "readSetting": "Read Setting"
+    },
+    "environmentVariable": "Environment Variable",
+    "annotations": "Annotations",
+    "database": {
+        "title": "Database",
+        "queryBuilder": "Query builder",
+        "entity": "Entity",
+        "entityQuery": "Entity Query",
+        "databaseManager": "Database Manager"
+    },
+    "cache": "Cache",
+    "maintenanceModes": "Maintenance modes",
+    "session": "Session",
+    "webService": "Web Service",
+    "security": {
+        "title": "Security",
+        "validations": "Validations",
+        "formBuilder": "Form Builder",
+        "csrf": "CSRF"
+        
+    },
+    "mail": "Mail",
+    "dependencyInjection": "Dependency injection",
+    "exceptionHandling": "Exception handling",
+    "utilityClasses": "Utility Classes",
+    "events": "Events",
+    "applicationLogging": "Application logging",
+    "localization": "Localization/Translation",
+    "consoleCommand": "Console command",
+    "codes": "Codes",
+    "guidelines": "Guidelines",
+    "notes": {
+        "title": "Notes",
+        "description": "Notes are visible to you only and its for your use only. Its good to note a point of what you read.",
+        "addNote": "Add note"
+    }
+}

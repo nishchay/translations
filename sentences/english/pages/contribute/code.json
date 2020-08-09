@@ -1,0 +1,13 @@
+{
+    "title": "Contribution coding guidelines",
+    "menu": {
+        "beforeYouStart": "Before you start",
+        "codingStandards": "Coding standards",
+        "prerequisite": "Prerequisite",
+        "chooseWork": "Choose work",
+        "install": "Install",
+        "setUpWorkEnv": "Setting up work environment",
+        "submitWork": "Submit work",
+        "pullRequest": "Pull request"
+    }
+}

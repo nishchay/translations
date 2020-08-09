@@ -1,0 +1,68 @@
+{
+    "email": {
+        "required": "Enter email",
+        "invalid": "Please enter valid email",
+        "githubWithoutPassword": "Account is registered using github, please login using github.",
+        "notEmpty": "You can't make this empty!",
+        "alreadyTaken": "Email already been registered. Please try login using same email."
+    },
+    "changeEmail": {
+        "alreadyTaken": "Email associated with another account.",
+        "deactivated": "Link has been deactivated"
+    },
+    "password": {
+        "required": "Enter password",
+        "min": "Password should be at least {0} character long",
+        "invalid": "Password is wrong",
+        "seemsWrong": "It seems you entered wrong password",
+        "not-set": "Account is registered using github and password not set. Login using github."
+    },
+    "token": {
+        "invalid": "Invalid link",
+        "expired": "Link expired",
+        "used": "Link already used",
+        "limit30min": "You can only get one verification email in 30 minutes.",
+        "limit24hrs": "Daily limit to get verification has been reached, please try tomorrow."
+    },
+    "resetPassword": {
+        "needLogout": {
+            "title": "You need to logout",
+            "description": "Please log out and click on reset password link"
+        },
+        "deactivated": "Link has been deactivated",
+        "invalid": "Invalid reset password link"
+    },
+    "accountMismatched": "Account mismatched",
+    "fullname": {
+        "required": "You forgot your name?",
+        "min": "Your name should be at lease {0} character long",
+        "max": "Your name should not be longer then {0} character long",
+        "notEmpty": "You can't make this empty!"
+    },
+    "confirmPassword": {
+        "required": "Confirm your password",
+        "notConfirmed": "Confirmation password is wrong"
+    },
+    "currentPassword": {
+        "required": "We need your current password to re-verify your identity"
+    },
+    "newPassword": {
+        "required": "Enter your new password",
+        "confirm": "Confirm your new password"
+    },
+    "terms": {
+        "required": "Please read terms and tick here if you agreed"
+    },
+    "birthDate": {
+        "required": "Please enter your birth date",
+        "invalid": "Please enter valid birth date"
+    },
+    "gender": {
+        "required": "Sure! You don't know this?"
+    },
+    "verify": {
+        "title": "Account not verified",
+        "description": "You need verify your email to access features. You might have received an email, if not please click below to receive it again.",
+        "button": "Get verification email"
+    }
+}
