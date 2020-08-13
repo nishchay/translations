@@ -35,6 +35,7 @@
     "accountMismatched": "Account mismatched",
     "fullname": {
         "required": "You forgot your name?",
+        "invalid": "Please enter valid name",
         "min": "Your name should be at lease {0} character long",
         "max": "Your name should not be longer then {0} character long",
         "notEmpty": "You can't make this empty!"
