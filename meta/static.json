@@ -1,0 +1,17 @@
+{
+    "main": "Nishchay is open structure PHP framework which can be use build website, REST api and applications like education system, ERP systems and more. Nishchay various features like maintenance modes, entity and entity query builder, database manager, many types of seasons.",
+    "contribute": {
+        "main": "Contribute to nishchay framework or website by contributing to framework code, website translation, reporting or fixing issue. Do code review of nishchay. Suggest and idea for the new features or improve existing features.",
+        "code": "Learn about coding standards followed by nishchay framework and how to contribute to nishchay framework and how to setup development environment.",
+        "content": "Improve nishchay framework website translation, this include any part of website and learning center. Know how to setup environment for contributing to translation."
+    },
+    "cookies": {
+        "terms": "Learn about how cookies are used in nishchay website."
+    },
+    "terms": "Learn about nishchay terms & conditions",
+    "login": "Login into account to see your learning progress, add note to learning center topic or update profile information",
+    "register": "Register your account so that track your learning progress, to add note any topic of learning center or to receive suggestions for learning.",
+    "account": {
+        "resetPassword": "Reset your nishchay account password if you forgot. You will receive an email to reset password."
+    }
+}

@@ -1,0 +1,55 @@
+{
+    "introduction": "Learn about nishchay framework like how to handle request, how to handle data, building queries, form validations, CSRF & XSS protection, maintenance modes, exception handling, generating controller, entities and more.",
+    "getStarted": "New to nishchay framework or are you gonna use framework for the first, this page will explain each steps from installing to configuration and creating your first page.",
+    "openStructure": "Create your own type of application structure. This can be MVC, HMVC or anything. This makes application higher compatible with future releases.",
+    "request": {
+        "requestHandling": "Requests are handled by controller method which has route annotation defined on it. On this page you can learn about how requests are handled, how to create route, how to create route with placeholder url part, how to forward of redirect request.",
+        "requestParameter": "Learn how you can fetch request parameters of GET, POST, PUT, DELETE request methods. Here you can also learn request file and server values.",
+        "requestStore": "Store data in store and it will available for whole request, these data can fetched, stored, remove from places within an application. These data are also automatically passed to views.",
+        "responseHandling": "Learn how route should respond to request. Generate view, JSON or XML response and you can even respond with your type of response."
+    },
+    "settings": {
+        "application": "Applications settings like application information, application version and season configuration",
+        "cache": "Cache configuration for the application. Define one more cache configuration, you can enable or disable it.",
+        "database": "Database configuration of nishchay framework application. Learn how to define multiple database connections and configuration for entity",
+        "encryption": "Define encryption cipher and its encryption key.",
+        "lang": "Configure where languages for an application should be stored. Set main and default locale. Set path languages.",
+        "logger": "Configuration for logger like where it should it should be logged and how it should be rotated.",
+        "mail": "Mail configuration for sending from application. Learn more about this in mail page.",
+        "maintenance": "Maintenance mode setting for an application. To know more about this visit maintenance page.",
+        "response": "Set default response type of an application and which template engine should be for view.",
+        "service": "Settings for web services. To know more about this visit web service page.",
+        "yourOwnSetting": "Learn how you can create your own setting for an application and how it should be placed in file and nishchay fetches",
+        "readSetting": "Learn how to read application settings. Know various reading methods and its class."
+    },
+    "environmentVariable": "Environment variable are variable as per application stage. Define variable for application stage local, test and live.",
+    "data": {
+        "queryBuilder": "Build query using nishchay query class. You can build simple to complex query using conditions, joins, sub query, order by, limit, offset, group by and having clause. Query builder also have inbuilt caching.",
+        "entity": "Create class which maps to database table where all properties represents column in table along with its data type. You can make property required, read only and also encrypt data while saving. Learn more about entity events, validations, relations and more.",
+        "entityQuery": "Build query based on entity class. Entity query follows same pattern as query builder class. Build entity query based on conditions, join, order by, group by, having and more.",
+        "databaseManager": "Use database manager to create or alter database table by adding, dropping or changing columns. Add or remove primary key, foreign key and index."
+    },
+    "cache": "Configure which caching server should be used within application. Define one or more caching configurations. Also configure how it should be used within query, session and other places.",
+    "maintenance": "Put your application into maintenance modes by time range for daily maintenance, date range for future maintenance and based on browser or callback method. Also whitelist routes based on its scope, context or regex expression",
+    "session": "Learn various type of session like read limit which expires after its read limit is reached, till next request which expires after given number of request. There are other session which are scope, context and conditional session.",
+    "service": {
+        "webService": "Develop web service which has feature like response filter based on fields demand. Make web service secured allow it to accessed using token only. Configure token to be received in GET, POST or in HEADER."
+    },
+    "security": {
+        "validation": "Validate request or other things using validation class. Learn various type of validations like, string , number, date and file. Validation also have built in CSRF protection.",
+        "formBuilder": "Build form based on Form class which allows creating input, select, option and textarea field. This form also comes with validation fo each fields along with CSRF protection.",
+        "CSRF": "Protect your application against CSRF. You can use CSRF standalone or with form. Configure where CSRF token should be received like GET, POST or in HEADER."
+    },
+    "mail": "Learn how to send an email from nishchay application. Define one or more mail configuration. Also learn how to send plain, html mail, how to add attachment. Send mail to more than one people.",
+    "dependencyInjection": "Inject dependency into object, method or class properties. Resolves method paramter, class properties based on resolve list and also cache object into dependency list.",
+    "exceptionHandling": "Handle exception which occurs within an application based on route path, route's scope, context. Also define define global exception handler for an application. We can define as many as exception handler within application.",
+    "events": {
+        "events" :"Define event should be called before or after controller or controller method. Event can also be defined for the scope, context or route path. Define any number of events within application."
+    },
+    "logger": {
+        "logger": "Log message to file or database. Log message like, error message and its detail, info logs and warning logs. Rotate log based on time like daily, weekly, biweekly or monthly."
+    },
+    "localization": "Allow your application to support more than one language. Application can support can any number languages. Store translation into file or DB.",
+    "consoleCommand": "Use console command to run route. Create empty or CRUD controller and entity. Also create controller or entity from predefined templates. Search controllers, routes, entities, events, exception handler and more using console command.",
+    "guidelines": "Learn security and performance consideration for an application. Learn about coding standard, application maintenance and other security consideration for an application."
+}

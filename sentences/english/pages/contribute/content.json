@@ -1,0 +1,10 @@
+{
+    "title": "Contribution content guidelines",
+    "menu": {
+        "beforeYouStart": "Before you start",
+        "prerequisite": "Prerequisite",
+        "setUpWorkEnv": "Setting up work environment",
+        "submitWork": "Submit work",
+        "pullRequest": "Pull request"
+    }
+}
