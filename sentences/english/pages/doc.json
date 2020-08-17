@@ -2,6 +2,24 @@
     "title": "Learn",
     "titleLearnPrefix": "Nishchay - Learn ",
     "introduction": "Introduction",
+    "installation": {
+        "windows": {
+            "composer": "Windows using composer",
+            "withoutComposer": "Windows without composer"
+        },
+        "ubuntu": {
+            "composer": "Ubuntu using composer",
+            "withoutComposer": "Ubuntu without composer"
+        },
+        "centos": {
+            "composer": "CentOS using composer",
+            "withoutComposer": "CentOS without composer"
+        },
+        "macos": {
+            "composer": "Mac OS using composer",
+            "withoutComposer": "Mac OS without composer"
+        }
+    },
     "getStarted": "Get Started",
     "openStructure": "Open Structure",
     "requestResponse": {

@@ -1,5 +1,23 @@
 {
     "introduction": "Learn about nishchay framework like how to handle request, how to handle data, building queries, form validations, CSRF & XSS protection, maintenance modes, exception handling, generating controller, entities and more.",
+    "installation": {
+        "windows": {
+            "composer": "Install nishchay application in windows machine using composer. This guide explains how to install composer and xampp and then how to configure application in xampp.",
+            "withoutComposer": "Install nishchay application in windows machine without composer. This guide explains how to install xampp and then how to configure application in xampp."
+        },
+        "ubuntu": {
+            "composer": "Install nishchay application in ubuntu using composer. This guide explains how to install composer, PHP, NGINX and then how to configure application in NGINX server.",
+            "withoutComposer": "Install nishchay application in ubuntu using composer. This guide explains how to install PHP, NGINX and then how to configure application in NGINX server."
+        },
+        "centos": {
+            "composer": "Install nishchay application in CentOS using composer. This guide explains how to install composer, PHP, NGINX and then how to configure application in NGINX server.",
+            "withoutComposer": "Install nishchay application in CentOS using composer. This guide explains how to install PHP, NGINX and then how to configure application in NGINX server."
+        },
+        "macos": {
+            "composer": "Install nishchay application in Mac OS using composer. This guide explains how to install composer, PHP, NGINX and then how to configure application in NGINX server.",
+            "withoutComposer": "Install nishchay application in Mac OS using composer. This guide explains how to install PHP, NGINX and then how to configure application in NGINX server."
+        }
+    },
     "getStarted": "New to nishchay framework or are you gonna use framework for the first, this page will explain each steps from installing to configuration and creating your first page.",
     "openStructure": "Create your own type of application structure. This can be MVC, HMVC or anything. This makes application higher compatible with future releases.",
     "request": {

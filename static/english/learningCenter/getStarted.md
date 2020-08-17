@@ -111,9 +111,8 @@ server {
     listen 80;
     listen [::]:80;
     server_name app.nishchay.local;
-    root   '/Users/bhavik/learningNishchay/public/';
+    root   '/var/www/nishchayApp/public/';
     index index.php;
-
 
     add_header X-Frame-Options DENY;
     add_header X-XSS-Protection "1; mode=block";
