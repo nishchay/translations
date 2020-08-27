@@ -14,6 +14,10 @@
             "title": "Learning Progress",
             "description": "Check you learning progress and reading timeline"
         },
+        "seminar": {
+            "title": "Seminar",
+            "description": "Check status of free seminar"
+        },
         "membership": {
             "title": "Membership",
             "description": "View and manage your membership detail and manage your developer if you are an organization."

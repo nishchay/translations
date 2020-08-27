@@ -23,6 +23,13 @@ We do not use these data for marketing or any other purpose.
 
 Notes added to any learning center topic are visible to you only. These notes are for your use only. Notes once added are not physically removed from database, once you delete any note it is mark as deleted. We do not maintain notes edit history.
 
+##### Seminar
+When you request free seminar you are agreeing to provide us your personal information and you also agree with terms mentioned here and in same request we create account if requester' email address is not registered in our website. We also inform same to requester in seminar notification mail.
+
+Upon submitting seminar request, website admin  verifies all details provided in seminar request and requester profile information.
+
+Website admin and owner has right to accept or reject seminar request based on provided detail and profile information. If we find any misuse of information, we may ban requester profile.
+
 ##### Account termination
 We may terminate your account if it is found that information provided by you not belongs to you. 
 We may identify if we receive such report for an account.

@@ -21,7 +21,11 @@ Make sure you have following in your machine
 
 ##### Choose work
 
-Before you start working, its better to check existing Pull request. You can also find issues on github and start working on it.
+Visit [Nishchay Atlassian Jira](https://nishchay.atlassian.net/jira/software/c/projects/NF/issues?filter=allissues) and choose any task you want to work on.
+
+If you have found an issue or thing you want to improve which does not exists in list, create new case and start working on it.
+
+If you want Jira account, please send email to [support@nishchay.io](mailto:support@nishchay.io) from your registered email address(Nishchay website). 
 
 
 ##### Install development version
@@ -53,6 +57,8 @@ git remote add upstream git://github.com/nishchay/framework.git
 ```
 5.  Create new branch from master or branch of specific version.
 
+Please check if work you to do if already exists in [Nishchay Atlassian Jira](https://nishchay.atlassian.net/jira/software/c/projects/NF/issues?filter=allissues), Put branch name same as issue number, example `NF-{number}`
+
 ```console
 git checkout -b BRANCH_NAME master
 ```
@@ -79,7 +85,7 @@ Push your changes to remote
 
 ```console
 git add
-git commit -m "{MESSAGE}"
+git commit -m "{ISSUE_NUMBER} {MESSAGE}"
 git push origin BRANCH_NAME
 ```  
 

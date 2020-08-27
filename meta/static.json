@@ -13,5 +13,8 @@
     "register": "Register your account so that track your learning progress, to add note any topic of learning center or to receive suggestions for learning.",
     "account": {
         "resetPassword": "Reset your nishchay account password if you forgot. You will receive an email to reset password."
+    },
+    "seminar": {
+        "request": "Request free seminar for learning nishchay framework. Seminar/Webinar is free for anyone whether they are organization or group of developers."
     }
 }

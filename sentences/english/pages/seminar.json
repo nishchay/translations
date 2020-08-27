@@ -1,0 +1,61 @@
+{
+    "title": "Request free seminar",
+    "heading": "Free seminar",
+    "description": {
+        "p1": "We provide free seminar over video call. This free seminar is for anyone whether it is organization, group of developers(Fresher, experience or anyone) or students .",
+        "lines": {
+            "line-1": "We cover only nishchay framework.",
+            "line-2": "Over video conference max join limit is 250 people, User must be gmail user.",
+            "line-3": "We verify provided below details in order to prevent misuse of information."
+        }
+    },
+    "form": {
+        "userDetail": {
+            "title": "Your detail",
+            "requestedAs": {
+                "label": "You are",
+                "organization": "Organization",
+                "developers": "Group of developers (Fresher, Experienced or Students) "
+            },
+            "name": {
+                "label": "Your name",
+                "placeholder": "Enter your name"
+            },
+            "email": {
+                "label": "Your email address",
+                "placeholder": "Enter your email"
+            }
+        },
+        "organizationDetail": {
+            "title": "Organization Detail",
+            "note": "We will verify entered detail by contacting contact information found in entered website.",
+            "name": {
+                "label": "Name",
+                "placeholder": "Enter organization name"
+            },
+            "website": {
+                "label": "Website",
+                "placeholder": "Enter organization website"
+            }
+        },
+        "preferredDates": {
+            "title": "Preferred dates",
+            "note": "If preferred dates are not available, we will notify you with available dates.",
+            "date": {
+                "placeholder": "Preferred date"
+            }
+        },
+        "acceptance": {
+            "label": "If provided email address is not registered, we will create account. Clicking this you also agree with our <a href='/terms?ref=registerPage'>terms</a>."
+        },
+        "button": {
+            "label": "Request free seminar",
+            "note": "We will send you, meeting link and covered topic for the seminar."
+        }
+    },
+    "submitted": {
+        "title": "Submitted",
+        "line-1": "Your request for free seminar has submitted, please wait while we review.",
+        "line-2": "We have sent you email regarding same, please check and response if required."
+    }
+}
