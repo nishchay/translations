@@ -85,7 +85,7 @@ composer
 1. Go to `/var/www` directory. If `www` does not exists then create it using below command
 
 ```cmd
-cd /varr
+cd /var
 sudo mkdir www
 sudo chmod 777 www
 ```
