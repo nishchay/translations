@@ -15,8 +15,8 @@
             "requestedAs": {
                 "label": "You are",
                 "organization": "Organization",
-                "developers": "Group of developers (Fresher, Experienced or Students)",
-                "individual": "Individual"
+                "developers": "Group of people",
+                "individual": "One person"
             },
             "name": {
                 "label": "Your name",
