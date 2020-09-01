@@ -30,7 +30,7 @@ class NamasteController {
 Here we just created route called `namaste` and it can be accessed by `{HOST}/namaste`.
 
 ###### Setting landing/index route
-Landing route is one where our application starts. It is the entry point of our application. When user hits only domain name, landing route is called. Landing route of application can changed by updating config `ocnfig.landingRoute` which is in setting file `settings/application.php`.
+Landing route is one where our application starts. It is the entry point of our application. When user hits only domain name, landing route is called. Landing route of application can changed by updating config `config.landingRoute` which is in setting file `settings/application.php`.
 
 ###### Multiple segments
 Route created above has only one segment. Route path is divided by `/`, each part is known as segment.
@@ -61,7 +61,7 @@ As per above code, Nishchay check for `@Placeholder` annotation is defined for r
 To make placeholder segment optional, prefix it by `?`. See below code for more understanding
 ```php
 /**
- * @Route(path='profile/??{userId}')
+ * @Route(path='profile/?{userId}')
  * @Placeholder(userId=number)
  */
 public function userProfile() {
