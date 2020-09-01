@@ -37,7 +37,7 @@ Suppose current context is _Application/Access/Direct_ then view will be searche
 
 1.  _Application/Access/Direct/views_
 2. Now `Direct` directory will be removed form path and response handler will find view in `Application/Access/views` .
-3. Now `Access` directory will be removed from path and response handler will find vie win `Application/views` 
+3. Now `Access` directory will be removed from path and response handler will find view in `Application/views` 
 
 It ends when there no more directory exists in path or path becomes empty.
 
