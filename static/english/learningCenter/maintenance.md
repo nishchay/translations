@@ -176,4 +176,4 @@ We can add one more scope to be allowed in maintenance mode.
     ]
 ```
 
-As per above code any route which have scope `help` will be accessible in maintennace mode.
+As per above code any route which have scope `help` will be accessible in maintenance mode.

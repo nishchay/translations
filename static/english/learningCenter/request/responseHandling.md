@@ -1,10 +1,10 @@
 #### Response Handling
 
-Response reuturned by route method considered as request response. By default response is view and it can be changed to JSON, XML or NULL.
+Response returned by route method considered as request response. By default response is view and it can be changed to JSON, XML or NULL.
 
 ##### View
 
-When response type is view, route should return single view name as stirng or list of view name as array.
+When response type is view, route should return single view name as string or list of view name as array.
 
 ``` php
 /**
@@ -33,7 +33,7 @@ If it does not found there then it tries to locate by going up.
 
 ###### Going up method
 
-Suppose current context is _Application/Access/Direct_ then view will be searched as per first method called context. If it not found thencontext gets removed one at time then it gets located and search is proceed as shown below.
+Suppose current context is _Application/Access/Direct_ then view will be searched as per first method called context. If it not found then context gets removed one at time then it gets located and search is proceed as shown below.
 
 1.  _Application/Access/Direct/views_
 2. Now `Direct` directory will be removed form path and response handler will find view in `Application/Access/views` .
@@ -76,7 +76,7 @@ Default response type of all route can be changed from setting file `settings/co
 
 ##### Response Type: JSON
 
-When route is to respond with json, route resonse must be an array. Response handler converts array into json and sets content type to json.
+When route is to respond with json, route response must be an array. Response handler converts array into json and sets content type to json.
 
 ``` php
 /**
@@ -173,7 +173,7 @@ Here `addresses` have two child which named `address` . Because putting address 
 
 ###### Set element attribute which has value
 
-To set value of an element which does not child element, we can set `@value` to sepicfy value for that element. See below code:
+To set value of an element which does not child element, we can set `@value` to specify value for that element. See below code:
 
 ``` json
 [
@@ -202,7 +202,7 @@ Setting response type to _NULL_ will allow us to set any response type we want. 
 1. If route returns string, it simply returned as response.
 2. To return view follow this format: `view:{viewName}`
 3. When route returns an array, then response handler generates json response.
-4. Returning nothting doesn't do anything.
+4. Returning nothing doesn't do anything.
 
 ##### Set response header
 
@@ -214,8 +214,8 @@ Response::setHeader('Cache-Control', 'no-cache, must-revalidate')
 
 Response class has dedicated method to set Content type and response status. 
 
-###### Respons status code
-To set response status code just pass response code as first parameter on `setStatus` method of `Response` class. We can pass message as second paramer to set reponse status message, omitting it will use default message.
+###### Response status code
+To set response status code just pass response code as first parameter on `setStatus` method of `Response` class. We can pass message as second parameter to set response status message, omitting it will use default message.
 
 ``` php
 Response::setStatus(404)
@@ -237,8 +237,8 @@ We can also pass alias of response type instead of passing full type name. Such 
 | plain  | text/plain    | Simple raw text |
 | text  | text/text    | Simple raw text |
 | json  | application/json    | JSON data content |
-| js  | applicaiton/javascript    | Javascript content |
-| javascript  | applicaiton/javascript    | Javascript content |
+| js  | application/javascript    | Javascript content |
+| javascript  | application/javascript    | Javascript content |
 | xml  | text/xml    | XML data content |
 | png  | image/png    | PNG image |
 | jpg  | image/jpg    | JPG image |

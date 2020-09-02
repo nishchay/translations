@@ -342,7 +342,7 @@ Below is an example for how to define default value for property
 public $userTypeId;
 ```
 
-Belowe code will use default value `1` for `userTypeId` property.
+Below code will use default value `1` for `userTypeId` property.
 
 ```php
 $user = new EntityManger(User::class);

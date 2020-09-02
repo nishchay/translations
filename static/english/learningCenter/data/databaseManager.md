@@ -30,7 +30,7 @@ Column can be added or changed by using `setColumn` method. Where its all parame
 | default | When we omit this argument or pass null then `DEFAULT NULL` is applied. To make column `NOT NULL` pass `false`. Other value is counted as default value for column. |
 | comment | Comment for column |
 
-**NOTE:** Changing column requires their original datatype, default and comment to be passed in everytime.
+**NOTE:** Changing column requires their original datatype, default and comment to be passed in every time.
 
 Creating new column named `id` and its data type `int`
 ```php

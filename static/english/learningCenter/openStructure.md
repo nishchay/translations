@@ -105,7 +105,7 @@ Allows to create at most 5 directory at root. As there are no other rule along w
 
 If we want to allow each of these directory to contain another directory within it. We should use R.*, please see below example.
 
-###### Widcard depth point: {R,5}{R.*,3}
+###### Wildcard depth point: {R,5}{R.*,3}
 
 Above rule extends first example by allowing each root directory to contain another directory within it. Each directory _Feature/Account_, _Feature/Message_ can have at most 3 directory within it. For _Feature/Account_ we can create _Feature/Account/Profile_, _Feature/Account/Setting_, _Feature/Account/Privacy_
 
