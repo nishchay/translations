@@ -69,5 +69,6 @@
     },
     "localization": "Allow your application to support more than one language. Application can support can any number languages. Store translation into file or DB.",
     "consoleCommand": "Use console command to run route. Create empty or CRUD controller and entity. Also create controller or entity from predefined templates. Search controllers, routes, entities, events, exception handler and more using console command.",
-    "guidelines": "Learn security and performance consideration for an application. Learn about coding standard, application maintenance and other security consideration for an application."
+    "guidelines": "Learn security and performance consideration for an application. Learn about coding standard, application maintenance and other security consideration for an application.",
+    "lifeCycle": "Understand how nishchay processes request and how request life cycle works. This explains detailed life cycle of request."
 }
