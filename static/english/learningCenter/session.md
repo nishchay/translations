@@ -2,13 +2,13 @@
 
 Nishchay session management is powerful and easy to use. It can be used multiple ways, as an example scope session which are available to processing route's scope only and it also has number of type of save handler like file, DB and Cache.
 
-Session are started when its first usage is made. We don't have to use any of php function or variable to manage session instead Nishchay provides more convenient way to use it. `As Nishchay has its own implementation for managing session, please do not use any of php function or varaible($_SESSSION).`
+Session are started when its first usage is made. We don't have to use any of php function or variable to manage session instead Nishchay provides more convenient way to use it. `As Nishchay has its own implementation for managing session, please do not use any of php function or variable($_SESSSION).`
 
 ##### Managing session data
 
 Writing, reading or removing session are same for each type of session. `Nishchay\Session` namespace contains all types of session. Creating instance of any session type will allow us to read or maintain session data.
 
-Below example demonstrate how instance of normal seassion is created.
+Below example demonstrate how instance of normal session is created.
 
 ```php
 $session = new Nishchay\Session\Session()
@@ -45,7 +45,7 @@ $session1->userId = 12345;
 # Prints 12345
 echo $session1->userId;
 
-# Prints 12345, here userId will also be available $session2 instnace.
+# Prints 12345, here userId will also be available $session2 instance.
 echo $session2->userId;
 ```
 Session data are shared among each instance of class, changing on one place gets reflected to other place also.
@@ -79,7 +79,7 @@ Simplest form of session, which works the same as php core session. It doesn't h
 
 ###### Scope
 
-As we know route can have named scope defined using `@NamedScope` annotation on route method. When we add data to scope session it will be available to all rotues which belongs to same scope. 
+As we know route can have named scope defined using `@NamedScope` annotation on route method. When we add data to scope session it will be available to all routes which belongs to same scope. 
 
 When we create instance of Scope session it first checks route's scope, and then it fetches all data of that scope. Data added to one scope won't be available to other scope.
 ```php
@@ -107,7 +107,7 @@ public function helpProfile() {
 }
 ```
 
-Here we have added `code` to `secure` and `direct` scope seassion. Both of these session have their separate copy. Any route which belongs to `secure` will have `code = 12345` while routes belongs to `direct` scope will have `code = 54321`.
+Here we have added `code` to `secure` and `direct` scope session. Both of these session have their separate copy. Any route which belongs to `secure` will have `code = 12345` while routes belongs to `direct` scope will have `code = 54321`.
 
 **What if route does not have scope.**
 

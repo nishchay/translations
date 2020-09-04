@@ -25,7 +25,7 @@ Classes other than above are not stored in collection classes. `This collections
 
 Special classes except entity are first processed and then stored to collection. So that on the following requests, these collections are fetched from persisted files and are directly used by the framework.
 
-##### Lfe cycle
+##### Life cycle
 
 This section explains detailed life cycle of any request. You should be familiar with requests, response and events.
 

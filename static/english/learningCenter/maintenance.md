@@ -48,7 +48,7 @@ Below example shows how we can put an application into maintenance for each day 
 [['12:00', '13:00']]
 ```
 
-As per because we have specified route to be called for this slot, Nishchay will look for default route for timed mode. If there's no defualt route defined for timed mode then route specified in `route` will be used.
+As per because we have specified route to be called for this slot, Nishchay will look for default route for timed mode. If there's no default route defined for timed mode then route specified in `route` will be used.
 
 ##### Client User Agent
 
@@ -58,7 +58,7 @@ Nishchay also allow us to put application by list of client user agents. Configu
 | ----- | ----- |
 | active | To enable this mode |
 | invert | When this is `true`, maintenance will not be activated for browser mentioned in `list` |
-| list | List of browesers with its versions |
+| list | List of browsers with its versions |
 | default | Default route in case there's no route defined in each list |
 
 User agent config is shown below:
@@ -82,7 +82,7 @@ By default if we do not specify version, it matches for all version.
 ```php
 ["firefox/45.0-50.0", "routeToCall", "Maintenance message"]
 ```
-This will match firfox having version number from 45.0 to 52.0.
+This will match firefox having version number from 45.0 to 52.0.
 
 ###### Version less or equal
 ```php
@@ -98,7 +98,7 @@ This will match browser version from 52.0
 
 ##### Callback
 
-We can set callback for maintenance check, this must return boolean value. Enable maintenance mode by returning true. We can have multiple callback. Callback configuraiton is listed below
+We can set callback for maintenance check, this must return boolean value. Enable maintenance mode by returning true. We can have multiple callback. Callback configuration is listed below
 
 | Name | Description |
 | ----- | ----- |
