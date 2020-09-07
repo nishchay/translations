@@ -207,6 +207,33 @@ DependencyList::get('accountId');
 
 DependencyList class also have method called `exist` which can be used to check if dependency value exist of given name. This method returns true or false based on dependency value exist or not.
 
+##### Interface or parent class
+
+DI creates instance of class found in parameter type hint, but sometime this type hint can be interface, abstract class or parent class. In this case we can set what to do. Let's take at below example.
+
+```php
+class Uploader {
+    public function __construct(UploadInterface $upload) {
+
+    }
+}
+```
+
+Based on above case, `UploadInterface` can be implemented by various kind of upload method, such method can be `FileUpload`, `S3Upload`. If want `$upload` to be `S3Upload`, we can do that by following ways.
+
+```php
+$di->set(UploadInterface::class, S3Upload::class);
+$di = $di->create(Uploader::class);
+```
+
+Now when DI resolves dependency it will create instance of `S3Upload` in the case wherever it finds `UploadInterface` interface.
+
+This can be changed later if want `FileUpload` instead of `S3Upload`:
+
+```php
+$di->set(UploadInterface::class, FileUpload::class);
+```
+
 ##### Single instance
 
 Every time we call `create` method of DI class, it creates new instance and returns it. But we can prevent it to be created every time and create method returns instance which was already created. Third parameter of `create` method tells DI to store instance in `InstanceList` if it was not been created before.
