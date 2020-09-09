@@ -411,7 +411,7 @@ public $departmentId;
 ###### Relative loos or perfect[time:60]
 We can define relativity relation type with the help of `type` parameter of `@Relative` annotation. Value of this parameter should be _loose_ or _perfect_.
 
-If `type` is perfect, then value of property should exists relative class. Leaving property null or assiging value which doest not exists in relative class results in an error.
+If `type` is perfect, then value of property should exists in relative class. Leaving property null or assigning value which doest not exists in relative class results in an error.
 
 ```php
 /**
