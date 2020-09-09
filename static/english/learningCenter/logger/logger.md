@@ -15,16 +15,16 @@ All of above methods accepts only one argument which should statement of log. Lo
 
 ###### Example
 ```php
-// Logging error
+# Logging error
 Nishchay::getLogger()->error('This should be error statement');
 
-// Logging warning
+# Logging warning
 Nishchay::getLogger()->warning('This should be warning statement');
 
-// Logging notice
+# Logging notice
 Nishchay::getLogger()->notice('This should be notice statement');
 
-// Logging info
+# Logging info
 Nishchay::getLogger()->info('This should be info statement');
 ```
 ##### Logging other type
