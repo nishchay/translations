@@ -1,0 +1,27 @@
+{
+    "title": "Learning center",
+    "documentation" :{
+        "title": "Documentation",
+        "description": "Learn about nishchay framework by reading each topic one by one.",
+        "linkTitle": "Start reading"
+    },
+    "learningProgress": {
+        "title": "Learning progress",
+        "line-1": "Each topic estimated with average reading time.",
+        "line-2": "Learning center tracks how much time you read each topic.",
+        "line-3": "Track your learning progress in profile"
+    },
+    "notes": {
+        "title": "Notes",
+        "line-1": "Notes helps you concenrate on topic and are useful when revising topics in the future.",
+        "line-2": "Add note to any topic for your own use.",
+        "line-3": "Notes are visible to you only."
+    },
+    "beginnerSteps": {
+        "title": "Beginner Steps",
+        "install": "Install",
+        "handleRequests": "Handle requests",
+        "workWithDatabase": "Work with database",
+        "configurations": "Configurations"
+    }
+}

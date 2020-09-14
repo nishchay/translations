@@ -12,7 +12,7 @@ In this getting started step, we will create route which handles request sent by
 * Passing data view
 * Application settings
 
-###### Install Nishchay
+##### Install Nishchay
 
 Nishchay can only be installed using composer only. If you don't have it, please download from [here](https://getcomposer.org/download).
 
@@ -23,7 +23,7 @@ composer create-project nishchay/nishchay learningNishchay
 
 This will install Nishchay inside learningNishchay directory.
 
-###### Create Route
+##### Create Route
 
 To create route, you first need to create method in controller class. After that create [@route](/learningCenter/annotations/request/route) annotation on method. Code example is shown below.
 ```php
@@ -39,7 +39,7 @@ Controller class is located at `Application/Controllers/Direct/NamasteController
 We have created route called `getStarted`. Method `getStarted` will be treated as request handler.
 If request matches with `getStarted`, above method will be executed.
 
-###### Create view
+##### Create view
 
 We have created route, but we need to create view so that our route can generate response for request. Create a file `getStarted.php` in `Application/views/direct`.
 
@@ -56,7 +56,7 @@ Paste below code to view file.
     </body>
 </html>
 ```
-###### Make route to respond with view
+##### Make route to respond with view
 
 We have created route and view. But we have to make route to respond with view. To do that just return view name from route method.
 
@@ -71,7 +71,7 @@ public function getStarted(){
 }
 ```
 
-###### Pass data to view
+##### Pass data to view
 
 We are sure you have noticed that, in view there is variable called `$name` which is getting printed. We will send `$name` from our route by using `Nishchay\Http\Request\RequestStore` class. This class is used for passing data to view and it can also be used at any other places too.
 
@@ -90,7 +90,7 @@ public function getStarted(){
 
 Remember to add `use Nishchay\Http\Request\RequestStore;` before class declaration.
 
-###### Set landing route of the application
+##### Set landing route of the application
 
 Application home page is known as landing route. If client requests domain name only, landing route will be executed. This setting is available in `settings/configuration/application.php` file. You have to change the value of `route.landing`. Change this value to `getStarted`
 
@@ -149,11 +149,11 @@ server {
 }
 ```
 
-###### Document root
+##### Document root
 
 Document root must be `public/index.php`.
 
-###### All done.
+##### All done.
 
 Now we are done. Please hit the url(`http://app.nishchay.local`) on your browser. You should be able to see below response.
 
