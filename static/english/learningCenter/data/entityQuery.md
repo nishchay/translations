@@ -2,13 +2,13 @@
 
 Entity query allow us to create query based on Entity class. Entity Query then converts entity based query to actual query. As Entity Manager allows only fetching all records or single by its identity property, Entity query allows to fetch records by applying conditions, joins, orders and etc.
 
-###### Create Instance
+##### Create Instance
 
 Entity query accepts only one optional argument which is database connection name, just as in Query builder if we omit connection name it will use default database connection.
 ```php
 $entityQuery = new Nishchay\Data\EntityQuery();
 ```
-###### Set entity
+##### Set entity
 
 Using `setEntity` method we can set entity.
 ```php
@@ -24,7 +24,7 @@ $entityQuery->setEntity(User::class);
 $entityQuery->setEntity(User::class, 'u');
 ```
 
-###### Fetch whole entity
+##### Fetch whole entity
 To fetch all properties of entity, pass only alias name of entity class.
 ```php
 $entityQuery = new EntityQuery();
@@ -34,7 +34,7 @@ $entityQuery->setEntity(User::class, 'user')
 
 Based on alias name, EntityQuery find all properites of entity class of alias and sets it to list of properties which needs to be fetched.
 
-###### Set property to be fetched
+##### Set property to be fetched
 Its mandatory to set which property should be fetched for Entity Query. Entity Query does not fetches all property of Entity class by default.
 ```php
 $entityQuery->setProperty(['user.userId', 'user.firstName', 'user.lastName'])
@@ -42,7 +42,7 @@ $entityQuery->setProperty(['user.userId', 'user.firstName', 'user.lastName'])
 If want to set only one property then pass only string otherwise pass list of properties in an array. 
 Properites being set should be prefixed with entity alias name. This is because if we do not specify it with alias name then it will be counted as entity alias name and EntityQuery tries to find entity class for alias name to fetch all properties of it.
 
-###### Set derilved property to be fetched
+##### Set derived property to be fetched
 Using `setDerivedProperty` we can set which derived property which needs to fetched. As derived property requires additional joins based on relative property, derived can not be set usig `setProperty` method.
 
 **NOTE** `EntityQuery` does not allow fetching whole derived entity, because it requires separate query to set those property.
@@ -53,7 +53,7 @@ $entity->setDerivedProperty('department');
 
 If want to set multiple properties, call `setDerivedProperty` multiple times.
 
-###### Set property which should not be fetched
+##### Set property which should not be fetched
 We can set property which should not be fetched. This is required when we want to fetch whole entity except one or more property. Same as setting property to fetch, this also requires alias name along with property name.
 ```php
 $entityQuery = new EntityQuery();
@@ -62,13 +62,13 @@ $entityQuery->setEntity(User::class, 'user')
 ```
 For above all property will be fetched except _birthDate_. Pass list of properties in an array, if we want to set multiple properties which needs not be fetched.
 
-###### Apply Condition to fetch record
+##### Apply Condition to fetch record
 
 Applying condition is same as Query Builder `setCondition`, learn more about [here](/learningCenter/data/queryBuilder?topic=setCondition).
 
 **NOTE** Unlike all of above methods, `setCondition` does not validates property is valid or not. It also does not check if passed property is entity alias or property itself.
 
-###### Join
+##### Join
 
 Adding join is same is Query Builder join except it requires class name instead of table name and alias is required. Omitting alias for join table will result in an error. Lear more about join [here.](/learningCenter/data/queryBuilder?topic=addJoin)
 
@@ -82,7 +82,7 @@ $entity->addJoin([
 ```
 
 
-###### Order By, Group By & Having
+##### Order By, Group By & Having
 
 All these are same as query builder, please learn [here.](/learningCenter/data/queryBuilder)
 
