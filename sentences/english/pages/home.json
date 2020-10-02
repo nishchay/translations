@@ -5,7 +5,7 @@
     },
     "tagLine": "Nishchay is <span>Open structure php framework</span> which helps you achieve your aim of building something awesome.",
     "easyInstall": {
-        "title": "Easy install",
+        "title": "Installation",
         "latestRelease": {
             "title": "Latest release",
             "download": "Download",
@@ -22,7 +22,7 @@
         }
     },
     "feature": {
-        "title": "Features at glance",
+        "title": "Highlights",
         "list": {
             "openStructure": {
                 "title": "Open Structure",
