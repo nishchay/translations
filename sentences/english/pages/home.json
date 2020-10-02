@@ -22,31 +22,31 @@
         }
     },
     "feature": {
-        "title": "Highlights",
+        "title": "Why nishchay",
         "list": {
             "openStructure": {
                 "title": "Open Structure",
-                "description": "Open structure allows us to create type of application structure we want.<br\/>Everything including controller, model, event, views, template etc. follows structure we define.<br\/>This way our application supports only things which are defined in structure definition."
+                "description": "Create MVC, HMVC, EMVC or your own type of application structure, or use existing structure.<br\/>Everything including controller, model, event, views, template etc. follows structure we define.<br\/>This way our application supports only things which are defined in structure definition."
             },
             "database": {
                 "title": "Database",
-                "description": "Database features like Query builder, Entity classes along with events and various kind of relation between entities.<br\/>Nishchay also provides entity query builder to build query based on entity.<br\/>It also supports inbuilt caching for query builder which turned on or off and caching key can be created using query statement itself or provided key."
+                "description": "Database features like Query builder, Entity classes along with events and various kind of relation between entities.<br\/>Nishchay also provides entity query builder to build query based on entity class.<br\/>It also supports inbuilt caching for query builder which turned on or off and caching key can be created using query statement itself or provided key."
             },
             "session": {
                 "title": "Session",
-                "description": "Nishchay session management is powerful and easy to use.<br\/>It can be used multiple ways, as an example scope session which are available to processing route's scope only and it also has number of type of save handler like file, DB and Cache."
+                "description": "Nishchay session management is powerful and easy to use.<br\/>Nishchay has many kind of sessions like read limit session which expires after it's read limit is reached. Other sessions are like till next request, flash, scope, context and more.<br/>Nishchay also allows session data to be stored in files, DB and cache."
             },
             "maintenanceModes": {
                 "title": "Maintenance modes",
-                "description": "Put application into maintenance mode by various ways.<br\/>Such maintenance modes are like browser level, timed based or based on callback method. Nishchay also allows to add exception for list of routes, route belongs to scope or context."
+                "description": "Put application into maintenance mode by various ways.<br\/>Such maintenance modes are like browser level which allows application to be go into maintenance for list of browsers, all browser versions, range of versions and more.<br/> Other maintenance modes are timed based or based on callback method. Nishchay also allows exception for list of routes, route belongs to scope or context so that it can be executed even in maintenance mode."
             },
             "webService": {
                 "title": "Web service",
-                "description": "Nishchay provides web service features apart form RESTful route.<br\/>Route allow us to create SEO friendly URL which can also used to create RESTful API.<br\/>Using allowed method type we can also create GET, POST, PUT or other service to provide various operation on same route.<br\/>Using response type we can create JSON\/XML response."
+                "description": "Nishchay provides web service features like response filter based on request, token based service, service response format.<br\/>Route allow us to create SEO friendly URL which can also used to create RESTful API.<br\/>Using allowed method type we can also create GET, POST, PUT or other service to provide various operation on same route.<br\/>Using response type we can create JSON\/XML response."
             },
             "consoleCommand": {
                 "title": "Console command",
-                "description": "Console command allow us to create route, controller, entity.<br/>It can also be use for creating empty, CRUD or we can create it from template.<br/> It can also be used to find routes, controller, events and handler info of an application. Use console command to run route which is useful for CRON jobs."
+                "description": "Console command allow us to create route, controller, entity.<br/>It can also be use for creating empty, CRUD or we can create it from template.<br/> It can also be used to find routes, controller, events and handler info of an application.<br/>Use console command to run route which is useful for CRON jobs."
             }
         }
     },
