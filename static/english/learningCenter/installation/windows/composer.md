@@ -42,7 +42,6 @@ composer create-project nishchay/nishchay nishchayApp
    </Directory>
 </VirtualHost>
 ```
-4. lick _next_
 
 ##### Add host entry
 

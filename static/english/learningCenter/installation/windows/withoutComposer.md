@@ -22,7 +22,6 @@ Download xampp from [here](https://www.apachefriends.org/download.html)
 
 1. Extract downloaded application
 2. Copy and past it in _D:\xampp\htdocs\_.
-3. Click _next_
 
 ##### Create your site
 
@@ -41,7 +40,6 @@ Download xampp from [here](https://www.apachefriends.org/download.html)
    </Directory>
 </VirtualHost>
 ```
-4. lick _next_
 
 ##### Add host entry
 
