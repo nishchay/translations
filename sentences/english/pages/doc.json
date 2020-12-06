@@ -24,12 +24,15 @@
     "openStructure": "Open Structure",
     "requestResponse": {
         "title": "Request / Response",
-        "request": "Request",
-        "requestParameter": "Request Paramter",
+        "request": "Request/Route",
+        "routePattern": "Route pattern",
+        "routeVisibility": "Route visibility",
+        "requestParameter": "Request paramter",
         "requestStore": "Request Store",
         "response": "Response",
         "viewTemplate": "View template"
     },
+    "prototype": "Prototype",
     "settings": {
         "title": "Settings",
         "application": "Application",
@@ -42,17 +45,17 @@
         "maintenance": "Maintenance",
         "response": "Response",
         "service": "Service",
-        "yourOwnSetting": "Your Own Setting",
-        "readSetting": "Read Setting"
+        "yourOwnSetting": "Your own setting",
+        "readSetting": "Read setting"
     },
-    "environmentVariable": "Environment Variable",
+    "environmentVariable": "Environment variable",
     "annotations": "Annotations",
     "database": {
         "title": "Database",
         "queryBuilder": "Query builder",
         "entity": "Entity",
-        "entityQuery": "Entity Query",
-        "databaseManager": "Database Manager"
+        "entityQuery": "Entity query",
+        "databaseManager": "Database manager"
     },
     "cache": "Cache",
     "maintenanceModes": "Maintenance modes",
@@ -61,14 +64,14 @@
     "security": {
         "title": "Security",
         "validations": "Validations",
-        "formBuilder": "Form Builder",
+        "formBuilder": "Form builder",
         "csrf": "CSRF"
         
     },
     "mail": "Mail",
     "dependencyInjection": "Dependency injection",
     "exceptionHandling": "Exception handling",
-    "utilityClasses": "Utility Classes",
+    "utilityClasses": "Utility classes",
     "events": "Events",
     "applicationLogging": "Application logging",
     "localization": "Localization/Translation",
