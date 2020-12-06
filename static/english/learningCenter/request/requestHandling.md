@@ -378,7 +378,22 @@ Route can also be defined for both `local` and `test` stage, by passing array `[
 
 ##### Abstract/Static route
 
-In an application there can be pages which displays only static contents, such pages are known as about us, terms and conditions and help pages.
+In an application there can be pages which displays only static contents, such pages are known as about us, terms and conditions and help pages and there can be many more. Because these pages are static, it only needed to render only view. In this case instead of using normal route, we can define route on abstract method which will then act as abstract(static) route.
+
+```php
+/**
+* @Route(path=help)
+*/
+abstract public function help();
+```
+
+Which view should be rendered is decided based on route path or `view` parameter of `@Response` annotation. As in the above code, there's no response annotation defined. In this case route path will be taken as view path. When route path is taken as view path it can be prefixed by setting `abstractViewPath` setting of `response.php`. This will be applicable to all abstract route where route path is taken as view path.
+
+If we don't want to take route path as view path then it should be defined in `view` parameter of `@Response` annotation.
+
+We recommend using interface for creating abstract routes. 
+
+Advantage of using abstract route is that, nishchay don't need create instance of controller and so no need to call route method.
 
 ##### Redirect request
 
