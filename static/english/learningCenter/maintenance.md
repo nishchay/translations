@@ -109,7 +109,7 @@ We can set callback for maintenance check, this must return boolean value. Enabl
 Config for this mode is shown below:
 ```php
 [
-    'active' => FALSE,
+    'active' => false,
     'list' => [
         [CALLBACK, ROUTE, MAINTENANCE_MESSAGE]
     ],
@@ -127,7 +127,7 @@ We can allow one or more context even in maintenance mode. All routes belongs to
 
 ```php
 [
-    'active' => TRUE,
+    'active' => true,
     'list' => [
         'Application/Access/Direct'
     ]
@@ -154,7 +154,7 @@ It will allow us to create our regex expression to be matched.
 Just like context ignore mode, this can also be enabled or disabled. Below code demonstrates regex match.
 ```php
 [
-    'active' => TRUE,
+    'active' => true,
     'list' => [
         [
             'type' => 'regex',
@@ -169,7 +169,7 @@ We can add one more scope to be allowed in maintenance mode.
 
 ```php
     [
-        'active' => TRUE,
+        'active' => true,
         'list' => [
             'help'
         ]
