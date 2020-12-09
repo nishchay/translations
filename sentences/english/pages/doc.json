@@ -33,6 +33,7 @@
         "viewTemplate": "View template"
     },
     "prototype": "Prototype",
+    "container": "Container",
     "settings": {
         "title": "Settings",
         "application": "Application",
