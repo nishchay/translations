@@ -9,7 +9,7 @@ Nishchay console commands are executed by `php nishchay {follow up commands}`. E
 
 ##### Command Help
 
-Just execute `php nishchay` without any follow up command and help for console command will be printed. This will print all supported along with how each command can used with one or more optional parameter.
+Just execute `php nishchay` without any follow up command and help for console command will be printed. This will print all supported command along with how each command can used with one or more optional parameter.
 
 ##### Framework version
 
@@ -40,7 +40,7 @@ php nishchay route
 Lists of all routes defined in specific controller.
 
 ```
-php nishchay route -controller {controllerClass}
+php nishchay route -controller {name}
 ```
 
 Here controllerClass must be full class path. As class path contains \ (slash), classPath must be passed in single or double quote. If you pass class which is not controller or it does not exists then command will gives an error.
@@ -140,14 +140,14 @@ public function toDo()
 Command to create empty controller is shown below:
 
 ```
-php nishchay controller -create {class}
+php nishchay controller -create {name}
 ```
 
 ###### Create CRUD controller
 
 To create controller which have create, update, delete and read operation. We just need to pass `-crud` parameter after class name.
 ```
-php nishchay controller -create {class} -crud
+php nishchay controller -create {name} -crud
 ```
 When we execute above command, Nishchay will ask for route. Nishchay will not check if route already exists or not, it will directly creates controller with route prefix as entered by us. Below method with route will be created upon successful execution of command.
 
@@ -166,7 +166,7 @@ Apart from creating empty or crud controller, Nishchay also has predefined contr
 Some templates have more than one controller, in that case Nishchay will ask us to create all controller or specific controller. If we choose specific then before creating each controller console will be prompted with answer yes or no for each controller creation. If there are multiple controllers in template then specify namespace within which all controllers need to be created or pass class name in case template having only one controller.
 
 ```
-php nishchay controller -create {classOrNamesapce} -template {templateName}
+php nishchay controller -create {name} -template {templateName}
 ```
 
 We can create controllers from following list templates.
@@ -256,7 +256,7 @@ Creating empty entity means class with only one property which is identity prope
 Suppose we are creating an empty entity called `UserAddress` then its identity property will be created with `userAddressId`. Command to create empty entity is shown below.
 
 ```
-php nishchay entity -create {class}
+php nishchay entity -create {name}
 ```
 
 ###### Create CRUD entity
@@ -313,7 +313,7 @@ CRUD entity means it will have following properties along with identity property
 Command to create CRUD entity is shown below:
 
 ```
-php nishchay entity -create {class} -crud
+php nishchay entity -create {name} -crud
 ```
 
 ###### Create Entity from template
@@ -321,7 +321,7 @@ php nishchay entity -create {class} -crud
 Entities can also be created using template. There can be multiple or single entity in template. If there are multiple entities in template, console asks us whether we want create all of entities or specific. Command to create entity from template is shown below.
 
 ```
-php nishchay entity -create {classOrNamespace} -template {templateName}
+php nishchay entity -create {name} -template {templateName}
 ```
 
 If template has only one entity then pass only namespace or pass entity full class name. For template which creates multiple entities, those entities will be created in provided namespace.
@@ -425,6 +425,48 @@ If template has only one entity then pass only namespace or pass entity full cla
     </tbody>
 </table>
 
+###### Generate new entity
+
+To create new entity just execute below command:
+
+```cmd
+php nishchay entity -generate -new
+```
+
+When above command is executed, generate will first ask for entity name. Then it will keep asking new each property which needs to be created. First property is considered as identity of entity and its data auto chosen as int.
+
+Once all properties are entered, type `q` and `Enter` to finish creating entity.
+
+###### Generate entities from DB
+
+To create entities for all tables in DB, use below command:
+
+```cmd
+php nishchay entity -generate -db
+```
+
+Upon executing above command, generator will first ask whether you want create entities for all table or specific. If we choose specific then it will keep asking before creating entity of table. If don't want to create entity of specific table, enter `n`.
+
+By default entities are created from default database connection. If want to create entities from specific database connection, just database connection after command:
+
+```cmd
+php nishchay entity -generate -db {connectionName}
+```
+
+###### Generate entity form DB specific table
+To create entity of specific table, use below command:
+
+```cmd
+php nishchay entity -generate -table name
+```
+
+This will create entity for provided table name from default database connection. To create entity from specific database connection, pass connection name after command:
+
+```cmd
+php nishchay entity -generate -table name {connectionName}
+```
+
+
 ##### Events
 
 Events are executed before & after controller & route. These events can be defined for global, scope and context. Using console command we can find events belongs to global, scope or context.
@@ -457,4 +499,56 @@ Just passing `-global` following event command lists events defined for global.
 
 ```console
 php nishchay event -global
+```
+
+##### Form: Generate
+
+Using console command we can create form from entity class. To create it use below command:
+
+```cmd
+php nishchay form -generate -entity {name}
+``` 
+
+This will create form class with all form field method from entity properties. It also adds validation based on property required, data type and other validation if any defined on it.
+
+##### Prototype
+
+When we create prototype using console command it creates following things:
+
+1. Entity
+2. Form
+3. Controller along with CRUD implementation.
+
+Prototype can be created new or from database table name.
+
+###### New prototype
+
+To create new prototype use below command:
+
+```cmd
+php nishchay prototype -generate -new  
+```
+
+Upon executing above command, generator will first create entity by asking for entity name and it will keep asking for each property which needs to be created. This process is similar to creating new entity.
+
+Once entity is create, generator will create form class based on this entity. At the end controller will be created with CRUD operation using CRUD prototype which will have following things already implemented.
+
+1. List records along with its pagination
+2. View record
+3. Create record
+4. Update record
+5. Delete record
+
+###### from entity
+
+To create prototype form entity, rather interactive command as explained above. Use below command:
+
+```cmd
+php nishchay prototype -generate -table {name}
+```
+
+By default this will create prototype from default database connection. To create from specific database connection, use below command:
+
+```cmd
+php nishchay prototype -generate -table {name} {connectionName}
 ```

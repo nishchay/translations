@@ -48,7 +48,7 @@ Below example shows how we can put an application into maintenance for each day 
 [['12:00', '13:00']]
 ```
 
-As per because we have specified route to be called for this slot, Nishchay will look for default route for timed mode. If there's no default route defined for timed mode then route specified in `route` will be used.
+Because we have specified route to be called for this slot, Nishchay will look for default route for timed mode. If there's no default route defined for timed mode then route specified in `route` will be used.
 
 ##### Client User Agent
 
@@ -76,23 +76,23 @@ By default if we do not specify version, it matches for all version.
 
 ###### Match exact version
 ```php
-["firefox/52.0", "routeToCall", "Maintenance message"]
+['firefox/52.0', 'routeToCall', 'Maintenance message']
 ```
 ###### Version range
 ```php
-["firefox/45.0-50.0", "routeToCall", "Maintenance message"]
+['firefox/45.0-50.0', 'routeToCall', 'Maintenance message']
 ```
 This will match firefox having version number from 45.0 to 52.0.
 
 ###### Version less or equal
 ```php
-["firefox/-52.0", "routeToCall", "Maintenance message"]
+['firefox/-52.0', 'routeToCall', 'Maintenance message']
 ```
 This will match browser version from 0 to 52.0
 
 ###### Version equal and above
 ```php
-["firefox/52.0-", "routeToCall", "Maintenance message"]
+['firefox/52.0-', 'routeToCall', 'Maintenance message']
 ```
 This will match browser version from 52.0
 
@@ -109,7 +109,7 @@ We can set callback for maintenance check, this must return boolean value. Enabl
 Config for this mode is shown below:
 ```php
 [
-    'active' => FALSE,
+    'active' => false,
     'list' => [
         [CALLBACK, ROUTE, MAINTENANCE_MESSAGE]
     ],
@@ -127,7 +127,7 @@ We can allow one or more context even in maintenance mode. All routes belongs to
 
 ```php
 [
-    'active' => TRUE,
+    'active' => true,
     'list' => [
         'Application/Access/Direct'
     ]
@@ -154,7 +154,7 @@ It will allow us to create our regex expression to be matched.
 Just like context ignore mode, this can also be enabled or disabled. Below code demonstrates regex match.
 ```php
 [
-    'active' => TRUE,
+    'active' => true,
     'list' => [
         [
             'type' => 'regex',
@@ -169,7 +169,7 @@ We can add one more scope to be allowed in maintenance mode.
 
 ```php
     [
-        'active' => TRUE,
+        'active' => true,
         'list' => [
             'help'
         ]
@@ -177,3 +177,16 @@ We can add one more scope to be allowed in maintenance mode.
 ```
 
 As per above code any route which have scope `help` will be accessible in maintenance mode.
+
+##### Exception
+We can specify list of IPs for which maintenance mode won't be applicable. This is required if you want to do some maintenance and still want to access application from your premises.
+
+This can be specified in `exception.ip` setting.
+
+```php
+'exception' => [
+    'ip' => [
+        '127.0.0.1'
+    ]
+]
+```
