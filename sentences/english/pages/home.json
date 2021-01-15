@@ -7,17 +7,17 @@
     "easyInstall": {
         "title": "Installation",
         "latestRelease": {
-            "title": "Latest release",
+            "title": "Download",
             "download": "Download",
             "then": "then extract in your project directory and <a href='{link}'>create encryption key.</a>"
         },
         "composer": {
-            "title": "Using composer",
+            "title": "Install: composer",
             "step1": "Install <a href='{link}' target='blank'>composer</a>",
             "step2": "Execute <code>composer create-project nishchay/nishchay</code> in your project directory via console window."
         },
         "install": {
-            "title": "Installation guide",
+            "title": "Setup guide",
             "description": "Go to <a href='{link}'>learning center</a> and follow installation based on your operating system and how do you want to install."
         }
     },
