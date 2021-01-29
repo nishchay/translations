@@ -1,27 +1,39 @@
 {
-    "title": "Learning center",
-    "documentation" :{
-        "title": "Documentation",
-        "description": "Learn about nishchay framework by reading each topic one by one.",
-        "linkTitle": "Start reading"
+  "title": "Learning center",
+  "documentation": {
+    "title": "Documentation",
+    "description": "Learn about nishchay framework by reading each topic one by one.",
+    "linkTitle": "Start reading"
+  },
+  "learningProgress": {
+    "title": "Learning progress",
+    "line-1": "Each topic estimated with average reading time.",
+    "line-2": "Learning center tracks how much time you read each topic.",
+    "line-3": "Track your learning progress in profile"
+  },
+  "notes": {
+    "title": "Notes",
+    "line-1": "Notes helps you concenrate on topic and are useful when revising topics in the future.",
+    "line-2": "Add note to any topic for your own use.",
+    "line-3": "Notes are visible to you only."
+  },
+  "beginnerSteps": {
+    "title": "Get started steps",
+    "install": "Install",
+    "handleRequests": "Handle requests",
+    "workWithDatabase": "Work with database",
+    "configurations": "Configurations"
+  },
+  "help": {
+    "title": "For help",
+    "discord": {
+      "title": "Discord",
+      "description": "Discord lets communicate directly via voice, video, or text. You can join discord to ask your doubts and to know other developers doing.",
+      "join": "To join discord click <a href='{link}'>here</a>."
     },
-    "learningProgress": {
-        "title": "Learning progress",
-        "line-1": "Each topic estimated with average reading time.",
-        "line-2": "Learning center tracks how much time you read each topic.",
-        "line-3": "Track your learning progress in profile"
-    },
-    "notes": {
-        "title": "Notes",
-        "line-1": "Notes helps you concenrate on topic and are useful when revising topics in the future.",
-        "line-2": "Add note to any topic for your own use.",
-        "line-3": "Notes are visible to you only."
-    },
-    "beginnerSteps": {
-        "title": "Beginner Steps",
-        "install": "Install",
-        "handleRequests": "Handle requests",
-        "workWithDatabase": "Work with database",
-        "configurations": "Configurations"
+    "whatsapp": {
+      "title": "WhatsApp",
+      "description": "If you want direct help, you can also contact us on WhatsApp for any kind of query."
     }
+  }
 }
