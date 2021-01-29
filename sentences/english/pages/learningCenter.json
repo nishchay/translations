@@ -28,12 +28,12 @@
     "title": "For help",
     "discord": {
       "title": "Discord",
-      "description": "Discord lets communicate directly via voice, video, or text. You can join discord to ask your doubts and to know other developers doing.",
+      "description": "Discord lets communicate directly via voice, video, or text. You can join discord to ask your doubts and to know what other developers are doing.",
       "join": "To join discord click <a href='{link}'>here</a>."
     },
     "whatsapp": {
       "title": "WhatsApp",
-      "description": "If you want direct help, you can also contact us on WhatsApp for any kind of query."
+      "description": "If you want direct help, you can also contact us on WhatsApp for any kind of help."
     }
   }
 }
