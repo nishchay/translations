@@ -1,27 +1,21 @@
 #### Request Handling
 
-Nishchay has controller class which contains all routes to handle request. Routes are only contained in controller class. To do this we first need to create controller by annotating class with `@Controller` annotation and then we can defined routes within it. Below code shows simple route.
+Route is controller method which handles requests. Controller is just as class which can have various method to handle request. Any class which is annotated with `@Controller` annotation is considered as controller class. This annotation is defined in doc comment of class declaration as shown in below code.
 
-##### This page contains
+```php
+/**
+* @Controller
+*/
+class NamasteController {
 
-1. Routes
-2. Placeholder route
-3. Prefix
-4. Route methods (GET, POST etc)
-5. Priority
-6. Stage route
-7. Abstract route
-8. Redirection
-9. Forwarding
-10. Private route
-11. Required parameter
-12. Only parameter
-13. Scope
-14. Event
+}
+```
+
+In this class we can define many methods but not all methods are considered as route, to do that we need to annotate method with `@Route`.
 
 ##### Route
 
-Routes are defined using `@Route` and it should follow below requirements.
+Before you learn how to handle request and create route, you should know how controller method is considered as route. Below are some requirements for method to be considered as route.
 
 1.  It must belong to same class, method defined on parent class is not considered.
 2.  It must be public.
@@ -31,7 +25,7 @@ Routes are defined using `@Route` and it should follow below requirements.
 
 ###### Simple route
 
-Route path can be any valid string.
+Below code demonstrates how we can create simple route.
 
 ```php
 namespace Application\Controllers\Direct;
@@ -49,7 +43,7 @@ class NamasteController {
 }
 ```
 
-Here we just created route called `namaste` and it can be accessed by `{HOST}/namaste`.
+Here we just created route called `namaste` and it can be accessed by `{HOST}/namaste`. Suppose your application hosted at `http://app.nishchay.local` then above route can access by `http://app.nishchay.local/namaste`
 
 ###### Setting landing/index route
 
@@ -57,7 +51,7 @@ Landing route is one where our application starts. It is the entry point of our 
 
 ###### Multiple segments
 
-Route path is divided by `/`, each part is known as segment.
+We can specify an valid string as route path. This path can be separated by `/` and each part is known as segment.
 
 ```php
 /**
@@ -72,7 +66,7 @@ In above created route, there are two segments `user` and `messages`.
 
 ###### Route with dynamic/placeholder segments
 
-Segment which has dynamic value is called placeholder segment. Placeholder segment can be any valid string or int.
+Segment can be dynamic, this segment is called placeholder segment. Placeholder segment can be one of `string`, `number` or `alphanum`. Placeholder segments are defined in opening `{` and closed `}` curly braces.
 
 ```php
 /**
@@ -84,9 +78,11 @@ public function messageView() {
 }
 ```
 
-Here `userId` is called placeholder segment which should be number as defined `@Placeholder` annotation parameter `userId`. If route has segment with opening and closing brace, it is counted as placeholder segment. If route has placeholder segment, it requires `@Placeholder` annotation defined on route and `@placeholder` annotation must contain parameter name same as placeholder segment of route.
+In above route path we have create route with path `user/messages/{userId}` where `userId` will be placeholder segment. What kind of `userId` should have is defined using `@Placeholder` annotation.
 
-As per above code, Nishchay check for `@Placeholder` annotation is defined for route or not. It also check for each placeholder segment to be exist as parameter name in `@Placeholder` annotation. Placeholder segment type can be from one of these `string`, `number` and `alphanum`.
+Parameters of `@Placeholder` annotation must be same as segment name as defined in route path. Its value should be on of `string`, `number` or `alphanum`.
+
+We can define any number of placeholder segment in path. For each placeholder segment it should be exists as parameter in `@Placeholder` annotation.
 
 ###### Optional segment
 
@@ -102,7 +98,7 @@ public function userProfile() {
 }
 ```
 
-Here `userId` will become optional segment. Route can have any number of optional segment.
+Here `userId` will become optional segment, so above route can be called with or without passing `userId`.
 
 ###### Choose method name as route name
 
@@ -256,9 +252,9 @@ class User {
 }
 ```
 
-Here we will get error second method `saveProfile` because combination of route and HTTP method is already created.
+Above will result in an exception because `profile` method is handling all type of HTTP method for path `profile` and `saveProfile` is again declaring `profile` path with `POST` HTTP method which is duplicated.
 
-Remember route path with HTTP method must be unique for application. Defining duplicate route will result in an error.
+Remember route path with HTTP method must be unique for application. Defining duplicate route will result in an exception.
 When we define any route, please make sure other route with route name and HTTP method already exists. If there is conflict, please check that other route is created for specific HTTP method only.
 
 ##### Route priority
@@ -361,7 +357,7 @@ Now above routes will be stored in following orders, Route with higher will be s
 
 As application can have multiple stages like `local`, `test` and `live`. We can create route for `local` and `test` application stage. This can be defined using `stage` parameter of `@Route` annotation. Stage route is not applicable for `live` application stage.
 
-If we have defined route for `test` stage then that route will be avaiable for application stage `test` only. See below example:
+If we have defined route for `test` stage then that route will be available for application stage `test` only. See below example:
 
 ```php
 /**
@@ -391,7 +387,7 @@ Which view should be rendered is decided based on route path or `view` parameter
 
 If we don't want to take route path as view path then it should be defined in `view` parameter of `@Response` annotation.
 
-We recommend using interface for creating abstract routes. 
+We recommend using interface for creating abstract routes.
 
 Advantage of using abstract route is that, nishchay don't need create instance of controller and so no need to call route method.
 
@@ -409,7 +405,7 @@ Redirecting using `Request::getRedirectWithin`
 */
 public function admin() {
     if ($this->isUserAdmin() === false) {
-        return Request::getRedirectWithin('unathorized');
+        return Request::getRedirectWithin('unauthorized');
     }
     ...
 }
