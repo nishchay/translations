@@ -10,9 +10,7 @@ Let's create container for said example.
 
 namespace Application\Container;
 
-/**
-* @Container
-*/
+#[Container]
 class OrderContainer {
     public function getLogin() {
         return \Application\Components\Login::class;

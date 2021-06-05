@@ -1,6 +1,6 @@
 #### Exception Handling
 
-Exceptions are handled at scope, context or global level in Nishchay. We only need annotate class with `@Handler` annotation to make exception handler class. Handler defined for scope will be executed for all routes which belongs to mentioned scope. Same applies to context exception handler. Global applies to all routes.
+Exceptions are handled at scope, context or global level in Nishchay. We only need annotate class with `Handler` attribute to make exception handler class. Handler defined for scope will be executed for all routes which belongs to mentioned scope. Same applies to context exception handler. Global applies to all routes.
 
 ##### How it works
 
@@ -24,21 +24,19 @@ We can define exception handler for specific route or for all routes within cont
 
 Annotation `@ExceptionHandler` has following parameters:
 
-| Parameter | Description |
-| --- | --- |
-| callback | Name of method which needs to be called exception. This must exists in self class |
-| order | To change the order of handler lookup |
-
+| Parameter | Description                                                                       |
+| --------- | --------------------------------------------------------------------------------- |
+| callback  | Name of method which needs to be called exception. This must exists in self class |
+| order     | To change the order of handler lookup                                             |
 
 **NOTE:** Exception handler defined on route completely overrides handler defined on controller.
 
 Below code demonstrates how we define exception handler on controller. Same as applicable for controller method(route).
 
 ```php
-/**
-* @Controller
-* @ExceptionHandler(callback='exceptionHandler')
-*/
+
+#[Controller]
+#[ExceptionHandler(callback: 'exceptionHandler')]
 class NamasteController {
 
     /**
@@ -54,16 +52,17 @@ class NamasteController {
 There won't be any further exception is defined callback method does not exists in controller class. In this case default handler will be called.
 
 ##### Exception instance
+
 Exception handler method receives instance of `Detail` class which contains information about exception thrown. Detail class contains following information, all of them accessed by their getter method.
 
-| Method | Description |
-| --- | --- |
-| getMessage | Exception message |
-| getFile | Path to file exception occurred |
-| getLine | Line number where exception occurred |
-| getCode | Error code for the exception. Returns `0` if there's no error code. |
-| getType | Type of an exception |
-| getTrace | Back trace |
+| Method     | Description                                                         |
+| ---------- | ------------------------------------------------------------------- |
+| getMessage | Exception message                                                   |
+| getFile    | Path to file exception occurred                                     |
+| getLine    | Line number where exception occurred                                |
+| getCode    | Error code for the exception. Returns `0` if there's no error code. |
+| getType    | Type of an exception                                                |
+| getTrace   | Back trace                                                          |
 
 ##### Handler class
 
@@ -72,21 +71,20 @@ Defining `@Handler` annotation on class makes it exception handler class. This a
 Below code demonstrates how we can define exception handler for scope `secure`.
 
 ```php
-/**
-* @Handler(type='scope',name='secure')
-*/
+
+#[Handler(type: 'scope', name: 'secure')]
 class SecureExceptionHandler {
 //....
 ```
 
 Supported parameters of `@Handler` annotation is listed below:
 
-| Parameter | Description |
-| --- | --- |
-| type | Can be global, context, scope. |
-| name | Applicable for handler for context and scope. |
+| Parameter | Description                                   |
+| --------- | --------------------------------------------- |
+| type      | Can be global, context, scope.                |
+| name      | Applicable for handler for context and scope. |
 
-Parameter name `name` is required when `type` is `context` or `scope`. This should be name of context for handler type for context. For the scope handler this should be  name of scope.
+Parameter name `name` is required when `type` is `context` or `scope`. This should be name of context for handler type for context. For the scope handler this should be name of scope.
 
 To define method which can handle exception, it should be either same as exception class name with its first letter in small case. Below method handles exception thrown for `RequestNotFoundException`.
 
@@ -96,7 +94,7 @@ public function requestNotFoundException(Detail $detail) {
 }
 ```
 
-We can define as many as handler for exception class. 
+We can define as many as handler for exception class.
 
 To define handler for all types of exception define method with name `handlerAll`. This method will be called when method with name as exception class does not exists in handler class.
 

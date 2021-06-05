@@ -4,19 +4,20 @@
 
 In this getting started step, we will create route which handles request sent by client and created route respond with view. Once you finish, You will have a basic idea about following things.
 
-* Installation
-* Open Structure
-* Annotations
-* Creating routes
-* Creating views
-* Passing data view
-* Application settings
+- Installation
+- Open Structure
+- Attributes
+- Creating routes
+- Creating views
+- Passing data view
+- Application settings
 
 ##### Install Nishchay
 
 Nishchay can only be installed using composer only. If you don't have it, please download from [here](https://getcomposer.org/download).
 
 Go to the directory where you host all your application and fire below command to install Nishchay.
+
 ```
 composer create-project nishchay/nishchay learningNishchay
 ```
@@ -26,14 +27,22 @@ This will install Nishchay inside learningNishchay directory.
 ##### Create Route
 
 To create route, you first need to create method in controller class. After that create [@route](/learningCenter/annotations/request/route) annotation on method. Code example is shown below.
+
 ```php
-/**
-* @Route(path='getStarted')
-*/
-public function getStarted(){
-    // Implementation
+use Nishchay\Attributes\Controller\Controller;
+use Nishchay\Attributes\Controller\Method\Route;
+
+#[Controller]
+class NamasteController {
+
+    #[Route(path:'getStarted')]
+    public function getStarted(){
+        // Implementation
+    }
+
 }
 ```
+
 Controller class is located at `Application/Controllers/Direct/NamasteController.php`.
 
 We have created route called `getStarted`. Method `getStarted` will be treated as request handler.
@@ -44,18 +53,22 @@ If request matches with `getStarted`, above method will be executed.
 We have created route, but we need to create view so that our route can generate response for request. Create a file `getStarted.php` in `Application/views/direct`.
 
 Paste below code to view file.
+
 ```html
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title></title>
-    </head>
-    <body>
-        Wow <?= $name ?> you did it well, you created your first route.
-    </body>
+  <head>
+    <meta charset="UTF-8" />
+    <title></title>
+  </head>
+  <body>
+    Wow
+    <?= $name ?>
+    you did it well, you created your first route.
+  </body>
 </html>
 ```
+
 ##### Make route to respond with view
 
 We have created route and view. But we have to make route to respond with view. To do that just return view name from route method.
@@ -63,9 +76,8 @@ We have created route and view. But we have to make route to respond with view. 
 Your updated route will look like:
 
 ```php
-/**
-* @Route(path='getStarted')
-*/
+
+#[Route(path:'getStarted')]
 public function getStarted(){
     return "direct/getStarted";
 }
@@ -78,10 +90,10 @@ We are sure you have noticed that, in view there is variable called `$name` whic
 RequestStore has method called `add` which allows us to store data to request store. This method accepts two parameter key and it's value. Anything you add to request store, will be converted to variable for your view. This means you can use key name as variable inside your view.
 
 So we will update our route code by adding `RequestStore::add('name',YOUR_NAME)` above return statement. Please replace `YOUR_NAME` with your name. Once you add it, make sure your code should be similar to
+
 ```php
-/**
-* @Route(path='getStarted')
-*/
+
+#[Route(path:'getStarted')]
 public function getStarted(){
     RequestStore::add('name',YOUR_NAME);
     return 'direct/get-started';

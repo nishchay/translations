@@ -1,15 +1,14 @@
 #### Response Handling
 
-Response returned by route method considered as request response. By default response is view and it can be changed to JSON, XML or NULL.
+Response returned by route method considered as request response. By default response is _view_ and it can be changed to _JSON_, _XML_ or _NULL_.
 
 ##### View
 
 When response type is view, route should return single view name as string or list of view name as array.
 
-``` php
-/**
- * @Route(path='namaste')
- */
+```php
+
+ #[Route(path:'namaste')]
 public function namaste() {
     return 'namaste';
 }
@@ -36,8 +35,8 @@ If it does not found there then it tries to locate by going up.
 Suppose current context is _Application/Access/Direct_ then view will be searched as per first method called context. If it not found then context gets removed one at time then it gets located and search is proceed as shown below.
 
 1.  _Application/Access/Direct/views_
-2. Now `Direct` directory will be removed form path and response handler will find view in `Application/Access/views` .
-3. Now `Access` directory will be removed from path and response handler will find view in `Application/views` 
+2.  Now `Direct` directory will be removed form path and response handler will find view in `Application/Access/views` .
+3.  Now `Access` directory will be removed from path and response handler will find view in `Application/views`
 
 It ends when there no more directory exists in path or path becomes empty.
 
@@ -49,40 +48,38 @@ These directory are stored as defined in structure definition.
 
 ##### Set response type of route
 
-We can specify response type for whole application in `response` setting. But if some routes need to respond with another type than defined in `response` config, we can use `@Response` annotation.
+We can specify response type for whole application in _response.php_ setting. But if some routes need to respond with another type than defined in _response_ config then use `Nishchay\Attributes\Controller\Method\Response` attribute.
 
-`@Response` annotation accepts only one parameter called `type` which should have one of following values.
+`Response` attribute's parameter name `type` should have one of following values.
 
-*   view
-*   json
-*   xml
-*   null: to respond with anything we want.
+- view
+- json
+- xml
+- null: to respond with anything we want.
 
-``` php
-/**
- * @Route(path='namaste')
- * @Response(type=view)
- */
+```php
+
+ #[Route(path:'namaste')]
+ #[Response(type:'view')]
 public function namaste() {
     return 'namaste';
 }
 ```
 
-This will make `namaste` route to respond with view only.
+This will make _namaste_ route to respond with view only.
 
 ##### Set response type globally
 
-Default response type of all route can be changed from setting file `settings/configuration/response.php` .
+Default response type of all route can be changed from setting file _settings/configuration/response.php_.
 
 ##### Response Type: JSON
 
 When route is to respond with json, route response must be an array. Response handler converts array into json and sets content type to json.
 
-``` php
-/**
- * @Route(path='user')
- * @Response(type=JSON)
- */
+```php
+
+ #[Route(path:'user')]
+ #[Response(type:'JSON')]
 public function user() {
     return [
         'name'=> 'Bhavik Patel',
@@ -93,14 +90,14 @@ public function user() {
 }
 ```
 
-As per above code, `user` route will response with: 
+As per above code, _user_ route will response with:
 
-``` json
+```json
 {
-    "name":"Bhavik Patel",
-    "age":28,
-    "gender":"Male",
-    "accountType":"user"
+  "name": "Bhavik Patel",
+  "age": 28,
+  "gender": "Male",
+  "accountType": "user"
 }
 ```
 
@@ -108,7 +105,7 @@ As per above code, `user` route will response with:
 
 Just like JSON response for XML response, route must respond with array. If we change response type JSON to XML in above code it will respond with following:
 
-``` xml
+```xml
 <root>
     <name>Bhavik Patel</name>
     <age>28</age>
@@ -119,9 +116,9 @@ Just like JSON response for XML response, route must respond with array. If we c
 
 ###### Set element attribute which has child element
 
-If array has `@attributes` key, its considered as attribute list. Value of this key must be array.
+If array has _@attributes_ key, its considered as attribute list. Value of this key must be array.
 
-``` json
+```json
 [
 	    'user'=>'bhavik',
 	    'name'=>'Bhavik Patel',
@@ -149,9 +146,9 @@ If array has `@attributes` key, its considered as attribute list. Value of this 
 ]
 ```
 
-Here `addresses` have two child which named `address` . Because putting address as key will prevent adding multiple child node with name. So `@name` will allow us to set name for node. This will output:
+Here _addresses_ have two child which named _address_ . Because putting address as key will prevent adding multiple child node with name. So _@name_ will allow us to set name for node. This will output:
 
-``` xml
+```xml
 <root>
         <user>bhavik</user>
         <name>Bhavik Patel</name>
@@ -173,9 +170,9 @@ Here `addresses` have two child which named `address` . Because putting address 
 
 ###### Set element attribute which has value
 
-To set value of an element which does not child element, we can set `@value` to specify value for that element. See below code:
+To set value of an element which does not have child element, we can set _@value_ to specify value for that element. See below code:
 
-``` json
+```json
 [
     [
         '@name' => 'name',
@@ -189,7 +186,7 @@ To set value of an element which does not child element, we can set `@value` to 
 
 which results in following response:
 
-``` xml
+```xml
 <root>
     <name id="12345">User full name</name>
 </root>
@@ -208,16 +205,17 @@ Setting response type to _NULL_ will allow us to set any response type we want. 
 
 Static method `Nishchay\Http\Response\Response::setHeader` allow us to set response header. It supports two parameter first being header name and second being header value.
 
-``` php
+```php
 Response::setHeader('Cache-Control', 'no-cache, must-revalidate')
 ```
 
-Response class has dedicated method to set Content type and response status. 
+Response class has dedicated method to set Content type and response status.
 
 ###### Response status code
+
 To set response status code just pass response code as first parameter on `setStatus` method of `Response` class. We can pass message as second parameter to set response status message, omitting it will use default message.
 
-``` php
+```php
 Response::setStatus(404)
 ```
 
@@ -225,22 +223,22 @@ Response::setStatus(404)
 
 Using `setContentType` we can set content type of response. This is required in the case route response type is `null`, as set in `@Response` annotation.
 
-``` php
+```php
 Response::setContentType('application/json')
 ```
 
 We can also pass alias of response type instead of passing full type name. Such alias are listed below.
 
-| Alias | Content Type | Use           |
-|-------|--------------|---------------|
-| html  | text/html    | Standard HTML |
-| plain  | text/plain    | Simple raw text |
-| text  | text/text    | Simple raw text |
-| json  | application/json    | JSON data content |
-| js  | application/javascript    | Javascript content |
-| javascript  | application/javascript    | Javascript content |
-| xml  | text/xml    | XML data content |
-| png  | image/png    | PNG image |
-| jpg  | image/jpg    | JPG image |
-| jpeg  | image/jpeg    | JPEG image |
-| gif  | image/gif    | GIF image |
+| Alias      | Content Type           | Use                |
+| ---------- | ---------------------- | ------------------ |
+| html       | text/html              | Standard HTML      |
+| plain      | text/plain             | Simple raw text    |
+| text       | text/text              | Simple raw text    |
+| json       | application/json       | JSON data content  |
+| js         | application/javascript | Javascript content |
+| javascript | application/javascript | Javascript content |
+| xml        | text/xml               | XML data content   |
+| png        | image/png              | PNG image          |
+| jpg        | image/jpg              | JPG image          |
+| jpeg       | image/jpeg             | JPEG image         |
+| gif        | image/gif              | GIF image          |

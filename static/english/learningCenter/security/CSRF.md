@@ -6,7 +6,6 @@ When web application renders form, application generates token & saves onto serv
 
 In nishchay we don't have worry about how token is generated, how it saves in server and how it verifies. Form builder and validator class also comes with support of CSRF which we will discuss. It works same for both of these class.
 
-
 ##### Create instance
 
 When we create instance of CSRF, we also need to pass name for which it need to be used. This is because CSRF token will be saved with the `csrs_{name}` name in session. So when we create CSRF instance, choose unique name.
@@ -28,12 +27,12 @@ Below code show how this location can be changed:
 ```php
 $csrf->setWhere(Request:GET);
 ```
+
 This changes CSRF token be received in GET request
 
 ##### Change name
 
-By default token should comes in `csrf` parameter, we can change it anything we want. 
-
+By default token should comes in `csrf` parameter, we can change it anything we want.
 
 ```php
 $csrf->setName('token');
@@ -74,7 +73,7 @@ echo $csrf;
 Above will output:
 
 ```html
-<input type='hidden' name='csrf' value='{TOKEN}' />
+<input type="hidden" name="csrf" value="{TOKEN}" />
 ```
 
 But if CSRF token to be set header then `echo $csrf` returns only token:
@@ -101,10 +100,8 @@ Let's create one GET route where we will render form with CSRF token.
 use Nishchay\Security\CSRF;
 use Nishchay\Http\Request\RequestStore;
 
-/**
-* @Route(path='csrf', type='GET')
-* @Response(type='view')
-*/
+#[Route(path: 'csrf', type: 'GET')]
+#[Response(type: 'view')]
 public function csrfGET() {
     $csrf = new CSRF('test-csrf');
 
@@ -121,8 +118,8 @@ As we are returning view we need to create one view called `testForm.twig` and b
 
 ```html
 <form action="{{action}}" method="POST">
-    {{csrf}}
-    <input type="submit" value="submit"/>
+  {{csrf}}
+  <input type="submit" value="submit" />
 </form>
 ```
 
@@ -133,11 +130,8 @@ Now when form is submitted, we will verify CSRF. As form will be submitted to `P
 ```php
 use Nishchay\Security\CSRF;
 
-/**
-* @Route(path="test", type=[PUT,POST])
-* @Response(type=null)
-* @return array
-*/
+#[Route(path: 'test', type: ['PUT', 'POST'])]
+#[Response(type: null)]
 public function testPost()
 {
     $csrf = new CSRF('test-form');

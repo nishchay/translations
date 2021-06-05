@@ -18,9 +18,7 @@ use Application\Entities\User;
 
 class AccountController{
 
-    /**
-    * @Route(path='account/auth',type=POST)
-    */
+    #[Route(path: 'account/path', type: 'POST')]
     public function auth(AccountPrototype $account) {
         $response = $account->getAuth(User::class)
                     ->execute();
@@ -97,6 +95,7 @@ $account->postAuth(function($user) {
 ```
 
 ##### Session / OAuth2
+
 When user is authenticated or registered, Account prototype creates OAuth2 token by default. If we don't want OAuth2 token after success, we can disable it.
 
 ```php
@@ -106,6 +105,7 @@ $account->generateOAuth2(false);
 Above will disable OAuth2 to be generated after success.
 
 ###### Session
+
 Account prototype can also save data to session upon. This is disabled by default. To enable:
 
 ```php
@@ -117,8 +117,8 @@ This will enable session for the account prototype, below data will set into ses
 1. isLogged (Set to true)
 2. userId (User id of authenticated or registered user)
 
-
 ##### Register : Account
+
 This prototype is for registering an user within application.
 
 ```php
@@ -126,11 +126,7 @@ This prototype is for registering an user within application.
 use Application\Forms\Register;
 use Application\Entities\User;
 
-/**
-* Creates an account of user.
-* 
-* @Route(path='user',type=POST)
-*/
+#[Route(path: 'user', type: 'POST')]
 public function register(AccountPrototype $accountPrototype)
 {
     $response = $accountPrototype->getRegister(User::class)
@@ -139,10 +135,11 @@ public function register(AccountPrototype $accountPrototype)
 }
 ```
 
-This will validates requests, if there's an error it returns error. Upon successful validation, form data inserted to  database using provided entity.
+This will validates requests, if there's an error it returns error. Upon successful validation, form data inserted to database using provided entity.
 By default upon success OAuth2 is created, this can be disabled or can be configured to set session data(See _Session / OAuth2_ section).
 
 ###### Ignore fields
+
 In register form, there can be fields which should not be inserted to database. We can omit those fields by using `setIgnoreFileds`. This method accepts list of fields need to ignored in array.
 
 ```php
@@ -150,6 +147,7 @@ $account->setIgnoreFileds(['isTermAccepted']);
 ```
 
 ###### Before register
+
 If we need to do some task before registration, that can be setting callback method which will be called just before form data saved.
 
 ```php
@@ -159,8 +157,8 @@ $account->preRegister(function($form) {
 ```
 
 ###### After register
-Just like pre register, we can also have post register callback which will be called after registration.
 
+Just like pre register, we can also have post register callback which will be called after registration.
 
 ```php
 $account->postRegister(function($form) {
@@ -180,13 +178,13 @@ $account->postRegister(function($form) {
 
 To get above details use below methods:
 
-|Method|Description|
-| - | - |
-| getUserDetail | Returns instance of entity for the user record. |
-| getAccessToken | Returns OAuth2 token |
-| isSuccess | Returns `true` on success |
-| getErrors | Returns validation errors |
-| getCsrf | Returns CSRF token if CSRF has been set in form |
+| Method         | Description                                     |
+| -------------- | ----------------------------------------------- |
+| getUserDetail  | Returns instance of entity for the user record. |
+| getAccessToken | Returns OAuth2 token                            |
+| isSuccess      | Returns `true` on success                       |
+| getErrors      | Returns validation errors                       |
+| getCsrf        | Returns CSRF token if CSRF has been set in form |
 
 ##### CRUD
 
@@ -207,15 +205,14 @@ $crud = new Nishchay\Prototype\Crud(Entity::class);
 This prototype can also be created using console command. When we create prototype using console command its creates controller along with entity and form class.
 
 ###### Fetch list of records
-Using `get` method we ca get list of records of provided entity. This also comes with pagination,  pagination can be disabled.
+
+Using `get` method we ca get list of records of provided entity. This also comes with pagination, pagination can be disabled.
 
 ```php
 use Nishchay\Prototype\Crud;
 
-/**
-* @Route(path=items,type=GET)
-* @Response(type=json)
-*/
+#[Route(path: 'items', type: 'GET')]
+#[Response(type: 'json')]
 public function getItems() {
     $crud = new Crud(Entity::class);
     return $crud->get();
@@ -225,6 +222,7 @@ public function getItems() {
 Pagination works on `limit` and `offset` GET parameter.
 
 ###### Pagination limit
+
 When CRUD get prototype is used, we ca get number of records based on `limit` get parameter. As one can request any number of requests, we can specify min and max limit.
 
 If we have set min limit to 10 and we try to fetch record using limit=4 then prototype will return 10 records. If we set max limit to 50 records and one request with limit=100 then prototype returns 50 records only. This is like if one request with lower limit then we set, it resets to min limit, same applies to max limit.
@@ -258,11 +256,9 @@ To fetch single record use `getOne` method, this method accepts one argument whi
 ```php
 use Nishchay\Prototype\Crud;
 
-/**
-* @Route(path='item/{itemId}',type=GET)
-* @Placeholder(itemId=int)
-* @Response(type=json)
-*/
+#[Route(path: 'item/{itemId}', type: 'GET')]
+#[Placeholder(['itemId' => 'int'])]
+#[Response(type: 'json')]
 public function getItem(int $itemId) {
     $crud = new Crud(Entity::class);
     return $crud->getOne($itemId);
@@ -280,10 +276,8 @@ To insert record using this prototype we only have to set form class and then ca
 ```php
 use Nishchay\Prototype\Crud;
 
-/**
-* @Route(path='item',type=POST)
-* @Response(type=json)
-*/
+#[Route(path: 'item', type: 'POST')]
+#[Response(type: 'JSON')]
 public function insert() {
     $crud = new Crud(Entity::class);
     return $crud->setForm(Form::class)
@@ -292,16 +286,15 @@ public function insert() {
 ```
 
 ###### Update record
+
 To update record using this prototype we only have to set form class and then call `update` method with value of identity property.
 
 ```php
 use Nishchay\Prototype\Crud;
 
-/**
-* @Route(path='item/{itemId}',type=PUT)
-* @Placeholder(itemId=int)
-* @Response(type=json)
-*/
+#[Route(path: 'item/{itemId}', type: 'PUT')]
+#[Placeholder(['itemId' => 'int'])]
+#[Response(type: 'json')]
 public function update(int $itemId) {
     $crud = new Crud(Entity::class);
     return $crud->setForm(Form::class)
@@ -311,16 +304,14 @@ public function update(int $itemId) {
 
 ###### Remove record
 
-To remove record, we only ave to call `update` with value of identity property. 
+To remove record, we only ave to call `update` with value of identity property.
 
 ```php
 use Nishchay\Prototype\Crud;
 
-/**
-* @Route(path='item/{itemId}',type=DELETE)
-* @Placeholder(itemId=int)
-* @Response(type=json)
-*/
+#[Route(path: 'item/{itemId}', type: 'DELETE')]
+#[Placeholder(['itemId' => 'int'])]
+#[Response(type: 'json')]
 public function remove(int $itemId) {
     $crud = new Crud(Entity::class);
     return $crud->remove($itemId);
@@ -328,6 +319,7 @@ public function remove(int $itemId) {
 ```
 
 ###### CRUD Response
+
 All methods `insert`, `update` and `remove` returns array with only key `message` which has success or failure message. If want to change this response read CRUD events.
 
 ###### CRUD events

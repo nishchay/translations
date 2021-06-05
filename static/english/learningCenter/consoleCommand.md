@@ -1,11 +1,10 @@
 #### Console Command
 
-Console commands can be used to create controller, route and entities and it can also be used to view application information such as list of controllers, routes, entities and more. 
+Console commands can be used to create controller, route and entities and it can also be used to view application information such as list of controllers, routes, entities and more.
 
 Commands can also be used for creating CRON job, all GET routes are executable from console commands.
 
 Nishchay console commands are executed by `php nishchay {follow up commands}`. Executing `php nishchay` prints list of supported commands and its description.
-
 
 ##### Command Help
 
@@ -15,8 +14,8 @@ Just execute `php nishchay` without any follow up command and help for console c
 
 Framework version is displayed using `php nishchay -v` command. Here `-v` also has two more alias, `v` and `-version`. Once you execute command below information will be printed:
 
-*   Version number
-*   Version name
+- Version number
+- Version name
 
 ##### Route
 
@@ -24,17 +23,19 @@ Framework version is displayed using `php nishchay -v` command. Here `-v` also h
 
 Using `route` we can find below information related to route:
 
-*   Path as defined in `@Route` annotation.
-*   HTTP methods for which route needs to be executed.
-*   Route's controller class name
-*   Route's method name
+- Path as defined in `Route` attribute.
+- HTTP methods for which route needs to be executed.
+- Route's controller class name
+- Route's method name
 
 ###### List all routes
 
 To list all routes in an application execute route command without any parameter.
+
 ```
 php nishchay route
 ```
+
 ###### Routes belongs to specific controller
 
 Lists of all routes defined in specific controller.
@@ -47,19 +48,23 @@ Here controllerClass must be full class path. As class path contains \ (slash), 
 
 ###### Route information by its path name
 
-We can also view route information by its path name as defined `@Route` annotation.
+We can also view route information by its path name as specified `Route` attribute.
+
 ```
 php nishchay route -name {pathName}
 ```
+
 ###### Route information by url
 
 To route information by any URL, just pass URL after `php nishchay route` This is helpful when you have large application or starting coding already developed application for the first time as it will gives all information which is required to locate route.
+
 ```
 php nishchay route {path}
 ```
+
 ###### Execute route
 
-To execute route we only need to pass url and then `-run`. 
+To execute route we only need to pass url and then `-run`.
 
 **Note:** Only route which supports GET request can be executed using route command.
 
@@ -70,18 +75,23 @@ php nishchay route {path} -run
 ###### List route by regular expression
 
 Upon passing regular expression. This regular expression will be run for each route path name and it will list all routes which matches regular expression.
+
 ```
 php nishchay route -match {RegexPattern}
 ```
+
 ###### Event defined for route
 
 We can also find events which can be execute before or after route. This will list events defined for route, route's scope (if it has been defined on route) and route's context.
+
 ```
 php nishchay route {path} -event
 ```
+
 ###### Error handler defined for route
 
 Lists all handlers defined for route. This will list all handlers defined for route, route's scope (if it has been defined on route) and route's context.
+
 ```
 php nishchay route {path} -handler
 ```
@@ -94,9 +104,9 @@ Controller command is used find all controller defined in an application, annota
 
 Running controller command without any parameter lists all controllers defined in application. This prints information as shown below
 
-*   Controller full class path
-*   Context it belongs to
-*   Number of route exists in controller
+- Controller full class path
+- Context it belongs to
+- Number of route exists in controller
 
 ```
 php nishchay controller
@@ -109,18 +119,23 @@ Passing controller full class path after controller command prints information o
 ```
 php nishchay controller {class}
 ```
+
 ###### Annotation defined on controller class
 
 Passing `-annotation` following controller class will lists all annotation defined on controller class. This will print annotation name and parameter syntax.
+
 ```
 php nishchay controller {class} -annotation
 ```
+
 ###### Annotation defined on controller method
 
 We can also find list of annotations defined on controller method. To view this information just use below command:
+
 ```
 php nishchay {class} -annotation -method {method}
 ```
+
 ###### Create empty controller
 
 When we create empty controller using console command, Controller with specified class will be created at appropriate location based on full class name. Required annotation also be created on class declaration.
@@ -146,17 +161,19 @@ php nishchay controller -create {name}
 ###### Create CRUD controller
 
 To create controller which have create, update, delete and read operation. We just need to pass `-crud` parameter after class name.
+
 ```
 php nishchay controller -create {name} -crud
 ```
+
 When we execute above command, Nishchay will ask for route. Nishchay will not check if route already exists or not, it will directly creates controller with route prefix as entered by us. Below method with route will be created upon successful execution of command.
 
-| Method | Route | HTTP |
-| --- | --- | --- |
-| index | [routePrefix]/ | GET |
-| create | [routePrefix]/ | POST |
-| fetch | [routePrefix]/{id} | GET |
-| update | [routePrefix]/{id} | PUT |
+| Method | Route              | HTTP   |
+| ------ | ------------------ | ------ |
+| index  | [routePrefix]/     | GET    |
+| create | [routePrefix]/     | POST   |
+| fetch  | [routePrefix]/{id} | GET    |
+| update | [routePrefix]/{id} | PUT    |
 | delete | [routePrefix]/{id} | DELETE |
 
 ###### Create controller from template
@@ -210,6 +227,7 @@ Using console command we can also find list of entities exists in an application
 ###### List all entities
 
 Just passing `entity` command without any parameter will list all entities exists in an application.
+
 ```
 php nishchay entity
 ```
@@ -225,6 +243,7 @@ php nishchay entity {class} -property
 ```
 
 ###### Derived properties
+
 ```
 php nishchay entity {class} -derived
 ```
@@ -251,7 +270,7 @@ This will print details related to trigger like its callback method name, for wh
 
 ###### Create empty entity
 
-Creating empty entity means class with only one property which is identity property of class. This class also has `@entity` annotation defined on it and it will be mapped to table name as base class name.
+Creating empty entity means class with only one property which is identity property of class. This class also has `Entity` attribute defined on it and it will be mapped to table name as base class name.
 
 Suppose we are creating an empty entity called `UserAddress` then its identity property will be created with `userAddressId`. Command to create empty entity is shown below.
 
@@ -454,6 +473,7 @@ php nishchay entity -generate -db {connectionName}
 ```
 
 ###### Generate entity form DB specific table
+
 To create entity of specific table, use below command:
 
 ```cmd
@@ -466,7 +486,6 @@ This will create entity for provided table name from default database connection
 php nishchay entity -generate -table name {connectionName}
 ```
 
-
 ##### Events
 
 Events are executed before & after controller & route. These events can be defined for global, scope and context. Using console command we can find events belongs to global, scope or context.
@@ -474,9 +493,11 @@ Events are executed before & after controller & route. These events can be defin
 ###### List all events
 
 To view all events defined within application execute below command.
+
 ```
 php nishchay event
 ```
+
 ###### Context events
 
 Events belongs to specific context can be found by passing context parameter with context name.
@@ -507,7 +528,7 @@ Using console command we can create form from entity class. To create it use bel
 
 ```cmd
 php nishchay form -generate -entity {name}
-``` 
+```
 
 This will create form class with all form field method from entity properties. It also adds validation based on property required, data type and other validation if any defined on it.
 
@@ -526,7 +547,7 @@ Prototype can be created new or from database table name.
 To create new prototype use below command:
 
 ```cmd
-php nishchay prototype -generate -new  
+php nishchay prototype -generate -new
 ```
 
 Upon executing above command, generator will first create entity by asking for entity name and it will keep asking for each property which needs to be created. This process is similar to creating new entity.
