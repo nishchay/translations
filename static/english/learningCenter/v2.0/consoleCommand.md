@@ -98,7 +98,7 @@ php nishchay route {path} -handler
 
 ##### Controller
 
-Controller command is used find all controller defined in an application, annotation defined on controller class or method. It can also be used to create empty controller, CRUD controller and controllers based on template.
+Controller command is used find all controller defined in an application. It can also be used to create empty controller, CRUD controller and controllers based on template.
 
 ###### List controller
 
@@ -120,31 +120,15 @@ Passing controller full class path after controller command prints information o
 php nishchay controller {class}
 ```
 
-###### Annotation defined on controller class
-
-Passing `-annotation` following controller class will lists all annotation defined on controller class. This will print annotation name and parameter syntax.
-
-```
-php nishchay controller {class} -annotation
-```
-
-###### Annotation defined on controller method
-
-We can also find list of annotations defined on controller method. To view this information just use below command:
-
-```
-php nishchay {class} -annotation -method {method}
-```
-
 ###### Create empty controller
 
-When we create empty controller using console command, Controller with specified class will be created at appropriate location based on full class name. Required annotation also be created on class declaration.
+When we create empty controller using console command, Controller with specified class will be created at appropriate location based on full class name. Required attribute also be created on class declaration.
 
-Created controller will comes with one method called `toDo` along with syntax for route annotation. This skelton method is shown below:
+Created controller will comes with one method called `toDo` along with syntax for route attribute. This skelton method is shown below:
 
 ```php
 /**
-* Route(path='toDo')
+* #[Route(path='toDo')]
 */
 public function toDo()
 {
