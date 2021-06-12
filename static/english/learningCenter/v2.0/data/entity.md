@@ -46,22 +46,22 @@ Below code demonstrates various usage of above three parameter. To explain, we a
 
 ```php
 
-# Table name will be 'user'.
+// Table name will be 'user'.
 #[Entity(name:'user')]
 
-# Table name will be 'Application_Entity_User'
+// Table name will be 'Application_Entity_User'
 #[Entity(name:'this')]
 
-# Table name: ApplicationEntityUser
+// Table name: ApplicationEntityUser
 #[Entity(name:'this',separator:'')]
 
-# Table name: applicationentityuser
+// Table name: applicationentityuser
 #[Entity(name:'this',separator:'',case:'small')]
 
-# Table name: User
+// Table name: User
 #[Entity(name:'this.base')]
 
-# Table name: USER
+// Table name: USER
 #[Entity(name:'this.base',case:'upper')]
 ```
 

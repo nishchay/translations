@@ -2,7 +2,7 @@
 
 Nishchay session management is powerful and easy to use. It can be used multiple ways, as an example scope session which are available to processing route's scope only and it also has number of type of save handler like file, DB and Cache.
 
-Session are started when its first usage is made. We don't have to use any of php function or variable to manage session instead Nishchay provides more convenient way to use it. `As Nishchay has its own implementation for managing session, please do not use any of php function or variable($_SESSSION).`
+Session are started when its first usage is made. We don't have to use any of php function or variable to manage session instead Nishchay provides more convenient way to use it. **As Nishchay has its own implementation for managing session, please do not use any of php function or variable($\_SESSSION).**
 
 ##### Managing session data
 
@@ -20,7 +20,7 @@ Now as we have instance of session class we can write session data as shown belo
 $session->userId = 12345
 ```
 
-As per above `userId` will be added to session. Once we add data to session it can be accessible form anywhere, we just need to create instance session class then access it.
+As per above _userId_ will be added to session. Once we add data to session it can be accessible form anywhere, we just need to create instance session class then access it.
 
 ###### Reading session data
 
@@ -85,7 +85,7 @@ Simplest form of session, which works the same as php core session. It doesn't h
 
 ###### Scope
 
-As we know route can have named scope defined using `@NamedScope` annotation on route method. When we add data to scope session it will be available to all routes which belongs to same scope.
+As we know route can have named scope defined using `Nishchay\Attributes\Controller\Method\NamedScope` attribute on route method. We can add session data for those scopes. When we add data to scope session it will be available to all routes which belongs to this scope.
 
 When we create instance of Scope session it first checks route's scope, and then it fetches all data of that scope. Data added to one scope won't be available to other scope.
 
@@ -111,7 +111,7 @@ public function helpProfile() {
 }
 ```
 
-Here we have added `code` to `secure` and `direct` scope session. Both of these session have their separate copy. Any route which belongs to `secure` will have `code = 12345` while routes belongs to `direct` scope will have `code = 54321`.
+Here we have added _code_ to _secure_ scope and _direct_ scope session. Both of these session have their separate copy. Any route which belongs to _secure_ will have _code = 12345_ while routes belongs to _direct_ scope will have _code = 54321_.
 
 **What if route does not have scope.**
 
@@ -119,7 +119,7 @@ In this case, session won't be created and it will through exception with messag
 
 ###### Route with multiple scope
 
-When route defines multiple scope, there always default scope for the route. Creating Scope session without passing scope name will use default scope as defined in `@NamedScope`.
+When route defines multiple scope, there always default scope for the route. Creating Scope session without passing scope name will use default scope as defined in `NamedScope` attribute.
 
 ```php
 
@@ -130,14 +130,15 @@ public function profile() {
 }
 ```
 
-Now any data added to `$session` will be added for scope `scope2`.
+As per above any data added to _$session_ will be added for scope _scope2_.
 
 ###### Context
 
-All controller belongs to context and we can create session which are available to that context. `Context` session class allows us to create session data to be available for controller's context only. On creating instance of `Context` session class, it fetches data of that context by checking route's context. Context session can be created for any route as all routes are belongs context.
+All controller belongs to context and we can create session which are available to that context. `Context` session class allows us to create session data to be available for controller's context only. On creating instance of `Context` session class, it fetches data of that context by checking route's context. Context session can be created for any route as all routes are belongs specific context.
 
 ```php
-namespace Application/Access/Secure/Controllers;
+namespace Application\Access\Secure\Controllers;
+
 class SecureRoutes {
 
     #[Route(path: 'profile')]
@@ -148,11 +149,11 @@ class SecureRoutes {
 }
 ```
 
-Above will add session data named 'code' to context 'Application/Access/Secure'.
+Above will add session data named _code_ to context _Application\Access\Secure_.
 
 ###### Read limit / Number of time read
 
-This type session data available till it reaches its read limit. Suppose we have session data 'token' to be accessed for at most 3 times. Once we read 'token' data 3 times, it get removed and then next time it won't be available.
+This type session data available till it reaches its read limit. Suppose we have session data _token_ to be accessed for at most 3 times. Once we read _token_ data 3 times, it get removed and then next time it won't be available.
 
 ```php
 $session = new \Nishchay\Session\ReadLimit(3);
@@ -207,7 +208,7 @@ Read and Save check callback must be string, as it gets persisted along with ses
 $session = new \Nishchay\Session\Conditional('ConditionalCheck::readCheck', 'ConditionalCheck::saveCheck');
 ```
 
-When we add session data `ConditionalCheck::saveCheck` will be called with data name and its value. If method does not return `true` then exception will be thrown. Same goes for we access session data.
+When we add session data `ConditionalCheck::saveCheck` will be called with data name and its value. If method does not return _true_ then exception will be thrown. Same goes for we access session data.
 
 ##### Cookie
 
@@ -222,29 +223,29 @@ See below methods
 | setExpiry   | Expiry time in seconds.                                                                                                                                                               |
 | setPath     | Path where cookie need to be available. Cookie will be available to all of its sub directory of path. By default this is current, means it will be available to path where it was set |
 | setDomain   | Domain on which only need to be available to                                                                                                                                          |
-| setSecure   | Set to `true` to allow cookies over HTTPS only.                                                                                                                                       |
-| setHttpOnly | Set to `true` to allow cookies over HTTP protocol                                                                                                                                     |
+| setSecure   | Set to _true_ to allow cookies over HTTPS only.                                                                                                                                       |
+| setHttpOnly | Set to _true_ to allow cookies over HTTP protocol                                                                                                                                     |
 
 You can learn more about cookie options [here](https://www.php.net/manual/en/function.setcookie.php).
 
 ##### Session storage location
 
-Session data can be stored in file, database or cache which can be specified in `session.storage` setting `application.php`.
+Session data can be stored in file, database or cache which can be specified in _session.storage_ setting _application.php_.
 
 ###### File/Default
 
-This is default save handler with default save path `/persisted/sessions/`. This storage path can changed by changing config `session.storagePath`. We recommened this location to be outside of application directory.
+This is default save handler with default save path _/persisted/sessions/_. This storage path can changed by changing config _session.storagePath_. We recommened this location to be outside of application directory.
 
 ###### Database
 
-To store session data in db change `session.storage` to `db`. For storage `db` setting `session.db` also need to be modified. See below setting database storage.
+To store session data in db change _session.storage_ to _db_. For storage _db_ setting _session.db_ also need to be modified. See below setting database storage.
 
 | Name       | Description                                                                                       |
 | ---------- | ------------------------------------------------------------------------------------------------- |
 | connection | Connection name, keeping it NULL uses default connection as provided in database setting.         |
-| table      | Table name where session data will be stored, keep it NULL will consider `Session` as table name. |
+| table      | Table name where session data will be stored, keep it NULL will consider _Session_ as table name. |
 
-Table structure for `Session`:
+Table structure for _Session_:
 
 ```sql
 CREATE TABLE `Session` (
@@ -256,7 +257,7 @@ CREATE TABLE `Session` (
 
 ###### Cache
 
-To store session data in db change `session.storage` to `cache`. For storage `cache` setting `session.cache` also need to be modified. See below setting cache storage.
+To store session data in db change _session.storage_ to _cache_. For storage _cache_ setting _session.cache_ also need to be modified. See below setting cache storage.
 
 | Name   | Description                                                                                                   |
 | ------ | ------------------------------------------------------------------------------------------------------------- |
