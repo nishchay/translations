@@ -1,10 +1,10 @@
 #### Exception Handling
 
-Exceptions are handled at scope, context or global level in Nishchay. We only need annotate class with `Handler` attribute to make exception handler class. Handler defined for scope will be executed for all routes which belongs to mentioned scope. Same applies to context exception handler. Global applies to all routes.
+Exceptions are handled at scope, context or global level in Nishchay. We only need to declare class with `Nishchay\Attributes\Handler\Handler` attribute to make exception handler class. Handler defined for scope will be executed for all routes which belongs to mentioned scope. Same applies to context exception handler. Global applies to all routes.
 
 ##### How it works
 
-Whenever exception occurs, let's say `RequestNotFoundException`. This occurs when request url does not matches with any route in an application. Nishchay first tries to find handler method with name as exception class in located exception handler class. In this case, Nishchay finds `requestNotFoundException` method, if there's no method then `handlerAll` is called.
+Whenever exception occurs, let's say `RequestNotFoundException`. This occurs when request url does not matches with any route in an application. Nishchay first tries to find handler method with name as exception class in located exception handler class (For this global exception handler will be considered). In this case, Nishchay finds `requestNotFoundException` method, if there's no method then `handlerAll` is called.
 
 If exception handler class does not have `handlerAll` and method with name as exception class, then default handler is called.
 
@@ -20,9 +20,9 @@ Exception handlers are located in following order, it uses which matches first.
 
 ##### Handler for route
 
-We can define exception handler for specific route or for all routes within controller. To define exception handler for specific route, define `@ExceptionHandler` on route method. For all routes within controller, define `@ExceptionHandler` annotation on controller.
+We can define exception handler for specific route or for all routes within controller. To define exception handler for specific route, declare `Nishchay\Attributes\Controller\ExceptionHandler` attribute on route method. For all routes within controller, declare same attribute on controller.
 
-Annotation `@ExceptionHandler` has following parameters:
+This attribute has following parameters:
 
 | Parameter | Description                                                                       |
 | --------- | --------------------------------------------------------------------------------- |
@@ -31,9 +31,10 @@ Annotation `@ExceptionHandler` has following parameters:
 
 **NOTE:** Exception handler defined on route completely overrides handler defined on controller.
 
-Below code demonstrates how we define exception handler on controller. Same as applicable for controller method(route).
+Below code demonstrates how we define exception handler on controller. Same applicable for controller method(route).
 
 ```php
+use Nishchay\Attributes\Controller\ExceptionHandler;
 
 #[Controller]
 #[ExceptionHandler(callback: 'exceptionHandler')]
@@ -49,11 +50,11 @@ class NamasteController {
 }
 ```
 
-There won't be any further exception is defined callback method does not exists in controller class. In this case default handler will be called.
+There won't be any further exception if defined callback method does not exists in controller class. In this case default handler will be called.
 
 ##### Exception instance
 
-Exception handler method receives instance of `Detail` class which contains information about exception thrown. Detail class contains following information, all of them accessed by their getter method.
+Exception handler method receives instance of `Nishchay\Handler\Detail` class which contains information about exception thrown. Detail class contains following information, all of them accessed by their getter method.
 
 | Method     | Description                                                         |
 | ---------- | ------------------------------------------------------------------- |
@@ -66,7 +67,7 @@ Exception handler method receives instance of `Detail` class which contains info
 
 ##### Handler class
 
-Defining `@Handler` annotation on class makes it exception handler class. This annotations supports two parameter using which we can assign this class for `global`, `context` and `scope`.
+Declaring `Nishchay\Attributes\Handler\Handler` attribute on class makes that class an exception handler class. This attribute supports two parameter using which we can assign this class for `global`, `context` and `scope`.
 
 Below code demonstrates how we can define exception handler for scope `secure`.
 
@@ -77,14 +78,14 @@ class SecureExceptionHandler {
 //....
 ```
 
-Supported parameters of `@Handler` annotation is listed below:
+Supported parameters of `Handler` attribute is listed below:
 
 | Parameter | Description                                   |
 | --------- | --------------------------------------------- |
 | type      | Can be global, context, scope.                |
 | name      | Applicable for handler for context and scope. |
 
-Parameter name `name` is required when `type` is `context` or `scope`. This should be name of context for handler type for context. For the scope handler this should be name of scope.
+Parameter name _name_ is required when _type_ is _context_ or _scope_. `name` should be name of context for handler type for context. For the scope handler it should be name of scope.
 
 To define method which can handle exception, it should be either same as exception class name with its first letter in small case. Below method handles exception thrown for `RequestNotFoundException`.
 
@@ -106,7 +107,7 @@ public function handlerAll(Detail $detail) {
 
 ##### Handler response
 
-Handler response must return response type same as response type of route. If it does not returns response type same as route, then further response exception is thrown based on response type of route and handler and default exception handler gets called to handle exception thrown because of invalid response type.
+Handler response must return response type same as response type of route. If it does not returns response type same as route, then further response exception is thrown based on response type of route & handler and default exception handler gets called to handle exception thrown because of invalid response type.
 
 To find response type of current request, we can do that by fetching current route method from controller collection. See below code:
 
@@ -119,10 +120,12 @@ $response = Nishchay::getControllerCollection()
         ->getType();
 ```
 
-If exception has occurred before route method is called then calling `Processor::getStageDetail('object')` throws exception. There always be `@Response` for all routes. Even if we don't define `@Response` annotation on route, Nishchay assigns it with default response for the route.
+If exception has occurred before route method is called then calling `Processor::getStageDetail('object')` throws exception.
+
+There always be `Response` for all routes. Even if we don't declare `Response` attribute on route, Nishchay assigns it with default response for the route.
 
 ##### Conflict
 
 When we try to define handler of same type then exception is thrown. Nishchay does not allow duplicate exception handler of same type.
 
-We can have only one global exception handler per application. There should be only one handler per context and scope. Suppose if we have already defined handler for scope named _Secure_, defining handler for scope again results in an exception.
+We can have only one global exception handler per application. There should be only one handler per context and scope. Suppose if we have already defined handler for scope named _Secure_, defining again handler for this scope, results in an exception.

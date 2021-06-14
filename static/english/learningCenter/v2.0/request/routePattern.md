@@ -1,6 +1,6 @@
 #### Route pattern
 
-Route pattern works on controller method and its parameter. This makes route annotation to be optional if controller is following any predefined or custom pattern. Nishchay has few predefined route pattern which application can use. This patterns are listed below:
+Route pattern works on controller method and its parameter. This makes route attribute to be optional if controller is following any predefined or custom pattern. Nishchay has few predefined route pattern which application can use. This patterns are listed below:
 
 1. Action
 2. Action method
@@ -11,7 +11,7 @@ Route pattern iterates over each method of controller and looks for its paramete
 
 ##### Use pattern
 
-To make controller follow route pattern, define it in `pattern` parameter of `@Route` annotation.
+To make controller follow route pattern, define it in `pattern` parameter of `Route` attribute.
 
 ```php
 

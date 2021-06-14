@@ -26,7 +26,7 @@ This will install Nishchay inside learningNishchay directory.
 
 ##### Create Route
 
-To create route, you first need to create method in controller class. After that create [@route](/learningCenter/annotations/request/route) annotation on method. Code example is shown below.
+To create route, you first need to create method in controller class. After that declare `Route` attribute on method. Code example is shown below.
 
 ```php
 use Nishchay\Attributes\Controller\Controller;

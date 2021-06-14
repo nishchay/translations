@@ -517,7 +517,7 @@ Calling route path without GET parameter _param2_ will result in _Route not foun
 
 `Nishchay\Attributes\Controller\RequiredGet` attribute is for requiring GET parameter and `Nishchay\Attributes\Controller\RequiredPost` attribute is for requiring POST parameter.
 
-We can also define both of these annotations on controller class and it will be applied to all routes within controller.
+We can also declare both of these attributes on controller class and it will be applied to all routes within controller.
 
 ##### Only GET/POST parameter
 

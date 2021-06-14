@@ -776,11 +776,11 @@ Events are executed on specific action. Action can be insert, update or remove. 
 `AfterChange` and `BeforeChange` both have same parameter which are listed below:
 | Parameter | Description |
 | ----------- | ----------- |
-| callback | Can be method name of same class or it can be in `{class}::{method}` format. If annotation is defined on method then this parameter will be discarded. |
+| callback | Can be method name of same class or it can be in `{class}::{method}` format. If attribute is declared on method then this parameter will be discarded. |
 | priority | Priority of events |
 | for | Event for which action(insert, update, remove). By default action event will be considered for all actions |
 
-Both event attributes can be declared on entity class or method. When annotation defined on method, callback parameter will be discarded.
+Both event attributes can be declared on entity class or method. When attribute declared on method, callback parameter will be discarded.
 
 **NOTE:** Unlike other attribute `BeforeChange` and `AfterChange` can be defined multiple times.
 

@@ -221,7 +221,7 @@ Response::setStatus(404)
 
 ###### Set Content Type
 
-Using `setContentType` we can set content type of response. This is required in the case route response type is `null`, as set in `@Response` annotation.
+Using `setContentType` we can set content type of response. This is required in the case route response type is `null`, as set in `Response` attribute.
 
 ```php
 Response::setContentType('application/json')
