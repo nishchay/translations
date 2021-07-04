@@ -1,6 +1,6 @@
 #### Request parameter
 
-Class `Nishchay\Http\Request\Request` is used for fetching   GET, POST request parameters. It can also be used to fetch request file.
+Class `Nishchay\Http\Request\Request` is used for fetching GET, POST request parameters. It can also be used to fetch request file.
 
 ##### GET parameter
 
