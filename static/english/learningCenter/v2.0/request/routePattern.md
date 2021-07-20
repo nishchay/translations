@@ -11,15 +11,15 @@ Route pattern iterates over each method of controller and looks for its paramete
 
 ##### Use pattern
 
-To make controller follow route pattern, define it in `pattern` parameter of `Route` attribute.
+To make controller follow route pattern, define it in `pattern` parameter of `Nishchay\Attributes\Controller\Routing` attribute.
 
 ```php
 
-#[Route(prefix: 'user', pattern: 'action')]
+#[Routing(prefix: 'user', pattern: 'action')]
 class UserController {
 ```
 
-Prefixing route is not required.
+Prefixing route is optional.
 
 ##### Action
 
@@ -29,7 +29,7 @@ This pattern creates route if method name in controller starts with `action`.
 
 ```php
 
-#[Route(prefix: 'user', pattern: 'action')]
+#[Routing(prefix: 'user', pattern: 'action')]
 class UserController {
 
     public function actionIndex(){
@@ -56,7 +56,9 @@ Note that `actionIndex` results in `/` path. Route created using this pattern al
 
 ##### Action method
 
-Pattern name: `actionMethod`. This pattern creates route along with optional HTTP method. This pattern follows `action{?HTTP_METHODS}{RoutePath}`.
+Pattern name: `actionMethod`.
+
+This pattern creates route along with optional HTTP method. This pattern follows `action{?HTTP_METHODS}{RoutePath}`.
 
 ```php
 public function actionGetUser() {
@@ -66,7 +68,9 @@ public function actionGetUser() {
 
 For above method `user` route will be created which will accept only `GET` request.
 
-This pattern also allows creating route with multiple supported HTTP methods. To create route with multiple supported HTTP methods, it should be concated without space but HTTP method name should be in camel case only. See below example to understand how multiple http methods are created.
+This pattern also allows creating route with multiple supported HTTP methods.
+
+To create route with multiple supported HTTP methods, it should be concatenated without space but HTTP method name should be in camel case only. See below example to understand how multiple http methods are created.
 
 ```php
 public function actionGetPostUser() {
@@ -80,9 +84,11 @@ As HTTP method part is optional in this pattern, omitting it creates route which
 
 ##### Action method parameter
 
-Pattern name: `actionMethodParameter`. This pattern is an improvement to `actionMethod` patern allowing plceholder to be defined in route path using method parameters. Method parameter which has scaler type hint are considered placeholder segment for the route.
+Pattern name: `actionMethodParameter`.
 
-This pattern iterates over each method parameter for creating placeholder segment. It stops when it encounters non scaler type hint for the parameter. Below are supported scaler types:
+This pattern is an improvement to `actionMethod` pattern allowing placeholder to be defined in route path using method parameters. Method parameter which has scaler type are considered placeholder segment for the route.
+
+This pattern iterates over each method parameter for creating placeholder segment. It stops when it encounters non scaler type for the parameter. Below are supported scaler types:
 
 1. String
 2. Int
@@ -115,7 +121,9 @@ In the case of array data type, as its value considered as enum values which sti
 
 ##### CRUD
 
-Pattern name: `crud`. This allow creating crud route based on method name only. When method name exactly matches below supported method name then it creates route associated with it.
+Pattern name: `crud`.
+
+This allow creating crud route based on method name only. When method name exactly matches below supported method name then it creates route associated with it.
 
 | Method Name | Route   | HTTP Method |
 | ----------- | ------- | ----------- |
@@ -125,11 +133,13 @@ Pattern name: `crud`. This allow creating crud route based on method name only. 
 | update      | `/{id}` | PUT         |
 | delete      | `/{id}` | DELETE      |
 
-For this pattern, method with name other than above are ignored. But still you can define route annotation and create route within this controller.
+For this pattern, method with name other than above are ignored. But still you can define route attribute and create route within this controller.
 
 ##### Pattern overriding
 
-Although pattern creates route based on its route pattern being used. We can override this behaviour by defining route annotation on method. All predefined route pattern allows defining route annotation on method. To better understand how we can override route pattern let's start with basic route pattern `action`.
+Although pattern creates route based on its route pattern being used. We can override this behaviour by defining route attribute on method. All predefined route pattern allows defining route attribute on method.
+
+To better understand how we can override route pattern let's start with basic route pattern `action`.
 
 ```php
 public function actionUser() {
@@ -137,9 +147,9 @@ public function actionUser() {
 }
 ```
 
-Above results in `@Route(path='user')` annotation. As this rotue is created with only parameter called `path`, we can override this parameter defining route with different path.
+Above results in `Route(path: 'user')` attribute. As this route is created with only parameter called `path`, we can override this parameter defining route with different path.
 
-Overriding behaviour is different for each pattern, suppose for an example `actionMethod` pattern which creates route along with HTTP method if any defined on it. `@Route` annotation in this case gets created with two parameters `path` and `type` parameter. We can override any of these parameter or both of the parameter.
+Overriding behaviour is different for each pattern, suppose for an example `actionMethod` pattern which creates route along with HTTP method. `Route` attribute in this case gets created with two parameters `path` and `type` parameter. We can override any of these parameter or both of the parameter.
 
 ```php
 public function actionGetUser() {
@@ -147,7 +157,7 @@ public function actionGetUser() {
 }
 ```
 
-This results in `@Route(path='user',type=GET)` annotation. To have different path than above and keep the HTTP method as it is we can define rotue with only `path` parameter.
+This results in `Route(path: 'user',type: 'GET')` attribute. To have different path than above and keep the HTTP method as it is we can define route with only `path` parameter.
 
 ```php
 
@@ -163,9 +173,9 @@ We can override only HTTP method by defining route with only `type` parameter.
 
 Apart from using predefined route pattern, we can define our pattern and then use in an application.
 
-In `routes.php` setting file under `patterns` we can define list of route pattern to be used within application where key becomes name of route pattern.
+In `routes.php` setting file, under `patterns` we can define list of route pattern to be used within application where key becomes name of route pattern.
 
-Route pattern is created setting values of below configuration:
+Route pattern is created based on values of below configuration:
 
 1. route
 2. namedscope
@@ -177,13 +187,13 @@ Based on value of above setting, we can create various kind of route pattern.
 
 ###### route
 
-This setting is used of `@Route` annotation on controller method. If set value to `true` it will force controller to define route annotation to be defined on method.
+This setting is used of `Route` attribute on controller method. If set value to `true` it will force controller to define route attribute to be defined on method.
 
 Using `null` makes it optional.
 
 ###### Namedscope
 
-Setting value of this to `true` forces route method to define `@namedscope` on it. This is useful if we are creating pattern and want to have all routes belongs to at least on scope.
+Setting value of this to `true` forces route method to declare `namedscope` attribute on it. This is useful if we are creating pattern and want to have all routes belongs to at least on scope.
 
 We can also leave `namedscope` optional by setting value to `null`.
 
@@ -200,19 +210,19 @@ We can specify list of scope which will be applied to all routes which follow cr
 
 ###### service
 
-This settings controls `@Service` annotation to make it required, optional or disabled.
+This settings controls `Service` attribute to make it required, optional or disabled.
 
 1. Set `null` to make it optional
 2. Set `true` to force it to be defined on method.
-3. Set `false` to disallow annotation.
+3. Set `false` to disallow attribute.
 
 ###### response
 
 This setting allow controlling of what kind of response should be generated by route which follows created pattern.
 
-We can configure pattern to allow only response which mentioned in this setting. To leave it to route, we can set it to `null` which will make `@Response` annotation optional.
+We can configure pattern to allow only response which mentioned in this setting. To leave it to route, we can set it to `null` which will make `Response` attribute optional.
 
-To force annotation to be defined on method set value to `true`.
+To force attribute to be defined on method set value to `true`.
 
 We can also set response type and make override disabled. by setting below setting:
 
@@ -227,7 +237,7 @@ We can also set response type and make override disabled. by setting below setti
 
 When pattern iterates over each method, this method get called with two arguments `className` and `methodName`.
 
-This method should return route path as string or route annotation in an array.
+This method should return instance of `Nishchay\Attributes\Controller\Method\Route` attribute.
 
 ###### Return route path only
 
@@ -235,30 +245,23 @@ This method should return route path as string or route annotation in an array.
 return 'pathName';
 ```
 
-###### Return route annotation
+###### Return route attribute
 
 ```php
-return [
-    'path' => 'path',
-    'type' => 'GET'
-];
+return new Route(path: 'PathName');
 ```
 
-Notice that we can return route annotation with all supported parameters. Where key represents route annotation parameter name.
+###### Return route and placeholder attribute
 
-###### Return route and placeholder annotation
-
-If prepared route contains placeholder segment then you must return `@Placeholder` along with `@Route` annotation.
+If prepared route contains placeholder segment then you must return `Nishchay\Attributes\Controller\Method\Placeholder` attribute along with `Route`attribute.
 
 ```php
 return [
-    'route' => [
-        'path' => 'user/{userId}/{action}'
-    ]
-    'placeholder' => [
+    'route' => new Route(path: 'user/{userId}/{action}')
+    'placeholder' =>  new Placeholder([
         'userId' => 'int',
         'action' => 'string'
-    ]
+    ])
 ];
 ```
 
@@ -268,4 +271,4 @@ To ignore method to consider as route, return `false`.
 
 ###### Leave it to controller
 
-To leave it controller method, return `null`. In this case controller method is considered as route only if it has `@Route` annotation defined on it.
+To leave it controller method, return `null`. In this case controller method is considered as route only if it has `Route` attribute declared on it.
