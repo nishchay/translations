@@ -1,0 +1,10 @@
+{
+  "inGameId": {
+    "notExists": "Player with in game id {inGameId} is not registered in nilms."
+  },
+  "team": {
+    "invalid": "Team does not exists.",
+    "isUsed": "You can update team which is participated in tournament.",
+    "nameTaken": "Team name already take, please choose different name."
+  }
+}

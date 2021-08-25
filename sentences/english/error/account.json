@@ -1,7 +1,7 @@
 {
   "email": {
     "required": "Enter email",
-    "invalid": "Please enter valid email",
+    "invalid": "Email is not valid",
     "githubWithoutPassword": "Account is registered using github, please login using github.",
     "notEmpty": "You can't make this empty!",
     "alreadyTaken": "Email already been registered. Please try login using same email."
@@ -65,5 +65,23 @@
     "title": "Account not verified",
     "description": "You need verify your email to access features. You might have received an email, if not please click below to receive it again.",
     "button": "Get verification email"
+  },
+  "scope": {
+    "missing": "Scope is required",
+    "invalid": "Invalid scope passed"
+  },
+  "user": {
+    "not-active": "Account is not active",
+    "not-verified": "Account is not verified"
+  },
+  "serviceToken": {
+    "required": "Service token required",
+    "expired": "Service token expired",
+    "invalid": "Invalid service token"
+  },
+  "payment": {
+    "amount": {
+      "invalid": "Invalid amount"
+    }
   }
 }

@@ -1,0 +1,32 @@
+{
+  "name": {
+    "required": "Please enter tournament name"
+  },
+  "mode": {
+    "required": "Please choose game mode"
+  },
+  "maxParticipants": {
+    "required": "Please enter max participant"
+  },
+  "rounds": {
+    "required": "Please enter number of rounds"
+  },
+  "startDate": {
+    "required": "Please enter start date"
+  },
+  "participationEndDate": {
+    "required": "Please enter participation end date"
+  },
+  "matches": {
+    "required": "Please organize rounds"
+  },
+  "invalidTournamentId": "Invalid tournamentId",
+  "notLeading": "You are not leading any team",
+  "maxParticipation": {
+    "reached": "Slot is full"
+  },
+  "participate": {
+    "teamAlready": "Your team already have participated",
+    "playerAlready": "Player from your team have already participated in tournament"
+  }
+}
