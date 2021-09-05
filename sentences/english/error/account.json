@@ -21,7 +21,7 @@
     "invalid": "Invalid link",
     "expired": "Link expired",
     "used": "Link already used",
-    "limit30min": "Can't send verification email. Only one send is allowed per 30 minutes.",
+    "limit30min": "Can't send verification email. Only one send is allowed per 10 minutes.",
     "limit24hrs": "Can't send verification email. Daily send limit has been reach for your account."
   },
   "resetPassword": {
