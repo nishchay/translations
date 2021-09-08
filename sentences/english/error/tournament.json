@@ -21,9 +21,9 @@
     "required": "Please organize rounds"
   },
   "invalidTournamentId": "Invalid tournamentId",
-  "notLeading": "You are not leading any team",
+  "notLeading": "Please create team first",
   "maxParticipation": {
-    "reached": "Slot is full"
+    "reached": "Not slot available to participate"
   },
   "participate": {
     "teamAlready": "Your team already have participated",
