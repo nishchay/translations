@@ -1,6 +1,6 @@
 {
   "game": {
-    "notAdded": "Please add your game detail first"
+    "notAdded": "Please add your game detail first. You can do that from 'Profile > Game Detail' menu"
   },
   "inGameId": {
     "notExists": "Player with in game id {inGameId} is not registered in nilms."
