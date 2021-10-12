@@ -83,5 +83,8 @@
     "amount": {
       "invalid": "Invalid amount"
     }
+  },
+  "discord": {
+    "emailRequired": "Please add email address in your discord account"
   }
 }
