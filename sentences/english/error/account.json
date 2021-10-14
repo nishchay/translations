@@ -85,6 +85,7 @@
     }
   },
   "discord": {
-    "emailRequired": "Please add email address in your discord account"
+    "emailRequired": "Please add email address in your discord account",
+    "connectedWithOther": "Discord account associated with another account"
   }
 }
