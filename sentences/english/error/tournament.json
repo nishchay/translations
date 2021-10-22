@@ -29,6 +29,8 @@
     "teamAlready": "Your team already have participated",
     "playerAlready": "Player from your team have already participated in tournament",
     "notEnoughBalance": "Please add money to participate",
-    "notificationNotSet": "Notification preference not set"
+    "notificationNotSet": "Notification preference not set",
+    "notRegistered": "Player not registered on website",
+    "notEnoughPlayers": "Your team has less than 4 players"
   }
 }

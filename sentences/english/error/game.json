@@ -13,7 +13,8 @@
       "invalid": "Invalid join code.",
       "own": "You can not join your own team.",
       "full": "Team is full. You can not join this team.",
-      "already": "You already have joined this team."
+      "already": "You already have joined this team.",
+      "noDiscord": "Your account must be connected to discord to join team."
     }
   }
 }
