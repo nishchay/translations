@@ -31,6 +31,7 @@
     "notEnoughBalance": "Please add money to participate",
     "notificationNotSet": "Notification preference not set",
     "notRegistered": "Player not registered on website",
-    "notEnoughPlayers": "Your team has less than 4 players"
+    "notEnoughPlayers": "Your team has less than 4 players",
+    "noDiscord": "Player has not connected discord account"
   }
 }
