@@ -33,5 +33,6 @@
     "notRegistered": "Player not registered on website",
     "notEnoughPlayers": "Your team has less than 4 players",
     "noDiscord": "Player has not connected discord account"
-  }
+  },
+  "notEnoughPermission": "Admin permission missing on bot. Please check bot permission on discord."
 }
