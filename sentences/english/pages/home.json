@@ -1,88 +1,158 @@
 {
-  "onlyNeed": {
-    "light": "We only need",
-    "bold": "One Nishchay"
+  "hero": {
+    "eyebrow": "Open source · New BSD license · PHP 8",
+    "titleLight": "Decide.",
+    "titleBold": "Then build.",
+    "tagLine": "<span>Nishchay</span> means “decision”. It is an open structure PHP framework: choose MVC, HMVC or design your own structure, and start building.",
+    "primaryButton": "Get started",
+    "secondaryButton": "Contribute",
+    "copy": "Copy command"
   },
-  "tagLine": "Nishchay is <span>Open structure php framework</span> which helps you achieve your aim of building something awesome.",
-  "easyInstall": {
-    "title": "Installation",
-    "latestRelease": {
-      "title": "Download",
-      "download": "Download",
-      "then": "then extract in your project directory and <a href='{link}'>create encryption key.</a>"
+  "facts": {
+    "release": {
+      "value": "Latest release",
+      "label": "Latest framework release"
     },
-    "composer": {
-      "title": "Using composer",
-      "step1": "Install <a href='{link}' target='blank'>composer</a>",
-      "step2": "Execute <code>composer create-project nishchay/nishchay</code> in your project directory via console window."
+    "license": {
+      "value": "New BSD",
+      "label": "Free and open source"
     },
+    "php": {
+      "value": "PHP 8.0+",
+      "label": "Built on native attributes"
+    },
+    "structure": {
+      "value": "Your structure",
+      "label": "MVC, HMVC or your own"
+    }
+  },
+  "showcase": {
+    "title": "Attributes, not boilerplate",
+    "subTitle": "Routes and entities are declared with PHP attributes, right next to the code they describe.",
+    "route": {
+      "title": "Routes",
+      "text": "Mark a public method with <code>Route</code> and it handles the request."
+    },
+    "entity": {
+      "title": "Entities",
+      "text": "Map a class to a table and describe each property once."
+    },
+    "console": {
+      "title": "Console",
+      "text": "Generate code and inspect your application from the terminal."
+    }
+  },
+  "features": {
+    "title": "Why Nishchay",
+    "subTitle": "Everything you need to build web applications and REST services, with the structure left up to you.",
+    "openStructure": {
+      "title": "Open structure",
+      "text": "Use MVC, HMVC or design your own. Controllers, models, events and views all follow the structure you define."
+    },
+    "database": {
+      "title": "Entities and queries",
+      "text": "Map entity classes to tables with read-only, required and derived properties. Build simple to complex queries, with built-in caching and optional encryption of sensitive values."
+    },
+    "session": {
+      "title": "Flexible sessions",
+      "text": "Read-limit, till-next-request, scope and conditional sessions, stored in files, a database or a cache."
+    },
+    "webService": {
+      "title": "Web services",
+      "text": "Turn the whole application, or selected routes, into a web service with JSON or XML responses, token-based access, field filtering and custom response formats."
+    },
+    "maintenance": {
+      "title": "Maintenance modes",
+      "text": "Pause the application by browser, time range, date range or callback, while keeping chosen routes available."
+    },
+    "console": {
+      "title": "Console commands",
+      "text": "Create controllers and entities, inspect routes and events, and run GET routes from the terminal, which suits cron jobs."
+    },
+    "moreTitle": "And much more",
+    "more": {
+      "item1": "Caching",
+      "item2": "Events",
+      "item3": "Dependency injection",
+      "item4": "Localization",
+      "item5": "Logging",
+      "item6": "Mail",
+      "item7": "CSRF protection",
+      "item8": "Validation",
+      "item9": "Form builder"
+    }
+  },
+  "steps": {
+    "title": "Up and running in three steps",
     "install": {
-      "title": "Setup guide",
-      "description": "Go to <a href='{link}'>learning center</a> and follow installation based on your operating system and how do you want to install."
+      "title": "Install",
+      "text": "Create a project with Composer, or <span class=\"download-link\" id=\"appDownload\">download the latest release</span> ({version}).",
+      "note": "Need help? See the <a href='{link}'>installation guides</a>."
+    },
+    "configure": {
+      "title": "Configure",
+      "text": "Create your encryption key and set up your environment.",
+      "link": "Encryption key guide"
+    },
+    "build": {
+      "title": "Build",
+      "text": "Follow the get-started guide and create your first route.",
+      "link": "Open the guide"
     }
   },
-  "feature": {
-    "title": "Why nishchay",
+  "learning": {
+    "title": "Learn at your own pace",
+    "text": "The Learning Center documents every feature topic by topic. Sign in to track your reading progress and keep private notes on any topic.",
     "list": {
-      "openStructure": {
-        "title": "Open Structure",
-        "description": "Open structure allow you to create your own kind of application structure or you can use existing application structure.<br/>Everything including controller, model, event, views, template etc. follows structure we define.<br/>This way our application supports only things which are defined in structure definition."
-      },
-      "database": {
-        "title": "Database",
-        "description": "Entity class which maps to database table and build simple to complex query using entity query builder. Query builder which directly works with database table.<br/> In built caching for both entity and normal query builder. Apart from this entity also has events, PII encryption and more."
-      },
-      "session": {
-        "title": "Session",
-        "description": "7 kinds of sessions which includes read limit session which expires after it's read limit is reached. Other sessions are like till next request, flash, scope, context and more.<br/>Nishchay also allows session data to be stored in files, DB and cache and you can create your own storage."
-      },
-      "maintenanceModes": {
-        "title": "Maintenance modes",
-        "description": "Put application into maintenance mode by various ways. Such maintenance modes are like browser level which allows application to be go into maintenance for list of browsers, all browser versions, range of versions and more.<br/> Other maintenance modes are timed based or based on callback method. Nishchay also allows exception for list of routes, route belongs to scope or context so that it can be executed even in maintenance mode."
-      },
-      "webService": {
-        "title": "Web service/REST API",
-        "description": "Apart from REST FULL route Nishchay provides web service features like response filter based on request, token based service, service response format. In built OAuth token generation and validation for the services including scope for the service. <br/>Using allowed method type we can also create GET, POST, PUT or other service to provide various operation on same route.<br/>Using response type we can create JSON/XML response."
-      },
-      "consoleCommand": {
-        "title": "Console command",
-        "description": "Console command allow us to create route, controller, entity and form.<br/>Create entity from database table and form using entity class.<br/>It can also be use for creating empty, CRUD or we can create it from template.<br/> It can also be used to find routes, controller, events and handler info of an application.<br/>Use console command to run route which is useful for CRON jobs."
-      }
-    }
+      "docs": "Documentation for every feature",
+      "progress": "Reading time and progress tracking when you are signed in",
+      "notes": "Private notes on any topic"
+    },
+    "button": "Open the Learning Center"
   },
-  "learnMore": "Learn more",
-  "join": {
-    "title": "Join community",
-    "tagLine": "Take up Nishchay & bring your ideas to reality.",
-    "buttonText": "Sign up"
+  "blogs": {
+    "title": "From the blog",
+    "readMore": "Read more",
+    "moreBlogs": "Read more blogs"
   },
-  "accountType": {
+  "news": {
+    "title": "Technical news"
+  },
+  "community": {
+    "title": "Join the community",
+    "subTitle": "Nishchay is built in the open. Choose how you want to take part.",
     "contributor": {
       "title": "Contributor",
-      "tagLine": "Contribute to any of the following to promote account to contributor.",
+      "tagLine": "Make any of the following contributions to be promoted to a contributor account.",
       "list": {
-        "line-1": "Contribute to framework",
-        "line-2": "Help us translating to multiple language or improve existing content",
-        "line-3": "Donate an amount"
+        "item1": "Contribute to the framework",
+        "item2": "Translate content into other languages or improve existing content",
+        "item3": "Make a donation"
       }
     },
     "developer": {
       "title": "Developer",
-      "tagLine": "You can create normal account which is called developer account by default.",
+      "tagLine": "Every new account is a developer account by default.",
       "list": {
-        "line-1": "Add note to any topic in learning center",
-        "line-2": "Your reading progress will be saved and can be seen in your profile",
-        "line-3": "Get suggestions in profile"
+        "item1": "Add notes to any topic in the Learning Center",
+        "item2": "Save your reading progress and see it in your profile",
+        "item3": "Get suggestions in your profile"
       }
     },
     "organization": {
       "title": "Organization",
-      "tagLine": "In short time you will be able join as an organization.",
+      "tagLine": "Organization accounts are coming soon.",
       "list": {
-        "line-1": "Submit project to get listed in website",
-        "line-2": "Track reading progress of your developer",
-        "line-3": "Code review by experts"
+        "item1": "Submit your project to be listed on the website",
+        "item2": "Track the reading progress of your developers",
+        "item3": "Get code reviews from experts"
       }
     }
+  },
+  "join": {
+    "title": "Make your decision",
+    "tagLine": "Take up Nishchay and bring your ideas to life.",
+    "buttonText": "Sign up",
+    "loggedIn": "Thanks for being part of Nishchay."
   }
 }
