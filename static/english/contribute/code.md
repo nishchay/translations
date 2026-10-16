@@ -21,11 +21,9 @@ Make sure you have following in your machine
 
 ##### Choose work
 
-Visit [Nishchay Atlassian Jira](https://nishchay.atlassian.net/jira/software/c/projects/NF/issues?filter=allissues) and choose any task you want to work on.
+Visit [Nishchay framework issues](https://github.com/nishchay/framework/issues) on GitHub and choose any issue you want to work on.
 
-If you have found an issue or thing you want to improve which does not exists in list, create new case and start working on it.
-
-If you want Jira account, please send email to [support@nishchay.io](mailto:support@nishchay.io) from your registered email address(Nishchay website). 
+If you have found a problem or something you want to improve which does not exist in the list, [create a new issue](https://github.com/nishchay/framework/issues/new) and start working on it.
 
 
 ##### Install development version
@@ -57,7 +55,7 @@ git remote add upstream git://github.com/nishchay/framework.git
 ```
 5.  Create new branch from master or branch of specific version.
 
-Please check if work you to do if already exists in [Nishchay Atlassian Jira](https://nishchay.atlassian.net/jira/software/c/projects/NF/issues?filter=allissues), Put branch name same as issue number, example `NF-{number}`
+Please check if the work you want to do already exists in [Nishchay framework issues](https://github.com/nishchay/framework/issues). Name your branch after the issue you are working on, for example `issue-{number}`.
 
 ```console
 git checkout -b BRANCH_NAME master
@@ -93,7 +91,7 @@ git push origin BRANCH_NAME
 
 Create pull request with following points
 
-1. Create [pull request](https://github.com/nishchay/translations/compare)
+1. Create [pull request](https://github.com/nishchay/framework/compare)
 2.  Explain your work including if any pros or cons
 3.  If you are adding feature, PR must contain how new feature can be used.
-4.  If there's JIRA case for also add link to JIRA case
+4.  If there's a GitHub issue for your work, add a link to it

@@ -1,32 +1,78 @@
 {
-    "title": "Contribute",
-    "subTitle": "Many ways to help world",
+  "title": "Contribute",
+  "hero": {
+    "eyebrow": "Open source",
+    "titleLight": "Help build",
+    "titleBold": "Nishchay",
+    "text": "Nishchay is built in the open. Write code, improve the docs, report a bug or share an idea: there is a place for you.",
+    "primaryButton": "Read the code guide",
+    "secondaryButton": "View on GitHub"
+  },
+  "ways": {
+    "title": "Ways to contribute",
+    "subTitle": "Pick whatever suits your skills and your time.",
     "newFeature": {
-        "title": "New feature",
-        "description": "If you have an idea for new feature or want to update/upgrade existing feature then visit our portal to submit your requirement."
+      "title": "Suggest a feature",
+      "text": "Have an idea for a new feature, or an upgrade to an existing one? Open an issue on GitHub and describe what you need.",
+      "link": "Open an issue"
     },
     "reportBug": {
-        "title": "Report bug",
-        "description": "Did you found something not working or something not working as expected? Let us know about issue you are facing."
+      "title": "Report a bug",
+      "text": "Found something that is broken or not working as expected? Let us know what you ran into.",
+      "link": "Report an issue"
     },
     "fixBug": {
-        "title": "Fix bug",
-        "description": "You can directly clone our github repo and start working on it. Once you fix work, push changes and create pull request."
+      "title": "Fix a bug",
+      "text": "Clone the GitHub repository and start working on it. When you are done, push your changes and create a pull request.",
+      "link": "Find an issue"
     },
     "codeReview": {
-        "title": "Correct us/Code review",
-        "description": "Everybody makes mistake but who finds mistake. On our github repo you can always comment and code review submitted code."
+      "title": "Review code",
+      "text": "Everybody makes mistakes, and a second pair of eyes finds them. Comment on and review submitted code in our GitHub repository.",
+      "link": "Review pull requests"
+    }
+  },
+  "start": {
+    "title": "Get hands-on",
+    "subTitle": "Guides and ways to support the project.",
+    "code": {
+      "title": "Code contribution",
+      "text": "New here, or unfamiliar with our coding guidelines? Learn how we work and how to submit your changes.",
+      "link": "Read the guide"
     },
-    "contribution": {
-        "title": "Code contribution",
-        "description": "Learn if you are first timer or unaware of our coding guidelines and process of implementation."
-    },
-    "updateContent": {
-        "title": "Update content",
-        "description": "You can edit each word, line and paragraph of this website including learning center documentation."
+    "content": {
+      "title": "Update content",
+      "text": "Edit any word, line or paragraph on this website, including the Learning Center documentation.",
+      "link": "Read the guide"
     },
     "donate": {
-        "title": "Donate",
-        "description": "Send us amount so that we can spend it on our website for maintenance, seminar & marketing work."
+      "title": "Donate",
+      "text": "Help us cover website maintenance, seminars and marketing.",
+      "badge": "Not available yet"
     }
+  },
+  "how": {
+    "title": "How contributing works",
+    "subTitle": "The same three steps for code changes.",
+    "choose": {
+      "title": "Choose your work",
+      "text": "Pick an open issue on GitHub, or create a new one if you found something that is not listed.",
+      "note": "Not sure where to begin? Ask on our Discord."
+    },
+    "fork": {
+      "title": "Fork and branch",
+      "text": "Fork the framework repository on GitHub and create a branch named after the issue you are working on.",
+      "note": "Follow PSR-1, PSR-2 and PSR-4, plus our own standards."
+    },
+    "submit": {
+      "title": "Open a pull request",
+      "text": "Push your branch and open a pull request. Explain your work, link the issue, and show how any new feature is used."
+    }
+  },
+  "cta": {
+    "title": "Every contribution counts",
+    "text": "Thank you for helping Nishchay grow.",
+    "primaryButton": "Browse open issues",
+    "secondaryButton": "Read the code guide"
+  }
 }
