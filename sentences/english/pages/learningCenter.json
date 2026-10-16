@@ -1,39 +1,95 @@
 {
-  "title": "Learning center",
-  "documentation": {
-    "title": "Documentation",
-    "description": "Learn about nishchay framework by reading each topic one by one.",
-    "linkTitle": "Start reading"
+  "title": "Learning Center",
+  "hero": {
+    "eyebrow": "Documentation",
+    "titleLight": "Learning",
+    "titleBold": "Center",
+    "text": "Learn Nishchay topic by topic, from installation to your first route and beyond.",
+    "start": "Start reading",
+    "search": "Search the docs"
   },
-  "learningProgress": {
-    "title": "Learning progress",
-    "line-1": "Each topic estimated with average reading time.",
-    "line-2": "Learning center tracks how much time you read each topic. (Only when you are logged in)",
-    "line-3": "Track your learning progress in profile"
+  "paths": {
+    "title": "Choose where to start",
+    "subTitle": "Pick the path that matches what you want to do first.",
+    "install": {
+      "title": "Install",
+      "text": "Set up Nishchay on Linux, macOS or Windows."
+    },
+    "requests": {
+      "title": "Handle requests",
+      "text": "Create controllers and routes that respond to requests."
+    },
+    "database": {
+      "title": "Work with databases",
+      "text": "Map entities to tables and build queries."
+    },
+    "configuration": {
+      "title": "Configure your app",
+      "text": "Learn what each application setting does."
+    }
   },
-  "notes": {
-    "title": "Notes",
-    "line-1": "Notes helps you concenrate on topic and are useful when revising topics in the future.",
-    "line-2": "Add note to any topic for your own use.",
-    "line-3": "Notes are visible to you only."
+  "topics": {
+    "title": "Explore by topic",
+    "subTitle": "Jump straight into any feature.",
+    "session": {
+      "title": "Sessions",
+      "text": "Keep data across requests in files, a database or a cache."
+    },
+    "webService": {
+      "title": "Web services",
+      "text": "Build JSON or XML services with token-based access."
+    },
+    "console": {
+      "title": "Console commands",
+      "text": "Generate code, inspect your app and run cron jobs."
+    },
+    "maintenance": {
+      "title": "Maintenance modes",
+      "text": "Pause your app by browser, time range or callback."
+    },
+    "forms": {
+      "title": "Forms and validation",
+      "text": "Build forms and validate what users submit."
+    },
+    "events": {
+      "title": "Events",
+      "text": "Run code before or after entity changes."
+    },
+    "cache": {
+      "title": "Caching",
+      "text": "Serve repeated data from cache instead of the database."
+    },
+    "localization": {
+      "title": "Localization",
+      "text": "Serve your application in more than one language."
+    }
   },
-  "beginnerSteps": {
-    "title": "Get started steps",
-    "install": "Install",
-    "handleRequests": "Handle requests",
-    "workWithDatabase": "Work with database",
-    "configurations": "Configurations"
+  "benefits": {
+    "title": "Learn your way",
+    "docs": {
+      "title": "Documentation",
+      "text": "Read each topic one by one, with an estimated reading time for every page."
+    },
+    "progress": {
+      "title": "Reading progress",
+      "text": "When you are signed in, the Learning Center tracks the time you spend on each topic. See your progress in your profile."
+    },
+    "notes": {
+      "title": "Private notes",
+      "text": "Add notes to any topic to help you concentrate and revise later. Only you can see them."
+    }
   },
-  "help": {
-    "title": "For help",
+  "support": {
+    "title": "Need a hand?",
+    "subTitle": "Ask questions and see what other developers are building.",
     "discord": {
       "title": "Discord",
-      "description": "Discord lets communicate directly via voice, video, or text. You can join discord to ask your doubts and to know what other developers are doing.",
-      "join": "To join discord click <a href='{link}'>here</a>."
+      "text": "Chat by voice, video or text. Join to ask your questions and see what other developers are working on.",
+      "join": "Join our Discord"
     },
     "whatsapp": {
       "title": "WhatsApp",
-      "description": "If you want direct help, you can also contact us on WhatsApp for any kind of help."
+      "text": "Prefer direct help? Contact us on WhatsApp for any kind of help."
     }
   }
 }
