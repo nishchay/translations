@@ -1,15 +1,21 @@
 {
-  "subTitle": "Login into website",
+  "subTitle": "Log in to continue learning",
   "button": {
     "login": "Login",
     "loginWithGithub": "Login with Github",
     "createAccount": "Create an account"
   },
   "link": {
-    "resetPassword": "Reset your password"
+    "resetPassword": "Forgot your password?"
   },
   "placeholder": {
     "email": "Enter your email",
     "password": "Enter Password"
+  },
+  "title": "Welcome back",
+  "or": "or",
+  "label": {
+    "email": "Email",
+    "password": "Password"
   }
 }
