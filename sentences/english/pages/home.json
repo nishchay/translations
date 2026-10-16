@@ -1,8 +1,8 @@
 {
   "hero": {
     "eyebrow": "Open source · New BSD license · PHP 8",
-    "titleLight": "Decide.",
-    "titleBold": "Then build.",
+    "titleLight": "We only need",
+    "titleBold": "One Nishchay",
     "tagLine": "<span>Nishchay</span> means “decision”. It is an open structure PHP framework: choose MVC, HMVC or design your own structure, and start building.",
     "primaryButton": "Get started",
     "secondaryButton": "Contribute",
