@@ -1,9 +1,9 @@
 {
   "hero": {
-    "eyebrow": "Open source · New BSD license · PHP 8",
+    "eyebrow": "Open source · New BSD license · PHP 8.3+",
     "titleLight": "We only need",
     "titleBold": "One Nishchay",
-    "tagLine": "<span>Nishchay</span> means “decision”. It is an open structure PHP framework: choose MVC, HMVC or design your own structure, and start building.",
+    "tagLine": "<span>Nishchay</span> means “decision”, and one firm decision is all it takes to get where you want. Decide how your project is built, with MVC, HMVC or a structure of your own, then start building.",
     "primaryButton": "Get started",
     "secondaryButton": "Contribute",
     "copy": "Copy command"
@@ -18,7 +18,7 @@
       "label": "Free and open source"
     },
     "php": {
-      "value": "PHP 8.0+",
+      "value": "PHP 8.3+",
       "label": "Built on native attributes"
     },
     "structure": {
@@ -26,12 +26,19 @@
       "label": "MVC, HMVC or your own"
     }
   },
+  "decision": {
+    "title": "One decision, then build",
+    "text1": "Every project starts with one decision that shapes the rest: how it is organised. Nishchay does not make it for you.",
+    "text2": "You describe your structure once, in a single file. Controllers, entities, forms, events and views all follow it. Keep the recommended layout, use MVC or HMVC, or design your own.",
+    "file": "settings/configuration/structure.xml",
+    "link": "Read about open structure"
+  },
   "showcase": {
     "title": "Attributes, not boilerplate",
-    "subTitle": "Routes and entities are declared with PHP attributes, right next to the code they describe.",
+    "subTitle": "Routes and entities are declared with PHP attributes, right next to the code they describe. These are the files the console writes for you.",
     "route": {
       "title": "Routes",
-      "text": "Mark a public method with <code>Route</code> and it handles the request."
+      "text": "A generated controller marks each route with <code>Route</code> and hands the work to the built in CRUD prototype."
     },
     "entity": {
       "title": "Entities",
@@ -39,7 +46,7 @@
     },
     "console": {
       "title": "Console",
-      "text": "Generate code and inspect your application from the terminal."
+      "text": "One command creates the entity, its table, a form and a controller. Then call the API it created."
     }
   },
   "features": {
@@ -47,7 +54,7 @@
     "subTitle": "Everything you need to build web applications and REST services, with the structure left up to you.",
     "openStructure": {
       "title": "Open structure",
-      "text": "Use MVC, HMVC or design your own. Controllers, models, events and views all follow the structure you define."
+      "text": "Decide how your project is organised: MVC, HMVC or your own. Controllers, entities, forms, events and views all follow the structure you define."
     },
     "database": {
       "title": "Entities and queries",
@@ -83,21 +90,27 @@
     }
   },
   "steps": {
-    "title": "Up and running in three steps",
+    "title": "Your first ten minutes",
+    "subTitle": "From nothing to a working API in three steps.",
     "install": {
       "title": "Install",
-      "text": "Create a project with Composer, or <span class=\"download-link\" id=\"appDownload\">download the latest release</span> ({version}).",
-      "note": "Need help? See the <a href='{link}'>installation guides</a>."
-    },
-    "configure": {
-      "title": "Configure",
-      "text": "Create your encryption key and set up your environment.",
-      "link": "Encryption key guide"
+      "text": "Create a project with Composer. It needs PHP 8.3 or newer.",
+      "command": "composer create-project nishchay/nishchay myapp",
+      "note": "Or <span class=\"download-link\" id=\"appDownload\">download the latest release</span> ({version}). Need help? See the <a href='{link}'>installation guides</a>."
     },
     "build": {
-      "title": "Build",
-      "text": "Follow the get-started guide and create your first route.",
-      "link": "Open the guide"
+      "title": "Generate your first resource",
+      "text": "Open your new application in the browser. Its home page walks you through one command that creates an entity, a table, a form and a controller.",
+      "command": "php nishchay prototype -generate -new",
+      "link": "Follow the tutorial"
+    },
+    "choose": {
+      "title": "Choose your path",
+      "text": "Then continue the way you want to build.",
+      "web": "Web application",
+      "rest": "REST API",
+      "data": "Data",
+      "tools": "Structure and tools"
     }
   },
   "learning": {
