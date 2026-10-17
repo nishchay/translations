@@ -4,20 +4,16 @@
     "introduction": "Introduction",
     "installation": {
         "windows": {
-            "composer": "Windows using composer",
-            "withoutComposer": "Windows without composer"
+            "composer": "Windows"
         },
         "ubuntu": {
-            "composer": "Ubuntu using composer",
-            "withoutComposer": "Ubuntu without composer"
+            "composer": "Ubuntu"
         },
         "centos": {
-            "composer": "CentOS using composer",
-            "withoutComposer": "CentOS without composer"
+            "composer": "CentOS / Alma"
         },
         "macos": {
-            "composer": "Mac OS using composer",
-            "withoutComposer": "Mac OS without composer"
+            "composer": "Mac OS"
         }
     },
     "getStarted": "Get Started",

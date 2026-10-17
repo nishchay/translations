@@ -2,26 +2,22 @@
     "introduction": "Learn about nishchay framework like how to handle request, how to handle data, building queries, form validations, CSRF & XSS protection, maintenance modes, exception handling, generating controller, entities and more.",
     "installation": {
         "windows": {
-            "composer": "Install nishchay application in windows machine using composer. This guide explains how to install composer and xampp and then how to configure application in xampp.",
-            "withoutComposer": "Install nishchay application in windows machine without composer. This guide explains how to install xampp and then how to configure application in xampp."
+            "composer": "Install Nishchay on Windows with PHP 8.3 or newer and Composer, natively or in WSL 2, and open the welcome page."
         },
         "ubuntu": {
-            "composer": "Install nishchay application in ubuntu using composer. This guide explains how to install composer, PHP, NGINX and then how to configure application in NGINX server.",
-            "withoutComposer": "Install nishchay application in ubuntu using composer. This guide explains how to install PHP, NGINX and then how to configure application in NGINX server."
+            "composer": "Install Nishchay on Ubuntu with PHP 8.3 or newer, Composer and NGINX, set up your site and open the welcome page."
         },
         "centos": {
-            "composer": "Install nishchay application in CentOS using composer. This guide explains how to install composer, PHP, NGINX and then how to configure application in NGINX server.",
-            "withoutComposer": "Install nishchay application in CentOS using composer. This guide explains how to install PHP, NGINX and then how to configure application in NGINX server."
+            "composer": "Install Nishchay on CentOS, Rocky Linux or AlmaLinux with PHP 8.3 or newer, Composer and NGINX, including SELinux and firewall notes."
         },
         "macos": {
-            "composer": "Install nishchay application in Mac OS using composer. This guide explains how to install composer, PHP, NGINX and then how to configure application in NGINX server.",
-            "withoutComposer": "Install nishchay application in Mac OS using composer. This guide explains how to install PHP, NGINX and then how to configure application in NGINX server."
+            "composer": "Install Nishchay on macOS with Homebrew, PHP 8.3 or newer, Composer and NGINX, set up your site and open the welcome page."
         }
     },
-    "getStarted": "New to nishchay framework or are you gonna use framework for the first, this page will explain each steps from installing to configuration and creating your first page.",
+    "getStarted": "New to Nishchay? Install it, generate and call your first resource in ten minutes, then pick a path for a web application, a REST API, data or tools.",
     "openStructure": "Create your own type of application structure. This can be MVC, HMVC or anything. This makes application higher compatible with future releases.",
     "request": {
-        "requestHandling": "Requests are handled by controller method which has route annotation defined on it. On this page you can learn about how requests are handled, how to create route, how to create route with placeholder url part, how to forward of redirect request.",
+        "requestHandling": "Requests are handled by controller method which has route attribute defined on it. On this page you can learn about how requests are handled, how to create route, how to create route with placeholder url part, how to forward of redirect request.",
         "requestParameter": "Learn how you can fetch request parameters of GET, POST, PUT, DELETE request methods. Here you can also learn request file and server values.",
         "requestStore": "Store data in store and it will available for whole request, these data can fetched, stored, remove from places within an application. These data are also automatically passed to views.",
         "responseHandling": "Learn how route should respond to request. Generate view, JSON or XML response and you can even respond with your type of response."
@@ -62,7 +58,7 @@
     "dependencyInjection": "Inject dependency into object, method or class properties. Resolves method paramter, class properties based on resolve list and also cache object into dependency list.",
     "exceptionHandling": "Handle exception which occurs within an application based on route path, route's scope, context. Also define define global exception handler for an application. We can define as many as exception handler within application.",
     "events": {
-        "events" :"Define event should be called before or after controller or controller method. Event can also be defined for the scope, context or route path. Define any number of events within application."
+        "events": "Define event should be called before or after controller or controller method. Event can also be defined for the scope, context or route path. Define any number of events within application."
     },
     "logger": {
         "logger": "Log message to file or database. Log message like, error message and its detail, info logs and warning logs. Rotate log based on time like daily, weekly, biweekly or monthly."
