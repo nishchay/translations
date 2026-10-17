@@ -1,10 +1,10 @@
-#### Nishchay: decide how your app is built, then build it
+#### We only need One Nishchay
 
-`Nishchay` is an open structure PHP framework, released under the New BSD license in 2020 and written by `Bhavik Patel`. Most frameworks hand you a folder layout and ask you to live with it. Nishchay lets you **define the structure of your application yourself**, then enforces it, so the code stays organised as it grows.
+`Nishchay` is an open structure PHP framework, released under the New BSD license in 2020 and written by `Bhavik Patel`.
 
-It is written for PHP 8 and built on native **attributes**: routes, services, entities and validation are declared on the class or method they belong to. You can use it in personal and commercial projects.
+**Nishchay means _decision_.** Our tagline, _We only need One Nishchay_, says that to achieve what we want we only need one strong decision, and to start working on it. For an application, the decision that shapes everything else is its structure. Most frameworks make that decision for you: they hand you a folder layout and ask you to live with it. Nishchay lets you **define the structure of your application yourself**, then enforces it, so the code stays organised as it grows.
 
-The name means _decision_. It comes from the idea that to do anything, we only need to decide and start working on it.
+It is written for PHP 8.3 and newer and built on native **attributes**: routes, services, entities and validation are declared on the class or method they belong to. You can use it in personal and commercial projects.
 
 ##### A look at the code
 
@@ -95,7 +95,7 @@ composer create-project nishchay/nishchay nishchayApp
 ```
 
 1. Open [Get Started](/learningCenter/getStarted), choose your operating system and what you want to build, and it gives you an installation guide and a reading path. You need PHP 8.3 or newer and Composer.
-2. Create your [first controller and route](/learningCenter/getStarted/web), or a [REST API](/learningCenter/getStarted/restApi).
+2. Build your [first resource](/learningCenter/getStarted/firstResource): one command generates an entity, its table, a form and a controller, and you have a working API. Then write a [web page](/learningCenter/getStarted/web) or your own [API route](/learningCenter/getStarted/restApi) by hand.
 3. Learn how the [request life cycle](/learningCenter/lifeCycle) works, then explore [entities](/learningCenter/data/entity), [validation](/learningCenter/security/validation) and [web services](/learningCenter/service/webService).
 
 ##### Where next

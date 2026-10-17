@@ -1,10 +1,10 @@
-#### Nishchay means 'decision'
+#### We only need One Nishchay
 
 `Nishchay` is an open structure PHP framework released under New BSD license in 2020 developed by `Bhavik Patel`.
-Name of the framework chosen from 'To do anything, we only need to decide and start working on it'.
-As the name suggests Nishchay has numbers of features which helps you to achieve your aim.
 
-##### Open structure
+The name means 'decision', and our tagline, _We only need One Nishchay_, says the rest: to achieve what we want, we only need one strong decision and to start working on it. For an application, that decision is how it is structured. Nishchay lets you make it yourself, and it has numbers of features which help you to achieve your aim.
+
+##### Open structure: your one decision
 1. Open structure allows you to create any kind of application structure like MVC, HMVC or anything.
 2. We can also create our application structure.
 3. This makes the framework most compatible than other frameworks.
