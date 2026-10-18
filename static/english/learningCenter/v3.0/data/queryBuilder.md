@@ -2,542 +2,780 @@
 
 ##### Introduction
 
-Nishchay query builder provides various feature to create simple to complex query. Query builder remains same all supported databases.
+Query builder creates and runs SQL statements **directly on database tables**. It does not use entity classes, so it works for any table, including tables that have no entity. The same code runs on every supported database, because column escaping and statement syntax are handled for each connection.
+
+Values are always sent to the database as bound parameters, never pasted into the statement. This protects the query from SQL injection.
+
+To work with entity classes instead of tables, see [Entity Query](/learningCenter/data/entityQuery).
+
+All examples use these two tables.
+
+```sql
+user (userId, firstName, age, departmentId, city)
+department (departmentId, departmentName, zoneId)
+```
 
 ##### Creating instance
 
-`Query` class is located in `Nishchay\Data` namespace. Query accepts one optional parameter which should be name of database connection name. If we do not pass connection it choses default connection name from database setttings. Query instance created for one connection work for that connection only.
+`Query` is in the `Nishchay\Data` namespace. It accepts one optional argument, the name of a database connection. Without it, the default connection is used. An instance works only with the connection it was created for.
+
 ```php
-$query = new Query('main');
+use Nishchay\Data\Query;
+
+$query = new Query();        # default connection
+$query = new Query('main');  # connection named main
 ```
-Once instance is created it can be used for select, update, insert or delete records.
+
+Every call that runs a statement (`get`, `getOne`, `insert`, `update`, `remove`, `count` and the aggregate methods) **clears the instance**, including the table. Set the table again before reusing it, or create a new instance.
+
+##### Set table
+
+`setTable` sets the table to work on. The second argument is an optional alias for the table.
+
+```php
+$query->setTable('user');
+$query->setTable('user', 'u');
+```
+
+When you use an alias, write columns with it.
+
+```php
+$query->setTable('user', 'u')
+    ->setColumn('u.firstName')
+    ->setCondition('u.age>', 40)
+    ->get();
+```
+
+```sql
+SELECT `u`.`firstName` FROM `user` AS `u` WHERE `u`.`age` > :i0b1
+```
+
+The table can also be a sub query, see _Sub query_ below.
 
 ##### Select
 
 ###### All columns
+
 ```php
 $records = $query->setTable('user')->get();
 ```
-Above will fetch all records from _user_ table. `get` method fetch all matched records from table. Beause we did not applied any condition it selects all records.
+
+`get` runs the statement and returns **an array of objects**, one per row. It returns an empty array when nothing matched.
+
+```php
+foreach ($records as $row) {
+    echo $row->firstName;
+}
+```
+
+Pass a PDO fetch mode to `get` to receive another format, for example `get(PDO::FETCH_ASSOC)` for arrays.
 
 ###### Specific columns
+
 ```php
 $query->setTable('user')
-            ->setColumn(['userId', 'firstName', 'lastName'])
-            ->get();
+    ->setColumn(['userId', 'firstName', 'lastName'])
+    ->get();
 ```
-Above will fetch mentioned columns from user table. Column names should be passed as an array if want to fetch multiple column. If want to select only one column, pass column as string. Above code can also written as.
+
+Pass a string for a single column. Every call adds to the columns set before it, so the next code selects the same columns.
+
 ```php
 $query->setTable('user')
-            ->setColumn('userId')
-            ->setColumn('firstName')
-            ->setColumn('lastName')
-            ->get();
+    ->setColumn('userId')
+    ->setColumn('firstName')
+    ->setColumn('lastName')
+    ->get();
 ```
-Each time we call `setColumn` method, it adds all column names for selecting.
 
 ###### First row
 
-`getOne` method returns first row from all matched records. This method applies LIMIT 1 to SELECT query.
+`getOne` returns the first matched row as an object, or `false` when there is none. It applies `LIMIT 1`.
+
+```php
+$user = $query->setTable('user')
+    ->setColumn(['userId', 'firstName'])
+    ->setCondition('userId', 1)
+    ->getOne();
+```
+
+###### Column alias
+
+Use a string key to name the column in the result.
+
 ```php
 $query->setTable('user')
-            ->setColumn(['userId', 'firstName', 'lastName'])
-            ->getOne();
+    ->setColumn(['userId', 'fname' => 'firstName'])
+    ->get();
 ```
-###### Column Alias
 
-To create an alias of column name, just add key for column name.
+Each row has `userId` and `fname`.
+
+###### Function or expression as column
+
+Column names are escaped by default, so a function would be quoted as a column. Add `Query::AS_IT_IS` at the end of the alias to keep the value exactly as written. An alias is required.
+
 ```php
 $query->setTable('user')
-            ->setColumn(['userId', 'fname' => 'firstName', 'lname' => 'lastName'])
-            ->get();
+    ->setColumn([
+        'total' . Query::AS_IT_IS => 'SUM(' . $query->quote('age') . ' + ' . $query->bindValue(2) . ')'
+    ])
+    ->get();
 ```
-When we set key of any column name, it becomes alias of that column. This key name must be string. Nishchay checks for key type if its string it takes key as alias for column name.
 
-###### Using function on column
-
-Because function argument can contains mixed of column and values. It requires lot of processing to parse escape column name and bind value. Nishchay provides easiest way to use function in query.
-```php
-$query->setTable('summary')
-        ->setColumn(['total'.Query::AS_IT_IS => SUM($query->quote('col1') .' + '. $query->quote('col2') . ' + ' . $query->bindValue(2).')']))
-        ->get();
-```
-This will results in following query for mysql. Escaping of coulmns differs for each database connection.
 ```sql
-SELECT SUM(`col1` + `col2` + :i0b1) as total;
+SELECT SUM(`age` + :i0b1) AS `total` FROM `user`
 ```
-In above php code `quote` method escapes passed value based on database connection. `bindValue` method binds value with unique placeholder name and returns it.
 
-`Query::AS_IT_IS` applying after column alias(key) makes its value to use as it is. If there's no alias then `Query::AS_IT_IS` should be apply before expression.
+`quote` escapes a column or table name for the current connection. `bindValue` stores a value and returns its placeholder. Always build expressions with these two instead of joining raw strings and values.
 
-It is advised to always use `quote` method on column name and `bindValue` for value if we are using expression.
+###### Count, sum, max, min and average
+
+These methods run the statement and return the result directly. They respect the table, joins and conditions you have set.
+
+```php
+$total = $query->setTable('user')->setCondition('age>', 25)->count();
+$all = $query->setTable('user')->count('city');   # counts rows where city is not NULL
+
+$sum = $query->setTable('user')->sum('age');
+$max = $query->setTable('user')->max('age');
+$min = $query->setTable('user')->min('age');
+$avg = $query->setTable('user')->average('age');
+```
+
+`count` returns an integer. `sum` and `average` return the value the database gives, usually a string. `max`, `min` and `average` need rows to work on, so make sure the conditions can match something.
 
 ##### Where
 
-Using `setCondition` method we can apply where clause to query. It supports two parameter. First parameter can be string or array value. If we want to set one clause we can pass column name in first parameter and value in second parameter. When we need to set multiple clause, it can be achieived by passing array of clause in first parameter.
+`setCondition` adds a WHERE clause. The first argument is a column name, or an array for many conditions, and the second is the value. Calling it again adds one more group joined with AND.
 
-###### Simple
 ```php
-$query->setCondition('firstName', 'TestName');
+$query->setCondition('firstName', 'Asha');
+$query->setCondition(['firstName' => 'Asha', 'age' => 30]);
 ```
-It will produce below statement clause.
+
 ```sql
-`firstName` = :i0b2
+`firstName` = :i0b1
+`firstName` = :i0b2 AND `age` = :i0b3
 ```
-Here second is considered as value and it will be bind.
 
-###### Multiple clause
-```php
-$query->setCondition([
-            'firstName' => 'TestName',
-            'lastName' => 'Patel'
-    ]);
-```
-Will produce below statement
-```sql
-`firstName` = :i0b3 AND `lastName` = :i0b4
-```
-When we pass array, then key should be column name or function.
+The array keys must be column names (or expressions, see below). The value is always bound, so it is safe to use input from the user.
 
-###### Using operator
+###### Operators
 
-By defualt condition evaluates to equal clause. We can generate most type of clause. We just need to pass operator at end of left operand.
+Put the operator at the end of the column name. Without an operator, `=` is used.
+
 ```php
 $query->setCondition('age>', 18);
+$query->setCondition(['age>=' => 18, 'age<>' => 30, 'firstName like' => 'A%']);
 ```
-Generates following statement.
+
 ```sql
-`age` > :i0b5
-```
-We can pass any operator at the end of left operand, query builder always checks for operator at the end of left operand. If no operator found at end, it use equal operator.
-
-###### Matching column with another column
-```php
-$query->setCondition('point1' . Query::AS_COLUMN, 'point2');
-```
-When we pass `Query::AS_COLUMN` at end of left operand it treats value as column name and it produce below statement.
-```sql
-`point1` = `point2`
-```
-###### Use right operand as it is
-
-If we need to use value as it is, we have to pass `Query::AS_IT_IS` at end of left operand.
-```php
-$query->setCondition('point1' . Query::AS_IT_IS, 'SUM(' . $query->quote('point2') . ' + 2)');
-```
-And this will result in following statement.
-```sql
-point1` = SUM(`point2` + 2)
-```
-###### Use left operand as it is
-
-Left operand is always considered as column name, but sometimes we need to use function. In this case we have to use left operand as it is. This can be achieived by placing `Query::LEFT_AS_IT_IS` at end of left operand.
-```php
-$query->setCondition('SUM(' . $query->quote('point1') . ' + 2)=' . Query::LEFT_AS_IT_IS, 200);
-```
-will produce
-```sql
-SUM(`point2` + 2) = :i0b6
+`age` > :i0b1
+`age` >= :i0b2 AND `age` <> :i0b3 AND `firstName` like :i0b4
 ```
 
-###### Operator precedence
-When we use following constant on left operand and we also want to conditional operator other than equal then it should be place before these constants.
+Supported operators are `=`, `>`, `<`, `>=`, `<=`, `<>`, `!=` and `like`.
 
-1. Query::AS_COLUMN
-2. Query::AS_IT_IS
-3. Query::LEFT_AS_IT_IS
+###### NULL
+
+A `null` value becomes `IS NULL`. With `<>`, `!=` or `!` it becomes `IS NOT NULL`.
 
 ```php
-$query->setCondition('a>' . Query::AS_COLUMN,'b')
+$query->setCondition('city', null);
+$query->setCondition('city<>', null);
 ```
-which generates
+
+```sql
+`city` IS NULL
+`city` IS NOT NULL
+```
+
+###### IN and NOT IN
+
+Add `Query::IN` or `Query::NOT_IN` at the end of the column and pass an array.
+
+```php
+$query->setCondition([
+    'age' . Query::IN => [21, 23, 25],
+    'userId' . Query::NOT_IN => [1, 2]
+]);
+```
+
+```sql
+`age` IN (:i0b1,:i0b2,:i0b3) AND `userId` NOT IN (:i0b4,:i0b5)
+```
+
+An empty array throws `Empty value for the [column]`, so check the list before you build the clause.
+
+###### BETWEEN
+
+Pass an array of exactly two values.
+
+```php
+$query->setCondition(['age' . Query::BETWEEN => [18, 60]]);
+```
+
+```sql
+`age` BETWEEN :i0b1 AND :i0b2
+```
+
+###### Compare with another column
+
+Add `Query::AS_COLUMN` and the value is treated as a column.
+
+```php
+$query->setCondition('userId' . Query::AS_COLUMN, 'age');
+```
+
+```sql
+`userId` = `age`
+```
+
+###### Use the value as it is
+
+Add `Query::AS_IT_IS` and the value goes into the statement unchanged and unescaped. Build it with `quote` and `bindValue`.
+
+```php
+$query->setCondition('age' . Query::AS_IT_IS, 'SUM(' . $query->quote('userId') . ' + 2)');
+```
+
+```sql
+`age` = SUM(`userId` + 2)
+```
+
+###### Use the left side as it is
+
+The left side is read as a column name. To use a function or an expression there, add `Query::LEFT_AS_IT_IS` at the end. Write the operator yourself, before the marker.
+
+```php
+$query->setCondition('SUM(' . $query->quote('age') . ' + 2)=' . Query::LEFT_AS_IT_IS, 200);
+```
+
+```sql
+SUM(`age` + 2)=:i0b1
+```
+
+###### Marker order
+
+When an operator and a marker are used together, the operator comes first.
+
+1. `Query::AS_COLUMN`
+2. `Query::AS_IT_IS`
+3. `Query::LEFT_AS_IT_IS`
+
+```php
+$query->setCondition('a>' . Query::AS_COLUMN, 'b');
+```
+
 ```sql
 `a` > `b`
 ```
-###### OR clause
 
-By default multiple clause always result in AND clause, but it can changed to OR. This can be achieved by putting OR as element at last of array condition
-```php
-$query->setCondition([
-        'firstName' => 'TestName',
-        'lastName' => 'Patel',
-        'age' => '28',
-        'OR'
-    ]);
-```
-When we put 'OR' at end of conditon array, query builder removes it and produces statement with OR cluase.
-```sql
-`firstName` = :i0b7 OR `lastName` = :i0b8 OR `age` = :i0b8
-```
-We don't have to do anything to produce AND clause as it can generated by default. But we cann still pass AND at end of condition array, just to denote that this condition will result in AND clause.
+###### OR
 
-**NOTE:** Query builde does not check for validation of 'OR' and 'AND' at end of array. Query builder just apply whatever at end of array but only if only there's no string key for last element. Just for example below will generate statement like 
-```sql
-`firstName` = :i0b9 JOINER `lastName` = :i0b10 JOINER `age` = :i0b11
-```
-
-based on below code.
+Conditions in one array are joined with AND. Put `'OR'` as the last element, without a key, to join them with OR.
 
 ```php
 $query->setCondition([
-        'firstName' => 'TestName',
-        'lastName' => 'Patel',
-        'age' => '28',
-        'JOINER'
-    ]);
+    'firstName' => 'Asha',
+    'age' => 28,
+    'OR'
+]);
 ```
-###### IN & NOT IN
 
-To build IN clause, just pass array as a right operand and place `Query::IN` at end of left operand.
-```php
-$query->setCondition([
-        'age' . Query::IN => [21,23,25]
-    ]);
-```
-Query builder will bind each element of right operand and produces statement as shown below
 ```sql
-`age` IN (:i0b12,:i0b13,:i0b14)
+`firstName` = :i0b1 OR `age` = :i0b2
 ```
-NOT IN clause can build by placing `Query::NOT_IN` at end of left operand.
 
-###### Between
-To produce between clause pass array having only two elements and left postfixed by `Query::BETWEEN`, see below code.
+`'AND'` can be written as the last element to make the intent clear.
+
+**NOTE** The last element is used as it is, without a check. `'JOINER'` would produce `... JOINER ...` and fail in the database. Take care with the spelling.
+
+###### Groups of conditions
+
+An array without a key becomes a group in brackets.
 
 ```php
 $query->setCondition([
-        'age' . Query::BETWEEN => [18,60]
-    ]);
+    ['a' => 1, 'b' => 2],
+    'c' => 3,
+    ['d' => 1, 'e' => 2, 'f' => 3, 'OR'],
+    'OR'
+]);
 ```
-
-Above code results in following query statement
 
 ```sql
-age BETWEEN :i0b15 AND :i0b16
+(`a` = :i0b1 AND `b` = :i0b2) OR `c` = :i0b3 OR (`d` = :i0b4 OR `e` = :i0b5 OR `f` = :i0b6)
 ```
 
-###### Complex clause
+The first group joins with AND because it has no joiner at its end. The third group ends with `'OR'`, so its parts are joined with OR. The outer `'OR'` joins the groups.
+
+###### Several calls
 
 ```php
-$query->setCondition([
-        [
-            'a' => 1,
-            'b' => 2
-        ],
-        'c' => 3,
-        [
-            'd' => 1,
-            'e' => 2,
-            'f' => 3,
-            'OR'
-        ],
-        'OR'
-    ]);
+$query->setCondition('a', 1)->setCondition('b', 2);
 ```
-Generates
+
 ```sql
-(`a` = :i0b15 AND `b` = :i0b16) OR `c` = :i0b17 OR (`d` = :i0b18 OR `e` = :i0b19 OR `f` = :i0b20)
+(`a` = :i0b1) AND (`b` = :i0b2)
 ```
-First element in condition results in AND clause as we did not have put anything at end for joining. If we do not specify key for element and directly place array, then it create seperate conditional group. Third element which results in OR clause as it have joining operator at end.
 
 ##### Join
 
-Before adding join to query builder, we must need to setTable as its being used by join builder. `addJoin` allows creating join statement. It accepts array argument which has key as child table name and value of key should be string if both parent and child table need ot joined by same column name.
+Set the table first, because the join uses it. `addJoin` takes an array. Each key is the table to join, and the value describes the `ON` clause.
 
-###### Two table having same column name
+###### Same column in both tables
+
+A string means both tables have a column of that name.
+
 ```php
-$query->setTable('mainTable')
-            ->addJoin([
-                'childTable' => 'columnName'
-            ]);
+$query->setTable('user')
+    ->addJoin(['department' => 'departmentId']);
 ```
-which results in below query.
+
 ```sql
-SELECT * 
-FROM `mainTable` 
-LEFT JOIN `childTable` AS `childTable` ON `childTable`.`columnName` = `mainTable`.`columnName`
+SELECT * FROM `user`
+LEFT JOIN `department` ON `department`.`departmentId` = `user`.`departmentId`
 ```
-Here _childTable_ being the key represents child table name, value of it to produce ON clause for join. For above example we needed to join both child and parent table by same column name so we just used string.
 
-###### Two table with different column name
+###### Different column names
+
+Use an array. The key is the column of the joined table and the value is the column of the main table.
+
 ```php
-$query->setTable('mainTable')
-            ->addJoin([
-                'childTable' => ['childTableId'=>'mainTableId']
-            ]);
+$query->setTable('user')
+    ->addJoin(['department' => ['id' => 'departmentId']]);
 ```
-When array is passed as join condition then by default each key(left operand) represents child table column and value(right operand) represents main table column. Here we have not specified table name for column, in this case query builder assigns table name as per default rule. _childTableId_ will be considered of _childTable_, _mainTableId_ will be considered of _mainTable_ table.
+
 ```sql
-SELECT * 
-FROM `mainTable` 
-LEFT JOIN `childTable` AS `childTable` ON `childTable`.`childTableId` = `mainTable`.`mainTableId`
+LEFT JOIN `department` ON `department`.`id` = `user`.`departmentId`
 ```
-Join condition are same as we use in `setCondition` method. But here in join condition right operand is considered as column while for `setCondition` it is considered as value. To make right operand use as value place `Query::AS_VALUE` at end of left operand.
-```php
-$query->setTable('mainTable')
-            ->addJoin([
-                'childTable' => ['childTableId$'=> 23]
-            ]);
-```
-**NOTE:**
 
-*   Do not place `Query::AS_COLUMN` at end of left operand to denote right operand as column. This is also same for `setCondition` to not to place ``Query::AS_VALUE`` at end left operand to denote right operand as value. This is because, its default behavior so we don't need tell explicitly.
-*   If you pass joiner at end of join condition, prefix it with `Query::ON_JOINER`. This is because in join condition joiner conflicts with join on same colum name. To better understand see below example
+A column without a table name gets the joined table on the left and the main table on the right.
+
+###### Join conditions
+
+Join conditions follow the rules of `setCondition`, with one difference: in a join the **right side is a column** by default. Add `Query::AS_VALUE` at the end of the left side to compare with a value, which is bound.
+
 ```php
-$query->setTable('mainTable')
-            ->addJoin([
-                'childTable' => ['columnName', 'columnName1'=>'columnName2', Query::ON_JOINER . 'OR']
+$query->setTable('user')
+    ->addJoin([
+        'department' => [
+            'departmentId',                              # same column in both tables
+            'zoneId>' . Query::AS_VALUE => 5,            # compared with the value 5
+            'departmentName' . Query::IN => ['Sales', 'Tech']
+        ]
     ]);
 ```
-If we do not prefix last element with `Query::ON_JOINER` in above code query builder will consider 'OR' as column name, because if we pass string its counted as column name. To solve this problem, it should be prefixed by `Query::ON_JOINER`. Query builder checks for last element in join condition which matches above condition. If it matches it is counted as joiner.
 
-###### Joining more than one table
-```php
-$query->setTable('mainTable')
-            ->addJoin([
-                'childTable1' => 'columnName',
-                'childTable2' => 'columnName'
-            ]);
-```
-Builds following query
 ```sql
-SELECT * 
-FROM `mainTable` 
-LEFT JOIN `childTable1` AS `childTable1` ON `childTable1`.`columnName` = `mainTable`.`columnName`
-LEFT JOIN `childTable2` AS `childTable2` ON `childTable2`.`columnName` = `mainTable`.`columnName`
+ON `department`.`departmentId` = `user`.`departmentId`
+AND `department`.`zoneId` > :i0b1
+AND `department`.`departmentName` IN (:i0b2,:i0b3)
 ```
-###### Join condiiton with other table name
 
-Query builder adds main table and child table name on its own. It does only if we do not specify table name. Below example demonstrate how to use another table name.
+Without `Query::AS_VALUE`, `'zoneId>' => 5` would compare `zoneId` with a **column** named `5`.
+
+Do not add `Query::AS_COLUMN` in a join, it is the default. Likewise, do not add `Query::AS_VALUE` in `setCondition`.
+
+Several conditions are joined with AND. To join them with OR, put the joiner at the end and prefix it with `Query::ON_JOINER`. The prefix is needed because in a join a plain string means a column name.
+
 ```php
-$query->setTable('mainTable')
-            ->addJoin([
-                'childTable1' => 'columnName',
-                'childTable2' => ['columnName', 'columnName1'=>'childTable1.columnName2']
-            ]);
+->addJoin([
+    'department' => [
+        'departmentId',
+        'zoneId' => 'zoneId',
+        Query::ON_JOINER . 'OR'
+    ]
+])
 ```
 
 ```sql
-SELECT * 
-FROM `mainTable` 
-LEFT JOIN `childTable1` AS `childTable1` ON `childTable1`.`columnName` = `mainTable`.`columnName`
-LEFT JOIN `childTable2` AS `childTable2` ON `childTable2`.`columnName` = `mainTable`.`columnName` AND `childTable2`.`columnName1` = `childTable1`.`columnName2`
+ON `department`.`departmentId` = `user`.`departmentId` OR `department`.`zoneId` = `user`.`zoneId`
 ```
-When we specify table name, query buider does not add table name. This applies to both left and right operand.
 
-###### Specifying join type
+###### More than one table
 
-It can be seen frmo above example that query builder by default generates LEFT join. It can be changed by specifying join type before table name.
 ```php
-$query->setTable('mainTable')
-            ->addJoin([
-                Query::INNER_JOIN . 'childTable1' => 'columnName',
-                'childTable2' => 'columnName'
-            ]);
+$query->setTable('user')
+    ->addJoin([
+        'department' => 'departmentId',
+        'city' => 'cityId'
+    ]);
 ```
-First table join will results in INNER join. Below are supported join types their join type.
-
-*   Query::INNER_JOIN
-*   Query::LEFT_JOIN
-*   Query::RIGHT_JOIN
-*   Query::CROSS_JOIN
-*   Query::FULL_JOIN
-
-###### Join table alias
-
-Alias of join table is created by placing alias in opening and close bracket at end of table. Such example is listed below
-```php
-$query->setTable('mainTable')
-            ->addJoin([
-                'childTable(child)' => 'columnName'
-        ]);
-```
-
-Above code prodices below statment
 
 ```sql
-SELECT * FROM `mainTable`
-LEFT JOIN `childTable` as `child` ON `child`.`columnName` = `mainTable`.`columnName`
+LEFT JOIN `department` ON `department`.`departmentId` = `user`.`departmentId`
+LEFT JOIN `city` ON `city`.`cityId` = `user`.`cityId`
 ```
 
-##### Group By
+###### Column of another table
 
-Group by clause can be set by passing string if want to do grouping by single column or pass array if want to do grouping by multiple columns.
+When a column has a table name, the builder does not add one. This also works for the right side, so a join can use a table joined earlier.
 
-Group by single column.
 ```php
-$query->setGroupBy('userId');
+->addJoin([
+    'department' => 'departmentId',
+    'zone' => ['zoneId', 'code' => 'department.zoneCode']
+])
 ```
-Group by multiple column.
-```php
-$query->setGroupBy(['userId', 'departmentId']);
-```
-##### Order By
 
-By single column.
-```php
-$query->setOrderBy('userId');
+```sql
+LEFT JOIN `zone` ON `zone`.`zoneId` = `user`.`zoneId` AND `zone`.`code` = `department`.`zoneCode`
 ```
-By multiple column.
+
+###### Join type
+
+Joins are LEFT joins unless you put a type in front of the table name.
+
 ```php
-$query->setOrderBy(['userId', 'departmentId']);
+$query->setTable('user')
+    ->addJoin([
+        Query::INNER_JOIN . 'department' => 'departmentId'
+    ]);
 ```
+
+| Constant | Join |
+|---|---|
+| `Query::INNER_JOIN` | INNER |
+| `Query::LEFT_JOIN` | LEFT (default) |
+| `Query::RIGHT_JOIN` | RIGHT |
+| `Query::CROSS_JOIN` | CROSS |
+| `Query::FULL_JOIN` | FULL |
+
+Your database must support the join you ask for. MySQL, for example, has no FULL join.
+
+###### Alias of the joined table
+
+Write the alias in brackets after the table name, and use it in conditions and columns.
+
+```php
+$query->setTable('user')
+    ->setColumn(['user.firstName', 'd.departmentName'])
+    ->addJoin(['department(d)' => 'departmentId']);
+```
+
+```sql
+SELECT `user`.`firstName`,`d`.`departmentName`
+FROM `user`
+LEFT JOIN `department` AS `d` ON `d`.`departmentId` = `user`.`departmentId`
+```
+
+##### Group by
+
+Pass one column or an array. Every call adds more columns.
+
+```php
+$query->setGroupBy('departmentId');
+$query->setGroupBy(['departmentId', 'city']);
+```
+
 ##### Having
 
-Having clause can be set by `setHaving` and it works the same way as `setCondition`. To learn how to use, please read _where_ section of this doc.
+`setHaving` works like `setCondition`, so every option in the _Where_ section can be used. The usual use is a condition on an aggregate. Use `Query::LEFT_AS_IT_IS` for the aggregate, or give it an alias with `Query::AS_IT_IS` and compare the alias.
+
+```php
+$query->setTable('user')
+    ->setColumn(['departmentId', 'total' . Query::AS_IT_IS => 'COUNT(*)'])
+    ->setGroupBy('departmentId')
+    ->setHaving('COUNT(*)>' . Query::LEFT_AS_IT_IS, 1)
+    ->get();
+```
+
+```sql
+SELECT `departmentId`,COUNT(*) AS `total` FROM `user` GROUP BY `departmentId` HAVING COUNT(*)>:i0b1
+```
+
+##### Order by
+
+Pass a column to sort ascending. Pass an array to sort by many columns, and use the column as key and `ASC` or `DESC` as value to choose the direction. Every call adds more columns.
+
+```php
+$query->setOrderBy('age');
+$query->setOrderBy(['departmentId' => 'DESC', 'age']);
+```
+
+```sql
+ORDER BY `age` ASC ,`departmentId` DESC ,`age` ASC
+```
+
+Start the value with `Query::AS_IT_IS` to use it without escaping, for example `setOrderBy([Query::AS_IT_IS . 'RAND()'])`.
 
 ##### Limit
 
-To limit records to be returned, use `setLimit` method. This accepts two arguments, first being number of records to fetch and second to set offset from where record should start.
+The first argument is how many rows, and the second is how many rows to skip.
+
 ```php
-$query->setLimit(5,10);
+$query->setLimit(5);       # first 5 rows
+$query->setLimit(5, 10);   # 5 rows after skipping 10
 ```
+
+##### Union
+
+`addUnionQuery` adds another query to the result. Pass `true` as the second argument for `UNION ALL`, which keeps duplicates.
+
+```php
+$query->setTable('user')->setColumn('firstName')->setCondition('age>', 40);
+
+$query->addUnionQuery(
+    (new Query())->setTable('department')->setColumn('departmentName'),
+    true
+);
+
+$records = $query->get();
+```
+
+```sql
+SELECT `firstName` FROM `user` WHERE `age` > :i0b1
+UNION ALL
+SELECT `departmentName` FROM `department`
+```
+
+Both queries must select the same number of columns. The names in the result come from the first query.
+
 ##### Insert
 
-To insert record into table first set table name by using `setTable` method and then `setColumnWithValue` to set column name & its value. Then at last call insert method which will parepare insert statement and executes it.
-```php
-$query->setTable('user')
-        ->setColumnWithValue([
-            'firstName'=>'TestName',
-            'lastName'=>'Patel',
-            'age'=>28,
-            'gender'=>'Male'
-        ])
-        ->insert();
-```
-Above can also be implemented by using chained method.
-```php
-$query->setTable('user')
-            ->setColumnWithValue('firstName', 'TestName')
-            ->setColumnWithValue('lastName', 'Patel')
-            ->setColumnWithValue('age', 28)
-            ->setColumnWithValue('gender', 'Male')
-            ->insert();
-```
-
-###### Insert multiple records
-To insert multiple records in one query use `setColumnWithMultipleValue` method. Here first parameter is list of column names and second parameter list of values. Once records to insert has been using this method then call `insert` method.
-
-See below code:
+Set the table and the values, then call `insert`. `insert` returns the id the database generated for the new row.
 
 ```php
-$query->setTable('content')
-    ->setColumnWithMultipleValue(['contentKey','ContentValue'], [
-        ['key1','Content 1'],
-        ['key2','Content 2'],
-        ['key3','Content 3'],
-        ['key4','Content 4']
+$id = $query->setTable('user')
+    ->setColumnWithValue([
+        'firstName' => 'Asha',
+        'age' => 28
     ])
     ->insert();
 ```
 
-List of values should be in same order as list of column names passed in first argument. If there's mismatch in count of row with count of column, query throws exception.
+A single value can be set as `setColumnWithValue('firstName', 'Asha')`. Calling `insert` without any value throws `Column with its value are not set.`
+
+`DateTime` values are converted to the database format for you.
+
+###### Insert many rows
+
+`setColumnWithMultipleValue` takes the column names, then a list of rows. Every row must have the same number of values as there are columns, otherwise an exception is thrown.
+
+```php
+$query->setTable('user')
+    ->setColumnWithMultipleValue(['firstName', 'age'], [
+        ['Asha', 28],
+        ['Ravi', 45],
+        ['Meena', 22]
+    ])
+    ->insert();
+```
+
+All rows are inserted by one statement. The returned id is the one of the first row.
 
 ##### Update
 
-Update works the same way as inserting record. We have to call `update` method at end so that query builder builds update statement and executes it.
+Set the table, the new values and the conditions, then call `update`. It returns how many rows were changed.
+
+```php
+$updated = $query->setTable('user')
+    ->setColumnWithValue(['age' => 29, 'city' => 'Pune'])
+    ->setCondition('userId', 1)
+    ->update();
+```
+
+Markers at the end of the column name change how the value is used.
+
+| Marker | Meaning |
+|---|---|
+| none | The value is bound |
+| `Query::AS_COLUMN` | The value is a column name |
+| `Query::AS_IT_IS` | The value is used as written |
+
 ```php
 $query->setTable('user')
-            ->setColumnWithValue('firstName', 'TestName')
-            ->setColumnWithValue('lastName', 'Patel')
-            ->setColumnWithValue('age', 28)
-            ->setColumnWithValue('gender', 'Male')
-            ->setCondition('userId', 1)
-            ->update();
+    ->setColumnWithValue([
+        'age' . Query::AS_IT_IS => $query->quote('age') . ' + 1',   # age = age + 1
+        'city' . Query::AS_COLUMN => 'firstName'                   # city = firstName
+    ])
+    ->setCondition('userId', 1)
+    ->update();
 ```
-Just like setting condition we can also tell wheather value is column or expression by applying same symbol at end of columnName. Put at end of column name `Query::AS_COLUMN` to denote value is column name and `Query::AS_IT_IS` to use value as it is.
 
-###### Update by JOIN
-We can also update table by using join. For that just add join and mention what should be updated in `setColumnWithValue`.
+Use `null` to store NULL, as in `setColumnWithValue('city', null)`.
+
+**NOTE** An update with **no condition** is refused with `Condition is required to update record.` It prevents changing every row by mistake. To allow it, set `updateNoCondition` to `true` in `settings/configuration/database.php`.
+
+###### Update using a join
+
+Add a join and name the column of the joined table in `setColumnWithValue`.
+
 ```php
-$query->setTable('mainTable')
-            ->addJoin([
-                'childTable'=>'columnName'
-            ])
-            ->setColumnWithValue('childTable.columnName', 'columnValue')
-            ->setCondition('mainTable.columnName', 1);
+$query->setTable('user')
+    ->addJoin(['department' => 'departmentId'])
+    ->setColumnWithValue('department.zoneId', 77)
+    ->setCondition('user.firstName', 'Asha')
+    ->update();
 ```
+
+This changes the joined `department` table. Use the table name in front of every column to make it clear which table is changed.
+
 ##### Remove
 
-To delete records just set condition and then execute `remove`.
+Set the table and the conditions, then call `remove`. It returns how many rows were removed.
+
+```php
+$removed = $query->setTable('user')
+    ->setCondition('userId', 1)
+    ->remove();
+```
+
+**NOTE** A remove with **no condition** is refused with `Condition is required to delete record.` Set `deleteNoCondition` to `true` in `settings/configuration/database.php` to allow it.
+
+###### Remove using a join
+
+A join can decide which rows are removed.
+
 ```php
 $query->setTable('user')
-            ->setCondition('user.userId', 1)
-            ->remove();
+    ->addJoin(['department' => 'departmentId'])
+    ->setCondition('department.departmentName', 'Closed')
+    ->remove();
 ```
 
-###### Remove by JOIN
+##### Sub query
 
-Just like update, record can also be deleted by using join.
-```php
-$query->setTable('mainTable')
-            ->addJoin([
-                'childTable'=>'columnName'
-            ])
-            ->setCondition('mainTable.col', 1)
-            ->remove();
-```
-##### Sub Query
-We can also add subquery in `from`, `column`, `where`  clause and in `join` on clause. We just have to create an instnace of `Query` class, prepare query and add it to main query builder instance.
+A `Query` instance can be used inside another query. Build it and pass it where the value would go. The values of the sub query are bound together with the main query.
 
 ###### In column
-While selecting column, we pass array consisting of key and value. When key is string it becomes alias and value becomes column name. If we put query instance in value, it becomes subquery. 
 
-For subquery in column name, alias is required.
+A sub query can be a column. The key is the alias and it is required.
 
 ```php
-$query->setTable('mainTable')
-            ->setColumn(['columnName' => (new Query())->setTable('subTable')->setCondition('subColumnName#','mainTable.columnName')])
-            ->get();
-```
-It will build query as shown below.
-```sql
-SELECT (SELECT * 
-FROM `subTable`  
-WHERE `subColumnName` = `mainTable`.`columnName`) AS `columnName` 
-FROM `mainTable`
-```
-###### In where clause
-Just like how subquery is used in selecting column, we can also pass subquery as right operand of where clause.
-```php
-$query->setTable('mainTable')
-            ->setCondition([
-                'mainTable.columnName' => (new Query())->setTable('subTable')->setCondition('subTableColumnName' . Query::AS_COLUMN,'mainTable.columnName')
-            ])
-            ->get();
-```
-Which will result in following query.
-```sql
-SELECT * 
-FROM `mainTable`  
-WHERE `mainTable`.`columnName` = ((SELECT * 
-FROM `subTable`  
-WHERE `subTableColumnName` = `mainTable`.`columnName`))
-```
-Above code will create equal condition for clause which is default behaviour, but it can changed to IN, NOT IN and it also supprts conditional operator. Below code is updated, so that IN conditon can be created.
-```php
-$query->setTable('mainTable')
-            ->setCondition([
-                'mainTable.columnName'. Query::IN => (new Query())->setTable('subTable')->setCondition('subTableColumnName' . Query::AS_COLUMN,'mainTable.columnName')
-            ])
-            ->get();
-```
-###### In from table
+$counter = (new Query())
+    ->setTable('user')
+    ->setColumn(['total' . Query::AS_IT_IS => 'COUNT(*)'])
+    ->setCondition('user.departmentId' . Query::AS_COLUMN, 'department.departmentId');
 
-Just like in column and where condition, subquery can also be added to from table. When we use sub query for `from` table, alias is requured.
-```php
-$query->setTable((new Query())->setTable('mainTable')
-            ->addJoin(['childTable'=>'columnName'])
-            ->setCondition('childTable.columnName2'. Query::AS_COLUMN,'mainTable.columnName2')
-            ,'mainTable');
+$records = $query->setTable('department')
+    ->setColumn(['departmentName', 'members' => $counter])
+    ->get();
 ```
-Which will result in below query statement
 
 ```sql
-SELECT * 
-FROM (
-    SELECT * 
-    FROM `mainTable` 
-    LEFT JOIN `childTable` ON `childTable`.`columnName` = `mainTable`.`columnName` 
-    WHERE `childTable`.`columnName2` = `mainTable`.`columnName2`
-) AS `mainTable`
+SELECT `departmentName`,
+    (SELECT COUNT(*) AS `total` FROM `user` WHERE `user`.`departmentId` = `department`.`departmentId`) AS `members`
+FROM `department`
 ```
+
+###### In where
+
+A sub query can be the right side of a condition. It is `=` by default, and works with `Query::IN`, `Query::NOT_IN` and the comparison operators.
+
+```php
+$tech = (new Query())
+    ->setTable('department')
+    ->setColumn('departmentId')
+    ->setCondition('departmentName', 'Tech');
+
+$records = $query->setTable('user')
+    ->setCondition(['departmentId' . Query::IN => $tech])
+    ->get();
+```
+
+```sql
+SELECT * FROM `user`
+WHERE `departmentId` IN (SELECT `departmentId` FROM `department` WHERE `departmentName` = :i1b1)
+```
+
+###### In from
+
+A sub query can replace the table. The alias is required, otherwise an exception is thrown.
+
+```php
+$older = (new Query())->setTable('user')->setCondition('age>', 40);
+
+$records = $query->setTable($older, 'older')->get();
+```
+
+```sql
+SELECT * FROM (SELECT * FROM `user` WHERE `age` > :i1b1) AS `older`
+```
+
+##### See the statement
+
+`getSQL` returns the statement without running it. It does not clear the instance. By default values are put in place of the placeholders, which is handy for debugging.
+
+```php
+$query->setTable('user')->setCondition('age>', 40);
+
+echo $query->getSQL();        # SELECT * FROM `user` WHERE `age` > 40
+echo $query->getSQL(false);   # SELECT * FROM `user` WHERE `age` > :i0b1
+```
+
+**NOTE** The version with values is for reading only. Do not run it, because the values are not escaped. `getBinded` returns the bound values.
+
+##### Run your own statement
+
+`execute` runs any SQL you write. Bind values with `bindValue`, never by joining strings. It returns the rows as objects for a SELECT.
+
+```php
+$query = new Query();
+$age = $query->bindValue(40);
+
+$rows = $query->execute("SELECT firstName FROM user WHERE age > $age");
+```
+
+##### Transaction
+
+Run several statements as one unit. All `Query` instances of a connection share the same transaction.
+
+```php
+$query = new Query();
+$query->startTransaction();
+
+try {
+    (new Query())->setTable('account')
+        ->setColumnWithValue('balance' . Query::AS_IT_IS, '`balance` - 100')
+        ->setCondition('accountId', 1)
+        ->update();
+
+    (new Query())->setTable('account')
+        ->setColumnWithValue('balance' . Query::AS_IT_IS, '`balance` + 100')
+        ->setCondition('accountId', 2)
+        ->update();
+
+    $query->commit();
+} catch (Throwable $e) {
+    $query->rollback();
+    throw $e;
+}
+```
+
+##### Cache
+
+`setCache` stores the result of `get` in cache. Pass your own key, or `true` to let Nishchay build the key from the statement. The second argument is the lifetime in seconds, where `0` means no expiry.
+
+```php
+$query->setTable('department')->setCache('departments', 3600);
+$records = $query->get();
+
+$query->isLastResultFromCache();   # true when the rows came from cache
+$query->getLastCacheKey();         # 'departments'
+```
+
+The connection must be set up with a cache in [database settings](/learningCenter/settings/database), otherwise nothing is cached.
+
+##### Quick reference
+
+| Method | Purpose |
+|---|---|
+| `setTable` | Table, with optional alias or sub query |
+| `setColumn` | Columns to select |
+| `setCondition`, `setHaving` | Where and having |
+| `addJoin` | Joins |
+| `setGroupBy`, `setOrderBy`, `setLimit` | Grouping, sorting, limiting |
+| `addUnionQuery` | Union |
+| `get`, `getOne` | Select rows |
+| `count`, `sum`, `max`, `min`, `average` | Aggregates |
+| `setColumnWithValue`, `setColumnWithMultipleValue` | Values for insert and update |
+| `insert`, `update`, `remove` | Change data |
+| `quote`, `bindValue` | Build expressions safely |
+| `getSQL`, `getBinded` | Inspect the statement |
+| `execute` | Run your own SQL |
+| `startTransaction`, `commit`, `rollback` | Transactions |
+| `setCache` | Cache the result |
