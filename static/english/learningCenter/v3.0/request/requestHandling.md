@@ -527,6 +527,18 @@ public function save() { ... }
 
 Both attributes can also be put on the controller class. They then apply to every route of the controller.
 
+###### Redirect instead of failing
+
+Pass `redirect` to send the visitor somewhere else instead of showing the 400 error. The value is a route of your application or a full URL. The route method is not called.
+
+```php
+#[Route(path: 'search')]
+#[RequiredGet(parameter: ['q'], redirect: 'search/help')]
+public function search() { ... }
+```
+
+`redirect` is available on `RequiredGet`, `RequiredPost`, `OnlyGet` and `OnlyPost`.
+
 ##### Only these parameters
 
 `OnlyGet` and `OnlyPost` require **exactly** the listed parameters. A missing one and an extra one are both rejected.
