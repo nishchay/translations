@@ -14,8 +14,5 @@
     "account": {
         "resetPassword": "Reset your nishchay account password if you forgot. You will receive an email to reset password."
     },
-    "seminar": {
-        "request": "Request free seminar for learning nishchay framework. Seminar/Webinar is free for anyone whether they are organization or group of developers."
-    },
     "blog": "Nishchay blog is all about articles related to nishchay framework, how to use it, features related tutorials, php related articles, php news, nginx, javascrip and other technology news."
 }
