@@ -1,31 +1,32 @@
 #### Request Handling
 
-Requests are handled by controller method. Controller is just a class which can have various method to handle request, this method is known as route method. Any class which has `Controller` attribute is considered as controller class.
+##### Introduction
+
+A request is handled by a **route method**, a method of a **controller** class. Nishchay matches the URL and HTTP method of the request to a route, runs the events around it, calls the method and sends back what it returns.
+
+A class with the `Controller` attribute is a controller.
 
 ```php
 use Nishchay\Attributes\Controller\Controller;
 
 #[Controller]
-class NamasteController {
+class NamasteController
+{
 
 }
 ```
 
-`Nishchay\Attributes\Controller\Controller` is an attribute class. When its declared on class, class becomes controller. Within this controller we can create various method along with `Nishchay\Attributes\Controller\Method\Route` attribute on it. Any controller method which has this attribute are considered as route method.
-
 ##### Route
 
-Controller methods are considered as route method if following conditions are met.
+A controller method is a route method when all of the following are true.
 
-1. `Route` attribute must be declared on it.
-2. It must belong to same class, method defined on parent class is not considered.
-3. It must be public.
-4. It must not be static.
-5. It must not start with underscore.
+1. It has the `Nishchay\Attributes\Controller\Method\Route` attribute.
+2. It is declared in the controller class itself. Methods inherited from a parent class are ignored.
+3. It is public.
+4. It is not static.
+5. Its name does not start with an underscore.
 
 ###### Simple route
-
-Below code demonstrates how we can create simple route.
 
 ```php
 namespace Application\Controllers\Direct;
@@ -34,329 +35,345 @@ use Nishchay\Attributes\Controller\Controller;
 use Nishchay\Attributes\Controller\Method\Route;
 
 #[Controller]
-class NamasteController {
+class NamasteController
+{
 
-    #[Route(path:'namaste')]
-    public function namaste() {
+    #[Route(path: 'namaste')]
+    public function namaste()
+    {
         return 'namaste';
     }
 
 }
 ```
 
-Here we just created route called _namaste_ and it can be accessed by _{HOST}/namaste_. Suppose your application hosted at _http://app.nishchay.local_ then above route can access by _http://app.nishchay.local/namaste_
+This creates the route _namaste_, reachable at `{HOST}/namaste`. If the application is hosted at `http://app.nishchay.local`, the address is `http://app.nishchay.local/namaste`.
 
-###### Setting landing/index route
+**What the route returns.** The default response type is _view_, so a returned string is the **name of a view** to render, not text to print. In the example above, Nishchay looks for a view called _namaste_. See [response handling](/learningCenter/request/responseHandling) to return JSON, XML or raw text instead.
 
-Landing route is one where our application starts. It is the entry point of our application. When user hits only domain name, landing route is called. Landing route of application can changed by updating config _config.landingRoute_ which is in setting file _settings/application.php_.
+###### Landing route
+
+The landing route is the one that runs when the visitor opens only the domain name. Set it with the `landing` key in `settings/configuration/routes.php`.
+
+```php
+return [
+    'landing' => 'namaste',
+    ...
+];
+```
 
 ###### Multiple segments
 
-We can specify any valid string as route path. This path can be separated by **/** and each part is known as segment.
+A path can be any string. Parts separated by `/` are called segments.
 
 ```php
-
-#[Route(path:'user/messages')]
-public function messageList() {
-    return 'user/messages';
+#[Route(path: 'user/messages')]
+public function messageList()
+{
+    ...
 }
 ```
 
-In above created route, there are two segments _user_ and _messages_.
+This path has two segments, _user_ and _messages_. A leading or trailing `/` is ignored, and the path cannot be empty.
 
-###### Route with dynamic/placeholder segments
+###### Method name as route path
 
-Segment can be dynamic, this segment is called placeholder segment. Placeholder segment can be any one of _string_, _number_, _int_ or _alphanum_. Placeholder segments are defined in opening _{_ and closed _}_ curly braces.
+Pass `true` as the path and the method name becomes the path.
+
+```php
+#[Route(path: true)]
+public function namaste()
+{
+    ...
+}
+```
+
+The route is _namaste_.
+
+##### Placeholder segment
+
+A segment written in curly braces is a **placeholder**. It matches any value of the type you declare for it. Declare the types with the `Nishchay\Attributes\Controller\Method\Placeholder` attribute.
 
 ```php
 use Nishchay\Attributes\Controller\Method\Route;
 use Nishchay\Attributes\Controller\Method\Placeholder;
 
- #[Route(path:'user/messages/{userId}')]
- #[Placeholder(['userId' => 'int'])]
-public function messageView() {
-    return 'user/messages/view';
+#[Route(path: 'user/messages/{userId}')]
+#[Placeholder(['userId' => 'int'])]
+public function messageView($userId)
+{
+    ...
 }
 ```
 
-In above route path we have create route with path _user/messages/{userId}_ where _userId_ will be placeholder segment. What kind of _userId_ should have is defined using `Nishchay\Attributes\Controller\Method\Placeholder` attribute.
+The key of the array is the segment name and the value is its type. Every placeholder in the path needs an entry, and an entry for a name that is not in the path is an error.
 
-All placeholder segments defined in path must be passed as in in `Placeholder` attribute where key is segment name(In above case its _userId_) and its value should be type of segment.
+###### Placeholder types
 
-We can define any number of placeholder segment in path. For each placeholder segment it should exists in `Placeholder` attribute parameter.
+| Type | Matches |
+|---|---|
+| `int`, `number` | Digits only |
+| `alphanum` | Letters and digits |
+| `string` | Letters, digits, dot, underscore and hyphen |
+| `bool`, `boolean` | `0` or `1` |
+| array of values | Only the listed values |
+
+Use an array when only a few values are valid.
+
+```php
+#[Route(path: 'color/{name}')]
+#[Placeholder(['name' => ['red', 'blue']])]
+public function color($name)
+{
+    ...
+}
+```
+
+`color/red` matches. `color/green` does not match any route, so the response is a 404.
+
+You can use as many placeholders as you need.
+
+```php
+#[Route(path: 'blog/{year}/{slug}')]
+#[Placeholder(['year' => 'int', 'slug' => 'string'])]
+public function post($year, $slug)
+{
+    ...
+}
+```
 
 ###### Optional segment
 
-To make placeholder segment optional, prefix it by `?`. See below code for more understanding
+Put `?` before the placeholder to make it optional.
 
 ```php
-
- #[Route(path='profile/?{userId}')]
- #[Placeholder(['userId' => 'int'])]
-public function userProfile() {
-    return 'user/profile';
+#[Route(path: 'profile/?{userId}')]
+#[Placeholder(['userId' => 'int'])]
+public function userProfile($userId = null)
+{
+    ...
 }
 ```
 
-Here _userId_ will become optional segment, so above route can be called with or without passing _userId_.
+Both `profile` and `profile/12` reach this method. Give the parameter a default value, because it has no value when the segment is missing.
 
-###### Choose method name as route name
+Placeholder values arrive as strings, even for `int`. Cast them yourself if you need a number.
 
-We can make method name to considered as route path. This can be achieved by passing first parameter as _true_.
+##### Receiving request data in route parameters
+
+Parameters of the route method are filled for you. You do not read them from the request by hand.
 
 ```php
-
-#[Route(path:true)]
-public function namaste() {
-    return 'namaste';
+#[Route(path: 'order/{orderId}')]
+#[Placeholder(['orderId' => 'int'])]
+public function order($orderId, ?string $note, array $GET, array $POST, $coupon = null)
+{
+    ...
 }
 ```
 
-Here route will be _namaste_.
+* A parameter with the same name as a placeholder gets the segment.
+* Any other name is looked for in this order: uploaded files, POST, GET. The first match wins, so a POST value hides a GET value of the same name.
+* `$GET` and `$POST` (in capitals) get all GET and all POST parameters as arrays.
+* A parameter with a default value uses it when nothing is found. A nullable parameter such as `?string $note` gets `null`.
+* A parameter that is not optional and cannot be found throws `Not able to find what to assign to [name] parameter`.
+* A parameter with a class as its type hint is created by [dependency injection](/learningCenter/dependencyInjection).
 
-###### Prefix all routes in controller
+Read more about [request parameters](/learningCenter/request/requestParameter).
 
-All routes defined under controller can be prefixed. Attribute `Nishchay\Attributes\Controller\Routing` allow us to create prefix for each router within controller.
+##### Prefix for all routes of a controller
+
+The `Nishchay\Attributes\Controller\Routing` attribute adds a prefix to every route of the controller.
 
 ```php
-
 use Nishchay\Attributes\Controller\Controller;
 use Nishchay\Attributes\Controller\Routing;
 
 #[Controller]
-#[Routing(prefix:'user')]
-class User {
+#[Routing(prefix: 'user')]
+class User
+{
 
-    #[Route(path:true)]
-    public function profile() {
-        return 'profile';
+    #[Route(path: true)]
+    public function profile()
+    {
+        ...
     }
 }
 ```
 
-Here actual route is created with path _profile_ which will be prefixed with _user_ and results in _user/profile_.
+The route is _user/profile_.
 
-###### Ignore prefix defined by Controller
+###### Skip the prefix for one route
 
-If controller has defined prefix, then each route defined within its controller are prefixed with it. But we can also ignore prefixing for specific route. This can be achieved by passing `Route` parameter `prefix: false`.
+Pass `prefix: false` to `Route` to keep the path exactly as written.
 
 ```php
-
-#[Controller]
-#[Routing(prefix:'user')]
-class User {
-
-    #[Route(path:true,prefix:false)]
-    public function profile() {
-        return 'profile';
-    }
+#[Route(path: 'login', prefix: false)]
+public function login()
+{
+    ...
 }
 ```
 
-###### Prepare prefix from class name
+This route is _login_, not _user/login_.
 
-If we want to prefix all routes within controller to be prefixed by class base name, this can achieved by specifying `prefix: 'this.base'`. Let's do some changes in above code.
+###### Prefix from the class name
+
+`prefix: 'this.base'` uses the class name without its namespace.
 
 ```php
-
 #[Controller]
-#[Routing(prefix:'this.base')]
-class User {
+#[Routing(prefix: 'this.base')]
+class User
+{
 
-    #[Route(path:true)]
-    public function profile() {
-        return 'profile';
+    #[Route(path: true)]
+    public function profile()
+    {
+        ...
     }
 }
 ```
 
-Above code will create route _User/profile_.
+The route is _User/profile_. The `case` parameter of `Routing` changes the case of the prefix.
 
-Because class name's first character is in upper case, in above code route is prefixed with _User_. we can change the case of prefix with the help of `case` parameter which accepts below values.
+| Value | Prefix for class `User` |
+|---|---|
+| `lower` | `user` |
+| `upper` | `USER` |
+| `camel` | `user` (first character in lower case, the rest unchanged) |
 
-1. lower: to change prefix in lower case. For above case, prefix will be _user_.
-2. upper: to change prefix in upper case. This will make prefix in above case to _USER_.
-3. camel: to change prefix in camel case. This actually makes first character lower case and keeps remaining character same.
+```php
+#[Routing(prefix: 'this.base', case: 'lower')]
+```
+
+`Routing` also takes a `pattern` parameter that generates routes from method names. Read more about [route patterns](/learningCenter/request/routePattern).
 
 ##### Route HTTP methods
 
-Route can also be created for single or multiple http methods. By default its for all http method. We can define http method for route with the help of `type` parameter of `Route` attribute. Value of it can be string or array(To make route to handle multiple HTTP methods).
+By default a route answers every HTTP method. Use the `type` parameter of `Route` to limit it to one method or to a list. The names are not case sensitive.
 
 ```php
+#[Route(path: 'profile', type: 'GET')]
+public function profile()
+{
+    ...
+}
 
-#[Controller]
-class User {
-
-    #[Route(path:'profile',type:'GET')]
-    public function profile() {
-        return 'profile';
-    }
+#[Route(path: 'profile', type: ['POST', 'PUT'])]
+public function saveProfile()
+{
+    ...
 }
 ```
 
-Here _profile_ path will work for GET http method only. Because we have defined _profile_ route for _GET_ http method, we can also define same route name for remaining http method also.
+Supported methods are `GET`, `POST`, `PUT`, `DELETE`, `OPTIONS`, `HEAD`, `TRACE` and `CONNECT`. A request with any other method for that path gets a 404.
+
+The same path can be used again for another HTTP method, as above. The combination of **path and HTTP method must be unique** in the application. A route without `type` already owns every method, so this fails when the application starts with `Route [profile] conflicted.`
 
 ```php
+#[Route(path: 'profile')]
+public function profile() { ... }
 
-#[Controller]
-class User {
-
-    #[Route(path:'profile',type:'GET')]
-    public function profile() {
-        return 'profile';
-    }
-
-    #[Route(path:'profile',type:'POST')]
-    public function saveProfile() {
-        return 'profile';
-    }
-}
+#[Route(path: 'profile', type: 'POST')]
+public function saveProfile() { ... }
 ```
-
-When we hit url _profile_ with _GET_ HTTP method, `User::profile` method will be called and for HTTP method _POST_ method `User::saveProfile` will be called.
-
-If we don't define any HTTP method for the route, it will have all HTTP method, defining same route again with other HTTP method will result in an error. See below code:
-
-```php
-
-#[Controller]
-class User {
-
-    #[Route(path:'profile')]
-    public function profile() {
-        return 'profile';
-    }
-
-    #[Route(path:'profile',type:'POST')]
-    public function saveProfile() {
-        return 'profile';
-    }
-}
-```
-
-Above will result in an exception because _profile_ method is handling all type of HTTP method for path _profile_ and _saveProfile_ method is again declaring _profile_ path with _POST_ HTTP method which is duplicated.
-
-Remember route path with HTTP method must be unique for application. Defining duplicate route will result in an exception.
-When we define any route, please make sure other route with route name and HTTP method already exists. If there is conflict, please check that other route is created for specific HTTP method only.
 
 ##### Route priority
 
-Because routes are processed how they are defined in an application, its stored with same priority in route collection.
-This will create problem if we have defined route which have dynamic segment.
+Routes are checked in the order they are stored. A route with a placeholder can therefore hide a fixed route stored after it.
 
 ```php
+#[Route(path: 'post/{name}', type: 'GET')]
+#[Placeholder(['name' => 'string'])]
+public function viewPost() { ... }
 
-#[Controller]
-class Post {
-
-    #[Route(path:'post/{postname}',type:'GET')]
-    #[Placeholder(['postName' => 'string'])]
-    public function viewPost() {
-        return 'post/view';
-    }
-
-    #[Route(path:'post/create',type:'GET')]
-    public function createPost() {
-        return 'post/create';
-    }
-
-    #[Route(path:'post/help',type:'GET')]
-    public function postHelp() {
-        return 'post/help';
-    }
-}
+#[Route(path: 'post/create', type: 'GET')]
+public function createPost() { ... }
 ```
 
-Here Nishchay will stores route in collection in following order, these routes are stored with same order of its class.
+`post/create` is also a valid `{name}`, so `viewPost` runs for it and `createPost` is never reached.
 
-1. GET post/{postName}
-2. GET post/create
-3. GET post/help
-
-If we hit url _{HOST}/post/create_, what we expect that _post/create_ should be called but it won't get called because when nishchay processor will find route, it will be first matched with _post/{routeName}_. This is because it was first stored in collection.
-
-We can give priority to routes and route with higher priority will be stored first in route collection. Let's change above code:
+The `Nishchay\Attributes\Controller\Method\Priority` attribute fixes this. The route with the **higher value is checked first**. The default is 100.
 
 ```php
+use Nishchay\Attributes\Controller\Method\Priority;
 
-#[Controller]
-class Post {
+#[Priority(value: 200)]
+#[Route(path: 'post/create', type: 'GET')]
+public function createPost() { ... }
 
-    #[Priority(value:2000)]
-    #[Route(path:'post/{postname}',type:'GET')]
-    #[Placeholder(['postName' => 'string'])]
-    public function viewPost() {
-        return 'post/view';
-    }
-
-    #[Priority(value:3000)]
-    #[Route(path:'post/create',type:'GET')]
-    public function createPost() {
-        return 'post/create';
-    }
-
-    #[Priority(value:4000)]
-    #[Route(path:'post/help',type:'GET')]
-    public function createPost() {
-        return 'post/help';
-    }
-}
+#[Route(path: 'post/{name}', type: 'GET')]
+#[Placeholder(['name' => 'string'])]
+public function viewPost() { ... }
 ```
 
-Now above routes will be stored in following orders, Route with higher will be stored first.
-
-1. GET post/help
-2. GET post/create
-3. GET post/{postName}
-
-**NOTE:** Route's default priority is: 100
+Now `post/create` goes to `createPost`, and every other `post/...` goes to `viewPost`.
 
 ##### Stage route
 
-An application can have multiple stages like _local_, _test_ and _live_. Application stage is defined in _settings/applicationl.php_ file. We can create route for _local_ and _test_ application stage. This can be defined using `stage` parameter of `Route` attribute. Stage route is not applicable for _live_ application stage.
-
-If we have defined route for _test_ stage then that route will be available for application stage _test_ only. See below example:
+An application runs in a stage: _local_, _test_ or _live_. It is set in `settings/configuration/application.php`. A route can be limited to the _local_ and _test_ stages with the `stage` parameter. It is never available in _live_.
 
 ```php
-
-#[Route(path:'checkTest',stage:'test')]
-public function testRoute() {
-
+#[Route(path: 'checkTest', stage: 'test')]
+public function testRoute()
+{
+    ...
 }
 ```
 
-Above will create _checkTest_ route applicable for only _test_ application stage. If application is _local_ stage then this route won't be available.
-
-Route can also be defined for both _local_ and _test_ stage, by passing array _['local','test']_ to `stage` parameter.
-
-##### Abstract/Static route
-
-In an application there can be pages which displays only static contents, such pages are known as about us, terms and conditions and help pages and there can be many more. Because these pages are static, it only needed to render only view. In this case instead of using normal route, we can define route on abstract method which will then act as abstract(static) route.
+This route exists in the _test_ stage only. In any other stage the URL returns 404. Use an array for both stages.
 
 ```php
-
-#[Route(path:'help')]
-abstract public function help();
+#[Route(path: 'debug', stage: ['local', 'test'])]
 ```
 
-Which view should be rendered is decided based on route path or `view` parameter of `Response` attribute. As in the above code, there's no response attribute defined. In this case route path will be taken as view path. When route path is taken as view path it can be prefixed by setting _abstractViewPath_ setting of _response.php_. This will be applicable to all abstract route where route path is taken as view path.
+Any other stage name is an error.
 
-If we don't want to take route path as view path then it should be defined in `view` parameter of `Response` attribute.
+##### Abstract (static) route
 
-We recommend using interface for creating abstract routes.
+Pages like _About us_, _Terms_ or _Help_ only render a view. For them you can declare the route on an **interface** method. No controller instance is created and no code runs. Nishchay renders the view directly.
 
-Advantage of using abstract route is that, nishchay don't need create instance of controller and so no need to call route method.
+```php
+#[Controller]
+interface StaticController
+{
+    #[Route(path: 'help')]
+    public function help();
+}
+```
+
+The view is chosen in one of two ways.
+
+* **Route path.** With no other setting the path is the view name, here _help_. The `abstractViewPath` setting in `settings/configuration/response.php` is put in front of it. With `'abstractViewPath' => 'static'` the view is `static/help`.
+* **Response attribute.** Use the `view` parameter to name the view yourself.
+
+```php
+use Nishchay\Attributes\Controller\Method\Response;
+
+#[Route(path: 'help')]
+#[Response(type: 'view', view: 'static/help')]
+public function help();
+```
+
+An interface is the cleanest choice, because a class with abstract methods must also be declared abstract.
 
 ##### Redirect request
 
-When we need to redirect request, route must return instance of `RequestRedirector`. We can either create instance of `RequestRedirector` or use `Request::getRedirectWithin` to redirect within application. If want to redirect outside of application use `Request::getRedirect`. All of these accept only one argument which should be route path or url in case of redirecting outside of an application.
+To redirect, return a `RequestRedirector` from the route. Create it with one of these helpers of the `Request` class.
 
-Redirecting using `Request::getRedirectWithin`
+| Helper | Use |
+|---|---|
+| `Request::getRedirectWithin($route)` | Redirect to a route of this application |
+| `Request::getRedirect($url)` | Redirect to a full URL, in or outside the application |
 
 ```php
+use Nishchay\Http\Request\Request;
 
-#[Route(path:true)]
-public function admin() {
+#[Route(path: 'admin')]
+public function admin()
+{
     if ($this->isUserAdmin() === false) {
         return Request::getRedirectWithin('unauthorized');
     }
@@ -364,281 +381,287 @@ public function admin() {
 }
 ```
 
-In above code we want to make sure that user without admin access can not visit admin page. If user is not admin, we will redirect user to _unauthorized_ page which will tell user that user is not authorized to access this.
+`getRedirectWithin` adds the base URL of the application, so `unauthorized` becomes `http://app.nishchay.local/unauthorized`.
 
-Above code can be implemented with the help of `RequestRedirector`
-
-```php
-
-#[Route(path:true)]
-public function admin() {
-    if ($this->isUserAdmin() === false) {
-        return new RequestRedirector('unathorized');
-    }
-    ...
-}
-```
-
-Redirecting outside application
+To redirect outside the application, check the address first. Never redirect to a URL taken from the request without checking it.
 
 ```php
-
-#[Route(path:true)]
-public function redirectTo() {
-    $url = Request::get('to'); # This will return value GET parameter name: to
+#[Route(path: 'goto')]
+public function goTo()
+{
+    $url = Request::get('to');
     if (UrlChecker::isUrlSafe($url)) {
-        return Request::getRedirect($url)
+        return Request::getRedirect($url);
     }
 
     return Request::getRedirectWithin('unsafeUrl');
 }
 ```
 
-Above route is to redirect to any url which is outside of our application. This will check redirecting url is safe or not. `UrlChecker` is custom class which we can create to check url. If url is safe, we will redirect user to requested url otherwise we will redirect to _unsafeUrl_ which will inform user that url is not safe.
+`UrlChecker` is your own class.
+
+**NOTE** `new RequestRedirector('path')` sends its argument as the `Location` header **unchanged**. A relative value is resolved by the browser against the current URL, and can end up as `/user/user/profile`. Use `getRedirectWithin` for routes of your application.
+
+A redirect changes the URL in the browser and always makes a new `GET` request.
 
 ##### Forward request
 
-Nishchay provides feature to forward request internally. When request is forwarded to another route, Client won't realize that it was forwarded. This is because it happens on server side only.
+A forward sends the request to another route **inside the same request**. The browser does not know about it and the URL does not change.
 
 ```php
+use Nishchay\Http\Request\RequestForwarder;
 
-#[Route(path:true)]
-public function register() {
-    return (new RequestForwarder('login'));
+#[Route(path: 'register')]
+public function register()
+{
+    # save the user, then log in
+    return new RequestForwarder('login');
 }
 
-#[Route(path:true)]
-public function login() {
-    return (new RequestRedirector('profile'));
+#[Route(path: 'login')]
+public function login()
+{
+    # log the user in, then show the profile
+    return Request::getRedirectWithin('profile');
 }
 ```
 
-What will happen here is that user is first registered. Once user registered we will forward request to login route so that user logged into account. Once logged in, we will redirect user to their profile page.
+Here the user registers, the request is forwarded to _login_, and _login_ redirects the browser to the profile.
 
-Redirect changes url in browser while forward does not, forward happens in one request only.
+|  | Redirect | Forward |
+|---|---|---|
+| Browser URL | Changes | Stays |
+| Requests | New request | Same request |
+| HTTP method | `GET` | Any |
+| Parameters | Query string only | GET and POST values you pass |
 
-Every time request is forwarded it creates new stage in request. Stage number starts from 1, increased by 1 for each forward. We can get stage detail of request using `Processor::getStageDetail('detailName')`.
+Every forward starts a new **stage** of the request. See _Stages of request_ at the end of this page.
 
-We can redirect url with HTTP method _GET_ only but in forward we can forward with any HTTP method including POST parameters.
+###### HTTP method
 
-###### Set request type
-
-By default request is forwarded with _GET_ HTTP method and it can changed to valid request method by passing it in second argument.
-
-```php
-(new RequestForwarder('routePath', 'POST'))
-```
-
-###### GET parameter
-
-By passing array of values in `withGetParameter`, will forward request with GET parameter.
+The default method is `GET`. Pass another one as the second argument.
 
 ```php
-    (new RequestForwarder('routePath'))
-                ->withGetParameter(['param1'=>'value1','param2'=>'value2'])
+new RequestForwarder('routePath', 'POST')
 ```
 
-###### POST parameter
-
-We can also forward request with POST parameter. Passing POST parameter for another request method type is ignored.
-
-```php
-(new RequestForwarder('routePath', 'POST'))
-            ->withPostParameter(['param1'=>'value1','param2'=>'value2'])
-```
-
-###### With flushing request store
-
-Data added to request store are available for each stages of request. But we can remove all added data while forwarding request to next route.
+###### GET parameters
 
 ```php
 (new RequestForwarder('routePath'))
-            ->withFlushRequestStore();
+    ->withGetParameter(['param1' => 'value1', 'param2' => 'value2']);
 ```
 
-Just calling `withFlushRequestStore` removes all request store data on forwarding request.
-
-##### Prevention on Forwarding request
-
-We can put prevention on forwarding request from one route to another route. We can also prevent request to be forwarded to specific route.
-
-- **Ascent**: Prevent request to be forwarded to route.
-- **Descent**: Prevent request to forwarded from route.
-
-Below code will prevents any request to be forwarded to this route.
+###### POST parameters
 
 ```php
-
-     #[Route(path:'routePath')]
-     #[Forwarder(ascent:false)]
-    public function methodName() {
-
-    }
+(new RequestForwarder('routePath', 'POST'))
+    ->withPostParameter(['param1' => 'value1', 'param2' => 'value2']);
 ```
 
-Attempt to forward request to this route results in exception. Just like ascent we can also prevent request to be forwarded from route.
+POST parameters are ignored when the method is not `POST`.
+
+In the target route, read them as usual, for example `Request::post('param1')`.
+
+###### Clear the request store
+
+Data added to the [request store](/learningCenter/request/requestStore) is still there in the next stage. Clear it while forwarding with `withFlushRequestStore`.
 
 ```php
-
-     #[Route(path:'routePath')]
-     #[Forwarder(descent:false)]
-    public function methodName() {
-
-    }
+(new RequestForwarder('routePath'))->withFlushRequestStore();
 ```
 
-##### Prevent incoming request / Create Private route
+###### Prevent forwarding
 
-We can make route private so that it can used for internal only. By setting parameter `incoming: false` of `Route` attribute will prevent any incoming request. This is useful when we need to create route that can be used for forward request only and this can also be used in CRON job.
+Two parameters of the `Nishchay\Attributes\Controller\Method\Forwarder` attribute control what is allowed.
+
+* `ascent: false`: no request can be forwarded **to** this route.
+* `descent: false`: this route cannot forward a request **to another route**.
 
 ```php
+use Nishchay\Attributes\Controller\Method\Forwarder;
 
-     #[Route(path:'routePath',incoming:false)]
-    public function methodName() {
+#[Route(path: 'routePath')]
+#[Forwarder(ascent: false)]
+public function methodName() { ... }
 
-    }
+#[Route(path: 'other')]
+#[Forwarder(descent: false)]
+public function other() { ... }
 ```
 
-##### Required GET/POST parameter
+Breaking a rule throws a `NotSupportedException`, such as `Ascent forward not allowed on route [routePath].`
 
-Route might need some GET/POST parameter, Nishchay has attribute which verifies if required parameter exist. If required parameter does not found it takes action based on attribute declaration.
+##### Private route
+
+Set `incoming: false` to refuse every direct request. The route can still be reached by a forward or by the command line, so it suits internal routes and cron jobs.
 
 ```php
-use Nishchay\Attributes\Controller\RequiredGet;
-
-#[Route(path:'routePath')]
-#[RequiredGet(parameter:['param1'])]
-public function methodName() {
-
+#[Route(path: 'routePath', incoming: false)]
+public function methodName()
+{
+    ...
 }
 ```
 
-Calling route path without GET parameter _param2_ will result in _Route not found_ exception. We can specify any number of required parameter for route.
+A direct request to this route gets a 404.
 
-`Nishchay\Attributes\Controller\RequiredGet` attribute is for requiring GET parameter and `Nishchay\Attributes\Controller\RequiredPost` attribute is for requiring POST parameter.
+##### Required parameters
 
-We can also declare both of these attributes on controller class and it will be applied to all routes within controller.
+`RequiredGet` and `RequiredPost` list the GET or POST parameters that must be sent. If one is missing, the request ends with `BadRequestException: Request could not be satisfied.` (400).
 
-##### Only GET/POST parameter
+```php
+use Nishchay\Attributes\Controller\RequiredGet;
+use Nishchay\Attributes\Controller\RequiredPost;
 
-Only GET/POST parameter means route will require exact parameter. There must not be any parameter missing from parameter list and also there must not be extra parameter.
+#[Route(path: 'search')]
+#[RequiredGet(parameter: ['q', 'page'])]
+public function search() { ... }
+
+#[Route(path: 'save', type: 'POST')]
+#[RequiredPost(parameter: ['name'])]
+public function save() { ... }
+```
+
+`search?q=a` fails because `page` is missing, and `search?q=a&page=1` works. Extra parameters are allowed.
+
+Both attributes can also be put on the controller class. They then apply to every route of the controller.
+
+##### Only these parameters
+
+`OnlyGet` and `OnlyPost` require **exactly** the listed parameters. A missing one and an extra one are both rejected.
 
 ```php
 use Nishchay\Attributes\Controller\OnlyGet;
 
-#[Route(path:'routePath')]
-#[OnlyGet(parameter:['a','b'])]
-public function methodName() {
-
-}
+#[Route(path: 'routePath')]
+#[OnlyGet(parameter: ['a', 'b'])]
+public function methodName() { ... }
 ```
 
-Above route will be called only if it is requested with exact parameter mentioned in `OnlyGet` attribute. Below is list of request which will be valid or not.
+| Request | Result |
+|---|---|
+| `routePath?a=1&b=2` | Works |
+| `routePath` | Fails, parameters are missing |
+| `routePath?a=1` | Fails, `b` is missing |
+| `routePath?a=1&b=2&c=3` | Fails, `c` is extra |
 
-| Request               | Result                                         |
-| --------------------- | ---------------------------------------------- |
-| routePath?a=1&b=2     | Valid                                          |
-| routePath             | Fail as there are not parameter                |
-| routePath?a=1         | Fails because parameter `b` is missing         |
-| routePath?a=1&b=2&c=3 | Fails because parameter `c` is extra parameter |
-
-We can also define same for POST parameter using `Nishchay\Attributes\Controller\OnlyPost` attribute which have parameter same as `OnlyGet` attribute. These attributes can also be declared on controller class to apply to all routes within controller.
+Failures are the same 400 as for required parameters. `OnlyPost` works the same for POST parameters, and both can be put on the controller class.
 
 ##### Scope
 
-Defining single or multiple scope helps in events, sessions and exception handling. Using `Nishchay\Attributes\Controller\Method\NamedScope` attribute we can define single or multiple scope for the route.
+A scope is a name you give to a group of routes. Events, sessions and exception handlers can then be attached to the name instead of to each route. Define it with the `Nishchay\Attributes\Controller\Method\NamedScope` attribute.
 
 ```php
+use Nishchay\Attributes\Controller\Method\NamedScope;
 
-#[Route(path:true)]
-#[NamedScope(name:'secure')]
-public function profile() {
+#[Route(path: true)]
+#[NamedScope(name: 'secure')]
+public function profile() { ... }
 
-}
+#[Route(path: 'profile/setting')]
+#[NamedScope(name: 'secure')]
+public function profileSetting() { ... }
+
+#[Route(path: true)]
+#[NamedScope(name: 'secure')]
+public function messages() { ... }
 ```
 
-Above code will create named scope _secure_ for route _profile_. We can also define multiple scope for route.
+These three routes share the _secure_ scope. Define one event for _secure_ that checks the login and all three are protected. Read more about [events](/learningCenter/events/events).
 
-When we define multiple scope for route then by default first scope in list becomes default scope of route. We can also specify default scope for the route with the help of `default` parameter.
-
-To understand when route scope is useful, see below code.
+A route can have several scopes. Pass an array in `name`. The first one is the default scope, and the `default` parameter chooses another.
 
 ```php
-
-#[Route(path:true)]
-#[NamedScope(name:'secure')]
-public function profile() {
-    # To view user profile
-}
-
-
-#[Route(path:'profile/setting')]
-#[NamedScope(name:'secure')]
-public function profileSetting() {
-    # For profile settings
-}
-
-#[Route(path:true)]
-#[NamedScope(name:'secure')]
-public function messages() {
-    # To view messages
-
+#[NamedScope(name: ['secure', 'admin'], default: 'admin')]
 ```
 
-Now we have multiple route for the profile and its related activity, we also have to make sure that user without login must not access above defined route.
+Scope is also used by
 
-To do this we can define event for `secure` scope within which we can check if user is logged or not. If user is not logged we can redirect user to login page. Please learn more about [events](/learningCenter/events/events).
-
-Scope is also used in following features
-
-1. [Session](/learningCenter/session), Learn how to define session for scope
-2. [Exception handling](/learningCenter/exceptionHandling), Learn how to define exception for scope
+1. [Session](/learningCenter/session)
+2. [Exception handling](/learningCenter/exceptionHandling)
 
 ##### Events
 
-Events can be defined on controller or method. Events defined on controller will be executed for each routes of controller class. These events can be executed before or after execution. There are two attributes `Nishchay\Attributes\Controller\Event\BeforeEvent` and `Nishchay\Attributes\Controller\Event\AfterEvent`, both of these can be declared on controller or method.
-
-Both of event attribute supports following parameter:
-
-| Parameter | Description                                                                                                                                                                |
-| --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| callback  | Callback method name. This can be only method name if its within same controller or specify with `{class}::{method}` for callback outside of controller                    |
-| order     | Order of execution. By default events are executed in [global, context, scope] order. This order can be changed using this parameter                                       |
-| once      | Whether to execute event only once during request. If the route is forwarded then event may execute multiple time. This can be prevented if we set this parameter to true. |
+An event is a method that runs **before** or **after** a route. Declare it on a route method with the attribute `Nishchay\Attributes\Controller\Event\BeforeEvent` or `Nishchay\Attributes\Controller\Event\AfterEvent`.
 
 ```php
+use Nishchay\Attributes\Controller\Event\BeforeEvent;
 
-#[Route(path:true)]
-#[BeforeEvent(callback:'checkLogin')]
-public function profile() {
-    # View profile
+#[Route(path: true)]
+#[BeforeEvent(callback: 'checkLogin')]
+public function profile()
+{
+    ...
+}
+
+public function checkLogin()
+{
+    return isset($_SESSION['user']);
 }
 ```
 
-###### Event response
+Parameters of both attributes:
 
-Event must return _true_ to denote its success. If event is success then next action is taken. If there are no further events then route will be executed otherwise next event will be executed.
+| Parameter | Description |
+|---|---|
+| callback | Method name when the method is in the same controller, or `{class}::{method}` for a method of another class |
+| order | Order of execution. Events run in the order global, context, scope. Pass an array to change it |
+| once | Run the event only once per request. A forward can run a route several times, so use `true` to avoid repeats |
 
-When event responds with _false_, request will result in an exception `BadRequestException`. If event respond with other than `boolean` type, it will taken as request response. We can return view name or we can also redirect request. We can also forward request from event.
+Events can also be attached to scopes, contexts or the whole application. See [events](/learningCenter/events/events).
 
-Even if route returns view or we redirect request, after event is always executed. On failure of event does not execute after event.
+###### What an event returns
+
+| Return value | Result |
+|---|---|
+| `true` | Success. The next event runs, and then the route |
+| `false` | The request ends with `BadRequestException` (400) |
+| Anything else | It becomes the response of the request. The route is **not** called |
+
+An event can return a view name, a redirect or a forward in the same way a route does.
+
+An after event always runs, even when a before event has already replaced the response. It does not run when a before event returns `false`.
 
 ##### Stages of request
 
-Upon each request, stages starts from number 1 which keep increases by 1 count for each forward request. Each stage store details related to current request for the stage.
+A request starts at stage 1. Each forward adds one stage. Every stage keeps its own details, read with `Processor::getStageDetail`.
 
-###### Get request/stage detail
+`Processor` is a facade, so add `use Processor;` at the top of the file.
 
-We can get following detail of stage using `Processor::getStageDetail` method. `Processor` is facade class, in use section it should be included with `use Processor` statement. It changes on each request forward.
-| Request | Result |
-| ----------- | ----------- |
-| urlString | path of request. Empty when accessed only domain name. |
-| urlParts | Url string divided by `/` |
-| mode | Stage mode. Initial is always incoming, it changes to `forward` if request if forwarded. For maintenance mode its changed to `maintenance`. |
-| stage | Stage number of request. Increased by 1 for each forward. |
-| object | Instance of `Route` attribute of current request. |
-| priority | Priority value of current route. |
-| urlex | Route path with regular expression. When we define route with dynamic segment it will be converted regex. |
-| segment | List of special segment in an array. |
-| context | Context name |
-| scopeName | Scope name of route. |
+```php
+use Processor;
+
+$mode = Processor::getStageDetail('mode');
+$all = Processor::getStageDetail();   # every detail of the current stage as an array
+```
+
+An unknown name throws `Invalid state detail`.
+
+| Detail | Description |
+|---|---|
+| urlString | Path of the request. Empty when only the domain was opened |
+| urlParts | Path split by `/` |
+| mode | `incoming` for the first stage, `forwarded` after a forward. `maintenance` when the application is in maintenance mode |
+| stage | Stage number. Starts at 1 and grows by 1 for each forward |
+| object | The `Route` attribute of the current route |
+| priority | Priority of the current route |
+| urlex | Route path as a regular expression. A route with placeholders is turned into one |
+| segment | List of placeholder segments of the route |
+| context | Name of the context of the route |
+| scopeName | Scope name of the route, or `false` |
+
+```php
+#[Route(path: 'register')]
+public function register()
+{
+    return new RequestForwarder('login');
+}
+
+#[Route(path: 'login', incoming: false)]
+public function login()
+{
+    # Processor::getStageDetail('mode')  => 'forwarded'
+    # Processor::getStageDetail('stage') => 2
+}
+```
