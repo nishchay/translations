@@ -41,7 +41,7 @@ This setting is applicable for query builder only. When this is `false`, it won'
 | Name | Description |
 |-----|-----|
 | updateNoCondition | Whether to allow update statement to be executed without condition. |
-| removeNoCondition | Whether to allow delete statement to be executed without condition. |
+| deleteNoCondition | Whether to allow delete statement to be executed without condition. `removeNoCondition` is accepted as an older name. |
 
 ##### Encryption
 Encryption and decryption related configuration is contained within `encryption` second.
